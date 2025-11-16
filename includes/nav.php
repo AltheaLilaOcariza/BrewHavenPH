@@ -12,9 +12,5 @@
             <li><a href="pages/faq.html">FAQs</a></li>
         </ul>
 
-        <div class="search-box">
-            <input type="text" placeholder="Search...">
-            <span class="search-icon">🔍</span>
-        </div>
     </div>
 </nav>
