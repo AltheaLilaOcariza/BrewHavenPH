@@ -12,8 +12,6 @@ $base_path = (strpos($_SERVER['PHP_SELF'], 'pages/') !== false) ? '../' : '';
 
     <div class="right-section">
         <ul class="nav-links">
-            <li><a href="<?php echo $base_path; ?>index.php">Home</a></li>
-            <li><a href="<?php echo $base_path; ?>pages/menu.php">Menu</a></li>
             <li><a href="<?php echo $base_path; ?>pages/contact.html">Contacts</a></li>
             <li><a href="<?php echo $base_path; ?>pages/about.html">About us</a></li>
             <li><a href="<?php echo $base_path; ?>pages/faq.html">FAQs</a></li>
