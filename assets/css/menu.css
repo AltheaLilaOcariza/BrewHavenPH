@@ -1,0 +1,106 @@
+.menu-section{
+    display: absolute;
+    top: 60px;
+    width: 100%;
+    text-align: center;
+}
+
+.menu-section p, .menu-section h2 {
+    text-align: center;
+    color: #333;
+}
+
+.menu-section h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.menu-section p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+/*================== Best Seller Section ==================*/
+.best-seller-section {
+    position: relative;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    gap: 40px;
+    padding: 40px 0;
+}
+
+/* Yellow oval */
+.yellow-bg {
+    position: absolute;
+    background: #ffd27f;
+
+    top: 0;
+    bottom: 0;
+    margin: auto;             /* center vertically */
+    border-radius: 200px;
+
+    width: 70%;              /* spans across both items */
+    height: 380px;
+    z-index: -1;
+}
+
+/* Red card */
+.card {
+    display: flex;
+    flex-direction: column;
+    background: #d9534f;
+    width: 320px;
+    padding: 15px;
+    border-radius: 30px;
+    color: #ffe9c6;
+    align-items: center;
+}
+
+.card .title {
+    align-self: flex-start;
+    margin: 10px 0;
+    margin-left: 10px;
+    font-size: 2.5rem;
+}
+
+.image-box img {
+    height: 300px;
+    width: 300px;
+    object-fit: cover;
+}
+
+.details-box {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 5vh;
+}
+
+.order-btn {
+    background: #fff;
+    color: #d9534f;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    height: 60px;
+    width: 150px;
+    font-weight: bold;
+    cursor: pointer;
+}   
+
+/* Description box */
+.description-box {
+    background: white;
+    height: 330px;
+    width: 380px;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+}

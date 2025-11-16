@@ -5,7 +5,10 @@
 ?>
 
 <div class="container">
-    <?php include 'includes/nav.php'; ?>
+    <?php 
+        $logo="assets/img/logo.png";
+        include 'includes/nav.php'; 
+    ?>
 
     <!-- Hero Section with Image -->
     <section class="hero-section-with-image">
@@ -44,6 +47,7 @@
         <div class="brand-footer">
             <h2>BREWHAVEN CAFE</h2>
         </div>
+        
     </section>
 
 </div>

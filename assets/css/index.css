@@ -1,0 +1,508 @@
+/* ===== PROFESSIONAL HERO SECTION ===== */
+.hero-section-with-image {
+    position: relative;
+    height: 85vh;
+    min-height: 700px;
+    max-height: 900px;
+    background: linear-gradient(135deg, #FAF9F6 0%, #FFD88F 100%);
+    background-image: url('../img/banner.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 255, 255, 0.88) 40%,
+        rgba(255, 255, 255, 0.4) 100%
+    );
+    z-index: 1;
+}
+
+.hero-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 60px;
+    width: 100%;
+    gap: 60px;
+}
+
+.hero-content {
+    flex: 0 1 550px;
+    text-align: left;
+    padding: 40px 0;
+}
+
+.hero-content h1 {
+    font-size: 4em;
+    margin-bottom: 25px;
+    color: #3E2723;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.5px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.hero-tagline {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #A0522D;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.hero-description {
+    font-size: 1.2em;
+    margin-bottom: 45px;
+    color: #5a3927;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.hero-image {
+    flex: 0 1 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Brown background square for Filipino delicacies */
+.hero-image::before {
+    content: "";
+    width: 450px;
+    height: 450px;
+    background: linear-gradient(135deg, #A0522D 0%, #8B4513 50%, #D2691E 100%);
+    border-radius: 25px;
+    box-shadow: 
+        0 20px 40px rgba(0,0,0,0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    display: block;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Filipino delicacies vector art overlay */
+.hero-image::after {
+    content: "";
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    background-image: url('../img/filipino_delicacies.png');
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 25px;
+    z-index: 3;
+    opacity: 0.9;
+    filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.4));
+    transition: all 0.3s ease;
+}
+
+/* Glow effect behind */
+.image-glow {
+    position: absolute;
+    width: 470px;
+    height: 470px;
+    background: linear-gradient(135deg, #FFD88F 0%, #A0522D 100%);
+    border-radius: 30px;
+    opacity: 0.6;
+    filter: blur(20px);
+    z-index: 1;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+.hero-image:hover::before {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 
+        0 25px 50px rgba(0,0,0,0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.hero-image:hover::after {
+    transform: translateY(-5px) scale(1.02);
+    opacity: 1;
+    filter: drop-shadow(4px 4px 12px rgba(0,0,0,0.6));
+}
+
+/* Enhanced CTA buttons */
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.cta-button {
+    padding: 18px 35px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1em;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    min-width: 160px;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.5px;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.7s ease;
+}
+
+.cta-button:hover::before {
+    left: 100%;
+}
+
+.cta-primary {
+    background: linear-gradient(135deg, #D04F4F 0%, #C0392B 100%);
+    color: white;
+    box-shadow: 0 8px 25px rgba(208, 79, 79, 0.3);
+}
+
+.cta-primary:hover {
+    background: linear-gradient(135deg, #FFD88F 0%, #F4D03F 100%);
+    color: #A0522D;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(255, 216, 143, 0.4);
+}
+
+.cta-secondary {
+    background: linear-gradient(135deg, #ABC06C 0%, #8A9A5B 100%);
+    color: white;
+    box-shadow: 0 8px 25px rgba(171, 192, 108, 0.3);
+}
+
+.cta-secondary:hover {
+    background: linear-gradient(135deg, #FFD88F 0%, #F4D03F 100%);
+    color: #A0522D;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(255, 216, 143, 0.4);
+}
+
+/* Professional decorative elements */
+.hero-section-with-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,216,143,0.3) 0%, transparent 70%);
+    z-index: 1;
+}
+
+.hero-section-with-image::after {
+    content: "";
+    position: absolute;
+    bottom: -100px;
+    left: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(160,82,45,0.1) 0%, transparent 70%);
+    z-index: 1;
+}
+
+/* ===== CONTENT SECTION ===== */
+.content-section {
+    padding: 60px 40px;
+    text-align: center;
+    background: #FAF9F6;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 800px;
+    margin: 0 auto 50px;
+}
+
+.content-card {
+    background: #F5F5DC; /* Rice Husk Beige */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border: 2px solid #A0522D;
+}
+
+.content-card h2 {
+    color: #A0522D;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.content-card p {
+    color: #3E2723;
+    line-height: 1.5;
+}
+
+.brand-footer {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 2px solid #A0522D;
+}
+
+.brand-footer h2 {
+    color: #A0522D;
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* ===== FOOTER ===== */
+.main-footer {
+    background: #5EBCAA; /* Pandan Leaf */
+    color: #FAF9F6;
+    padding: 40px 20px 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section h3,
+.footer-section h4 {
+    color: #FFD88F;
+    margin-bottom: 15px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    color: #FAF9F6;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #FFD88F;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: #D04F4F;
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background: #FFD88F;
+    color: #A0522D;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1200px) {
+    .hero-container {
+        padding: 0 40px;
+        gap: 40px;
+    }
+    
+    .hero-content h1 {
+        font-size: 3.2em;
+    }
+    
+    .hero-image::before,
+    .hero-image::after {
+        width: 380px;
+        height: 380px;
+    }
+    
+    .image-glow {
+        width: 400px;
+        height: 400px;
+    }
+}
+
+@media (max-width: 968px) {
+    .hero-section-with-image {
+        height: auto;
+        min-height: auto;
+        padding: 100px 0;
+        background-attachment: scroll;
+    }
+    
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 0 30px;
+        gap: 50px;
+    }
+    
+    .hero-content {
+        text-align: center;
+        flex: none;
+        max-width: 600px;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.8em;
+    }
+    
+    .hero-overlay {
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(255, 255, 255, 0.9) 100%
+        );
+    }
+    
+    .cta-buttons {
+        justify-content: center;
+    }
+    
+    .hero-image::before,
+    .hero-image::after {
+        width: 350px;
+        height: 350px;
+    }
+    
+    .image-glow {
+        width: 370px;
+        height: 370px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-nav {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .right-section {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .hero-container {
+        padding: 0 20px;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.3em;
+    }
+    
+    .hero-tagline {
+        font-size: 1.3em;
+    }
+    
+    .hero-description {
+        font-size: 1.1em;
+    }
+    
+    .hero-image::before,
+    .hero-image::after {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .image-glow {
+        width: 320px;
+        height: 320px;
+    }
+    
+    .cta-button {
+        padding: 16px 30px;
+        min-width: 140px;
+        font-size: 1em;
+    }
+    
+    .search-box input {
+        width: 150px;
+    }
+    
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2em;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cta-button {
+        width: 200px;
+    }
+    
+    .hero-image::before,
+    .hero-image::after {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .image-glow {
+        width: 300px;
+        height: 300px;
+    }
+}
