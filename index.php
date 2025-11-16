@@ -19,7 +19,6 @@
                 <div class="cta-buttons">
                     <a href="pages/menu.php" class="cta-button cta-primary">Browse Menu</a>
                     <a href="#" class="cta-button cta-secondary">Login</a>
-                    <a href="#" class="cta-button cta-secondary">Register</a>
                 </div>
             </div>
             
@@ -50,3 +49,4 @@
 </div>
 
 <?php include 'includes/footer.php'; ?>
+
