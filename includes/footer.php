@@ -9,11 +9,12 @@
         <div class="footer-section">
             <h4>Quick Links</h4>
             <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="pages/menu.php">Menu</a></li>
-                <li><a href="pages/about.html">About Us</a></li>
-                <li><a href="pages/contact.html">Contact</a></li>
+                <li><a href="<?php echo $base_path; ?>index.php">Home</a></li>
+                <li><a href="<?php echo $base_path; ?>pages/menu.php">Menu</a></li>
+                <li><a href="<?php echo $base_path; ?>pages/about.html">About Us</a></li>
+                <li><a href="<?php echo $base_path; ?>pages/contact.html">Contact</a></li>
             </ul>
+        </ul>
         </div>
         
         <div class="footer-section">
