@@ -1,11 +1,14 @@
 .menu-section{
-    display: absolute;
+    display : flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     top: 60px;
     width: 100%;
     text-align: center;
 }
 
-.menu-section p, .menu-section h2 {
+.best-seller-section > p, .menu-section h2 {
     text-align: center;
     color: #333;
 }
@@ -16,7 +19,7 @@
     font-weight: bold;
 }
 
-.menu-section p {
+.best-seller-section p {
     font-size: 1.2rem;
     color: #666;
     margin-bottom: 40px;
@@ -30,6 +33,8 @@
     justify-content: center;
     gap: 40px;
     padding: 40px 0;
+    width: 100%;
+    min-height: 400px; /* ensure the section is tall enough */
 }
 
 /* Yellow oval */
@@ -39,11 +44,13 @@
 
     top: 0;
     bottom: 0;
-    margin: auto;             /* center vertically */
+    left: 0;
+    right: 0;
+    margin: auto;           /* center vertically and horizontally */
     border-radius: 200px;
 
-    width: 70%;              /* spans across both items */
-    height: 380px;
+    width: 70%;             /* your requested length */
+    height: 380px;          /* height of the oval */
     z-index: -1;
 }
 
@@ -80,7 +87,7 @@
     column-gap: 5vh;
 }
 
-.order-btn {
+.best-seller-order-btn{
     background: #fff;
     color: #d9534f;
     border: none;
@@ -103,4 +110,131 @@
     position: relative;
     z-index: 1;
     box-sizing: border-box;
+}
+
+/* Carousel Section */
+.carousel-title {
+    align-self: flex-start;
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: left;
+    padding-left: 15%;
+}
+.carousel {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 70%;
+  height: 40vh;
+  margin: auto;
+  margin-bottom: 40px
+}
+
+.carousel-window {
+  position: inherit;
+  overflow: hidden;
+  width:100%; /* visible area for 3 items */
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+.carousel-item {
+  display: flex;
+  flex-direction: column;
+  max-width: 175px;
+  margin: 0 5px;
+  background: #eedcbf;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 5px;
+  height: 35vh;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+.item-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-name {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+}
+.price {
+  font-size: 1rem;
+  color: #555;
+  margin: 0;
+}
+.order-btn-container {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.order-btn{
+    background: #fff;
+    color: #d9534f;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    width: 100px;
+    font-weight: bold;
+    cursor: pointer;
+}   
+
+button.prev, button.next {
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  height: 40vh;
+  background: #dbc49e;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.view-btn-wrapper {
+    position: relative; /* needed for absolute positioning inside JS */
+}
+
+.view-order-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.view-order-btn:hover {
+    background: #c43e3a;
 }

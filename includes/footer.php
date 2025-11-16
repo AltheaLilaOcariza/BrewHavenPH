@@ -28,3 +28,11 @@
         <p>&copy; 2025 BrewHaven Cafe PH. All rights reserved.</p>
     </div>
 </footer>
+<?php
+// Print any extra JS files enqueued by pages. Pages can set $extra_js = ['path/to/file.js', ...]
+if (isset($extra_js) && is_array($extra_js)) {
+    foreach ($extra_js as $js_file) {
+        echo '<script src="' . htmlspecialchars($js_file, ENT_QUOTES) . '"></script>' . PHP_EOL;
+    }
+}
+?>
