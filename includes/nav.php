@@ -1,15 +1,15 @@
 <nav class="main-nav">
     <div class="left-section">
-        <img src="images/logo.png" class="logo">
-        <span class="site-name">Brewhaven Cafe PH</span>
+        <img src="assets/img/logo.png" alt="BrewHaven Cafe Logo" class="logo debug">
+        <span class="site-name">BrewHaven Cafe PH</span>
         <div class="divider"></div>
     </div>
 
     <div class="right-section">
         <ul class="nav-links">
-            <li><a href="#">Contacts</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">FAQs</a></li>
+            <li><a href="pages/contact.html">Contacts</a></li>
+            <li><a href="pages/about.html">About us</a></li>
+            <li><a href="pages/faq.html">FAQs</a></li>
         </ul>
 
         <div class="search-box">
