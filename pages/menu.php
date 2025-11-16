@@ -5,12 +5,9 @@
     include '../includes/header.php';
 ?>
 
-<main class="container">
-    <?php 
-        $logo="../assets/img/logo.png";
-        include '../includes/nav.php'; 
-    ?>
-
+<div class="container">
+    <?php include '../includes/nav.php'; ?>
+    
     <section class="menu-section">
         <h1>Our Menu</h1>
         <p>Explore our selection of artisan coffees and Filipino delicacies.</p>
