@@ -7,6 +7,7 @@
 
     <div class="right-section">
         <ul class="nav-links">
+            <li><a href="index.php">Home</a></li>
             <li><a href="pages/contact.html">Contacts</a></li>
             <li><a href="pages/about.html">About us</a></li>
             <li><a href="pages/faq.html">FAQs</a></li>
