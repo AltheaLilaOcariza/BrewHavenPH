@@ -1,16 +1,11 @@
 .menu-section{
-    display : flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    top: 60px;
     width: 100%;
     text-align: center;
-}
-
-.best-seller-section > p, .menu-section h2 {
-    text-align: center;
-    color: #333;
+    padding: 20px 0;
 }
 
 .menu-section h1 {
@@ -20,13 +15,11 @@
     color: #3E2723; /* Mocha Ink */
 }
 
-.best-seller-section p {
+.menu-section > p {
     font-size: 1.2rem;
     color: #A0522D; /* Cinnamon Roast */
     margin-bottom: 40px;
     max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 /* ===== BEST SELLER SECTION ===== */
@@ -36,45 +29,44 @@
     align-items: center; 
     justify-content: center;
     gap: 40px;
-    padding: 40px 0px;
+    padding: 60px 0;
     width: 100%;
     min-height: 400px;
+    margin: 40px 0;
 }
 
 /* Yellow oval background */
 .yellow-bg {
     position: absolute;
-    background: #FFD88F; /* Banana Glaze - matches your brand */
-    
-    top: 0;
-    bottom:0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    
+    background: #FFD88F; /* Banana Glaze */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 200px;
-
     width: 70%;
     height: 380px;
     z-index: -1;
     opacity: 0.9;
 }
 
-
-
 /* Best seller card */
 .card {
     display: flex;
     flex-direction: column;
-    background: #D04F4F; /* Cherry Heart - matches your brand */
+    background: #D04F4F; /* Cherry Heart */
     width: 320px;
     padding: 20px;
     border-radius: 30px;
-    color: #FFD88F; /* Banana Glaze text */
+    color: #FFD88F;
     align-items: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     position: relative;
     z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
 }
 
 .card .title {
@@ -91,6 +83,7 @@
     border-radius: 20px;
     overflow: hidden;
     margin-bottom: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
 .image-box img {
@@ -127,12 +120,12 @@
 .price {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #FFD88F; /* Banana Glaze */
+    color: #FFD88F;
 }
 
-.best-seller-order-btn{
+.best-seller-order-btn {
     background: #FFFFFF;
-    color: #D04F4F; /* Cherry Heart */
+    color: #D04F4F;
     border: none;
     padding: 12px 25px;
     border-radius: 25px;
@@ -145,9 +138,9 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
-.order-btn:hover {
-    background: #FFD88F; /* Banana Glaze */
-    color: #A0522D; /* Cinnamon Roast */
+.best-seller-order-btn:hover {
+    background: #FFD88F;
+    color: #A0522D;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
 }
@@ -163,201 +156,231 @@
     position: relative;
     z-index: 2;
     box-sizing: border-box;
-    border: 2px solid #FFD88F; /* Banana Glaze border */
+    border: 2px solid #FFD88F;
+    transition: transform 0.3s ease;
+}
+
+.description-box:hover {
+    transform: translateY(-5px);
 }
 
 .description-box p {
     font-size: 1.1rem;
     line-height: 1.6;
-    color: #3E2723; /* Mocha Ink */
+    color: #3E2723;
     margin: 0;
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 968px) {
-    .best-seller-section {
-        flex-direction: column;
-        gap: 30px;
-        padding: 40px 20px;
-    }
-    
-    .yellow-bg {
-        width: 90%;
-        height: 300px;
-        border-radius: 150px;
-    }
-    
-    .description-box {
-        height: auto;
-        min-height: 200px;
-    }
-}
-
-@media (max-width: 768px) {
-    .menu-section {
-        padding: 40px 20px 20px;
-    }
-    
-    .menu-section h1 {
-        font-size: 3rem;
-    }
-    
-    .card,
-    .description-box {
-        width: 100%;
-        max-width: 400px;
-    }
-    
-    .image-box {
-        width: 100%;
-        max-width: 280px;
-        height: 280px;
-    }
-}
-
-@media (max-width: 480px) {
-    .menu-section h1 {
-        font-size: 2.5rem;
-    }
-    
-    .card .title {
-        font-size: 1.7rem;
-    }
-    
-    .details-box {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-    
-    .info {
-        text-align: center;
-    }
-}
-
-/* Carousel Section */
+/* ===== CAROUSEL SECTION ===== */
 .carousel-title {
     align-self: flex-start;
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin: 60px 0 20px 15%;
     text-align: left;
-    padding-left: 15%;
+    color: #A0522D;
+    position: relative;
 }
+
+.carousel-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background: #FFD88F;
+    border-radius: 2px;
+}
+
+/* FIXED CAROUSEL STYLES */
+.carousel-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+}
+
 .carousel {
-  position: relative;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 70%;
-  height: 40vh;
-  margin: auto;
-  margin-bottom: 40px
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Changed from center to space-between */
+    width: 80%;
+    max-width: 1200px; /* Added max-width */
+    margin: 0 auto;
+    min-height: 300px;
+    overflow: visible; /* CHANGED: Allow buttons to be visible */
 }
 
 .carousel-window {
-  position: inherit;
-  overflow: hidden;
-  width:100%; /* visible area for 3 items */
+    position: relative;
+    overflow: hidden; /* Only hide overflow for the window */
+    width: 100%; /* CHANGED: Take full width */
+    flex: 1; /* Take available space */
+    margin: 0 20px; /* Add space for buttons */
 }
 
 .carousel-track {
-  display: flex;
-  transition: transform 0.3s ease;
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    gap: 15px;
+    will-change: transform;
+    padding: 10px 5px; /* Adjusted padding */
 }
 
 .carousel-item {
-  display: flex;
-  flex-direction: column;
-  max-width: 175px;
-  margin: 0 5px;
-  background: #eedcbf;
-  text-align: center;
-  padding: 1rem;
-  border-radius: 5px;
-  height: 35vh;
+    flex: 0 0 200px; /* FIXED WIDTH */
+    display: flex;
+    flex-direction: column;
+    background: #F5F5DC;
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 15px;
+    height: 280px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+}
+
+.carousel-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border-color: #FFD88F;
 }
 
 .carousel-item img {
-  width: 100%;
-  height: 70%;
-  object-fit: cover;
-  border-radius: 5px;
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
 }
+
 .item-details {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 10px;
-    width: 100%;
-    margin: 20px 0;
+    flex-grow: 1;
+    justify-content: space-between;
 }
 
 .item-info {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
-.item-name {
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 0;
+.carousel .item-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0;
+    color: #3E2723;
 }
-.price {
-  font-size: 1rem;
-  color: #555;
-  margin: 0;
+
+.carousel .price {
+    font-size: 1.2rem;
+    color: #D04F4F;
+    margin: 0;
+    font-weight: bold;
 }
+
 .order-btn-container {
-  display: flex;
-  align-items: center;
-  margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
 }
 
-.order-btn{
-    background: #fff;
-    color: #d9534f;
+.order-btn {
+    background: #D04F4F;
+    color: #FFFFFF;
     border: none;
     padding: 10px 20px;
     border-radius: 20px;
     width: 100px;
     font-weight: bold;
     cursor: pointer;
-}   
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(208, 79, 79, 0.3);
+}
+
+.order-btn:hover {
+    background: #FFD88F;
+    color: #A0522D;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 216, 143, 0.4);
+}
 
 button.prev, button.next {
-  padding: 0.5rem 1rem;
-  font-size: 1.2rem;
-  height: 40vh;
-  background: #dbc49e;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.view-btn-wrapper {
-    position: relative; /* needed for absolute positioning inside JS */
-}
-
-.view-order-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #d9534f;
-    color: #fff;
+    padding: 1rem;
+    font-size: 1.5rem;
+    height: 50px;
+    width: 50px;
+    background: #FFD88F;
     border: none;
-    padding: 15px 25px;
-    border-radius: 30px;
-    font-size: 1.2rem;
-    font-weight: bold;
+    border-radius: 50%;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    z-index: 1000;
+    transition: all 0.3s ease;
+    color: #A0522D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+    z-index: 10;
+    position: relative; /* Ensure proper positioning */
 }
 
-.view-order-btn:hover {
-    background: #c43e3a;
+button.prev:hover, button.next:hover {
+    background: #D04F4F;
+    color: #FFFFFF;
+    transform: scale(1.1);
+}
+
+button.prev:disabled, button.next:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    background: #cccccc;
+    color: #666666;
+}
+
+/* NEW: Responsive fixes */
+@media (max-width: 768px) {
+    .carousel {
+        width: 95%;
+        gap: 10px;
+    }
+    
+    .carousel-window {
+        margin: 0 15px;
+    }
+    
+    .carousel-item {
+        flex: 0 0 180px;
+        height: 260px;
+        padding: 1rem;
+    }
+    
+    button.prev, button.next {
+        height: 40px;
+        width: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .carousel-title {
+        margin: 40px 0 20px 10%;
+        font-size: 2rem;
+    }
+}
+
+/* Additional fixes for carousel alignment */
+.carousel-track {
+    min-width: min-content; /* Ensure track can contain all items */
+}
+
+/* Remove the old clear fix */
+.carousel-track::after {
+    display: none;
 }
