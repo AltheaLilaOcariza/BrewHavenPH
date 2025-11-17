@@ -100,8 +100,9 @@
                             ['name' => 'Cassava Cake', 'price' => 110, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
                             ['name' => 'Ensaymada', 'price' => 65, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
                             ['name' => 'Pan de Coco', 'price' => 55, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Croissant', 'price' => 80, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Banana Bread', 'price' => 85, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg']
+                            ['name' => 'Crinkles', 'price' => 80, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
+                            ['name' => 'Banana Bread', 'price' => 85, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
+                            ['name' => 'Pain au chocolat', 'price' => 85, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg']
                         ];
                         
                         foreach ($snacks as $snack) {
