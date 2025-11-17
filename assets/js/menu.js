@@ -20,6 +20,9 @@ class Carousel {
         this.prevTranslate = 0;
         this.animationID = 0;
         
+        // Add unique identifier for debugging
+        this.id = Math.random().toString(36).substr(2, 9);
+        
         // Wait a bit for DOM to be ready, then initialize
         setTimeout(() => {
             this.calculateDimensions();
@@ -41,7 +44,7 @@ class Carousel {
                 const containerWidth = this.carousel.offsetWidth;
                 this.visibleItems = Math.floor(containerWidth / (this.itemWidth + this.gap));
                 
-                console.log('Carousel dimensions calculated:', {
+                console.log(`Carousel ${this.id} dimensions calculated:`, {
                     itemWidth: this.itemWidth,
                     gap: this.gap,
                     visibleItems: this.visibleItems,
@@ -50,7 +53,7 @@ class Carousel {
                 });
                 
             } catch (error) {
-                console.warn('Error calculating carousel dimensions, using defaults:', error);
+                console.warn(`Error calculating carousel ${this.id} dimensions, using defaults:`, error);
                 // Fallback to default values
                 this.itemWidth = 200;
                 this.gap = 15;
@@ -60,7 +63,7 @@ class Carousel {
     }
     
     init() {
-        console.log('Carousel initialized with', this.items.length, 'items');
+        console.log(`Carousel ${this.id} initialized with`, this.items.length, 'items');
         
         // Set up track width to contain all items
         this.updateTrackWidth();
@@ -70,9 +73,16 @@ class Carousel {
         // Button events with null checks
         if (this.prevBtn) {
             this.prevBtn.addEventListener('click', () => this.prev());
+            console.log(`Carousel ${this.id}: Previous button found and bound`);
+        } else {
+            console.warn(`Carousel ${this.id}: Previous button not found`);
         }
+        
         if (this.nextBtn) {
             this.nextBtn.addEventListener('click', () => this.next());
+            console.log(`Carousel ${this.id}: Next button found and bound`);
+        } else {
+            console.warn(`Carousel ${this.id}: Next button not found`);
         }
         
         // Mouse events for dragging
@@ -96,12 +106,17 @@ class Carousel {
         });
         
         // Handle window resize
-        window.addEventListener('resize', () => {
+        const resizeHandler = () => {
             this.calculateDimensions();
             this.updateTrackWidth();
             this.updateCarousel();
             this.updateButtons();
-        });
+        };
+        
+        window.addEventListener('resize', resizeHandler);
+        
+        // Store resize handler for cleanup if needed
+        this.resizeHandler = resizeHandler;
     }
     
     updateTrackWidth() {
@@ -183,7 +198,7 @@ class Carousel {
         this.track.style.transition = this.isDragging ? 'none' : 'transform 0.4s ease';
         this.track.style.transform = `translateX(${translateX}px)`;
         
-        console.log('Moving carousel to index:', this.index, 'translateX:', translateX);
+        console.log(`Carousel ${this.id}: Moving to index:`, this.index, 'translateX:', translateX);
     }
     
     updateButtons() {
@@ -203,11 +218,11 @@ class Carousel {
             this.nextBtn.style.cursor = nextDisabled ? 'not-allowed' : 'pointer';
         }
         
-        console.log('Button states - prev:', prevDisabled, 'next:', nextDisabled, 'maxIndex:', maxIndex);
+        console.log(`Carousel ${this.id} button states - prev:`, prevDisabled, 'next:', nextDisabled, 'maxIndex:', maxIndex);
     }
     
     prev() {
-        console.log('Previous button clicked, current index:', this.index);
+        console.log(`Carousel ${this.id}: Previous button clicked, current index:`, this.index);
         if (this.index > 0) {
             this.index--;
             this.updateCarousel();
@@ -216,7 +231,7 @@ class Carousel {
     }
     
     next() {
-        console.log('Next button clicked, current index:', this.index);
+        console.log(`Carousel ${this.id}: Next button clicked, current index:`, this.index);
         const maxIndex = Math.max(0, this.items.length - this.visibleItems);
         if (this.index < maxIndex) {
             this.index++;
@@ -297,14 +312,26 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // Store carousel instances for debugging
+        window.carouselInstances = [];
+        
         carousels.forEach((carousel, index) => {
-            console.log(`Initializing carousel ${index + 1} with ${carousel.querySelectorAll('.carousel-item').length} items`);
+            console.log(`=== Initializing carousel ${index + 1} ===`);
+            console.log(`Carousel ${index + 1} element:`, carousel);
+            console.log(`Carousel ${index + 1} track items:`, carousel.querySelectorAll('.carousel-item').length);
+            console.log(`Carousel ${index + 1} prev button:`, carousel.querySelector('.prev'));
+            console.log(`Carousel ${index + 1} next button:`, carousel.querySelector('.next'));
+            
             try {
-                new Carousel(carousel);
+                const instance = new Carousel(carousel);
+                window.carouselInstances.push(instance);
+                console.log(`✓ Carousel ${index + 1} initialized successfully`);
             } catch (error) {
-                console.error(`Error initializing carousel ${index + 1}:`, error);
+                console.error(`✗ Error initializing carousel ${index + 1}:`, error);
             }
         });
+        
+        console.log('All carousels initialized:', window.carouselInstances);
     }, 100);
     
     // Add to Cart functionality
