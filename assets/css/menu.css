@@ -1,3 +1,4 @@
+/* ===== MENU PAGE STYLES ===== */
 .menu-section{
     display: flex;
     flex-direction: column;
@@ -383,4 +384,25 @@ button.prev:disabled, button.next:disabled {
 /* Remove the old clear fix */
 .carousel-track::after {
     display: none;
+}
+
+.view-order-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+    transition: opacity 0.2s ease;
+}
+
+.view-order-btn:hover {
+    background: #c43e3a;
 }

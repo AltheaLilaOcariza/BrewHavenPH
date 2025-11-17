@@ -446,3 +446,37 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Script error:', e.error);
     });
 });
+
+// View Order Button Position Adjustment on Scroll
+window.addEventListener("DOMContentLoaded", () => {
+    const viewBtn = document.querySelector(".view-order-btn");
+    const footer = document.querySelector("footer");
+
+    function updateButtonPosition() {
+        if (!viewBtn || !footer) return;
+
+        const footerTop = footer.getBoundingClientRect().top + window.scrollY;
+        const btnHeight = viewBtn.offsetHeight;
+        const margin = 20;
+        const viewportBottom = window.scrollY + window.innerHeight - margin - btnHeight;
+
+        if (viewportBottom >= footerTop) {
+            // Keep it above footer (LOCKED position)
+            viewBtn.style.position = "absolute";
+            viewBtn.style.bottom = "auto";
+            viewBtn.style.top = `${footerTop - btnHeight - margin}px`;
+            viewBtn.style.right = "20px";
+        } else {
+            // Normal floating
+            viewBtn.style.position = "fixed";
+            viewBtn.style.bottom = `${margin}px`;
+            viewBtn.style.top = "auto";
+            viewBtn.style.right = "20px";
+        }
+    }
+
+    updateButtonPosition();
+    window.addEventListener("scroll", updateButtonPosition);
+    window.addEventListener("resize", updateButtonPosition);
+});
+

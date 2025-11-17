@@ -5,7 +5,7 @@
     include '../includes/header.php';
 ?>
 
-<div class="container">
+<main class="container">
     <?php include '../includes/nav.php'; ?>
     
     <section class="menu-section">
@@ -128,11 +128,10 @@
             </div>
         </div>
 
+        <button class="view-order-btn">View Order</button>
     </section>
 
-    <button class="view-order-btn">View Order</button>
-
-</div>
+</main>
 
 <!-- MANUALLY INCLUDE THE JAVASCRIPT FILE -->
 <script src="../assets/js/menu.js"></script>
