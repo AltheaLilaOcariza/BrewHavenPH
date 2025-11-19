@@ -20,21 +20,32 @@
         <section class="orders-left">
             <h2>Your Orders</h2>
 
-            <section class="order-item">
-                <section class="item-img"></section>
+            <?php
+            session_start();
 
-                <section class="item-details">
-                    <p class="item-name">Name</p>
-                    <p class="item-price">Price</p>
-                </section>
+            if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+                echo "<p class='empty-msg'>Your cart is empty.</p>";
+            } else {
+                foreach ($_SESSION['cart'] as $item) {
+                    echo '
+                    <section class="order-item">
+                        <section class="item-img" style="background-image:url('.$item['image'].')"></section>
 
-                <section class="qty-control">
-                    <button class="minus">−</button>
-                    <span class="qty">1</span>
-                    <button class="plus">+</button>
-                </section>
-            </section>
+                        <section class="item-details">
+                            <p class="item-name">'.$item['name'].'</p>
+                            <p class="item-price">₱'.$item['price'].'</p>
+                        </section>
 
+                        <section class="qty-control">
+                            <button class="minus" data-id="'.$item['id'].'">−</button>
+                            <span class="qty">'.$item['qty'].'</span>
+                            <button class="plus" data-id="'.$item['id'].'">+</button>
+                        </section>
+                    </section>
+                    ';
+                }
+            }
+            ?>
         </section>
 
         <!-- RIGHT COLUMN -->

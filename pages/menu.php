@@ -3,6 +3,7 @@
     $extra_css = ['../assets/css/includes.css', '../assets/css/menu.css'];
     $extra_js = ['../assets/js/menu.js'];
     include '../includes/header.php';
+    include '../includes/db_con.php';
 ?>
 
 <main class="container">
@@ -28,7 +29,13 @@
                         <p class="item-name">Ube Latte</p>
                         <p class="price">PHP 185</p>
                     </div>
-                    <button class="best-seller-order-btn">ORDER</button>
+                    <button class="best-seller-order-btn"
+                            data-name="Ube Latte"
+                            data-price="185"
+                            data-image="https://images.pexels.com/photos/27548798/pexels-photo-27548798.jpeg">
+                        ORDER
+                    </button>
+
                 </div>
             </div>
     
@@ -49,36 +56,30 @@
                 
                 <div class="carousel-window">
                     <div class="carousel-track">
-                        <?php 
-                        $drinks = [
-                            ['name' => 'Espresso', 'price' => 120, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Americano', 'price' => 130, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Cappuccino', 'price' => 150, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Latte', 'price' => 160, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Mocha', 'price' => 170, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Cold Brew', 'price' => 140, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Iced Coffee', 'price' => 135, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Matcha Latte', 'price' => 165, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Hot Chocolate', 'price' => 145, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Chai Tea', 'price' => 155, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg']
-                        ];
-                        
-                        foreach ($drinks as $drink) {
-                            echo '
+                        <?php
+                        $drink_query = $conn->query("SELECT * FROM items WHERE category='Drink' AND is_available=1 ORDER BY name ASC");
+                        $drinks = $drink_query->fetch_all(MYSQLI_ASSOC);
+
+                        foreach ($drinks as $drink):
+                        ?>
                         <div class="carousel-item">
-                            <img src="' . $drink['image'] . '" alt="' . htmlspecialchars($drink['name']) . '" loading="lazy">
+                            <img src="<?= htmlspecialchars($drink['image'], ENT_QUOTES) ?>" alt="<?= htmlspecialchars($drink['name'], ENT_QUOTES) ?>" loading="lazy">
                             <div class="item-details">
                                 <div class="item-info">
-                                    <p class="item-name">' . htmlspecialchars($drink['name']) . '</p>
-                                    <p class="price">PHP ' . htmlspecialchars($drink['price']) . '</p>
+                                    <p class="item-name"><?= htmlspecialchars($drink['name'], ENT_QUOTES) ?></p>
+                                    <p class="price">PHP <?= htmlspecialchars($drink['price'], ENT_QUOTES) ?></p>
                                 </div>
                                 <div class="order-btn-container">
-                                    <button class="order-btn">ORDER</button>
+                                    <button class="order-btn"
+                                            data-name="<?= htmlspecialchars($drink['name'], ENT_QUOTES) ?>"
+                                            data-price="<?= htmlspecialchars($drink['price'], ENT_QUOTES) ?>"
+                                            data-image="<?= htmlspecialchars($drink['image'], ENT_QUOTES) ?>">
+                                        ORDER
+                                    </button>
                                 </div>
                             </div>
-                        </div>';
-                        }
-                        ?>
+                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
                 
@@ -94,33 +95,30 @@
                 
                 <div class="carousel-window">
                     <div class="carousel-track">
-                        <?php 
-                        $snacks = [
-                            ['name' => 'Biko', 'price' => 95, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Cassava Cake', 'price' => 110, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Ensaymada', 'price' => 65, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Pan de Coco', 'price' => 55, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Crinkles', 'price' => 80, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Banana Bread', 'price' => 85, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg'],
-                            ['name' => 'Pain au chocolat', 'price' => 85, 'image' => 'https://images.pexels.com/photos/3028993/pexels-photo-3028993.jpeg']
-                        ];
-                        
-                        foreach ($snacks as $snack) {
-                            echo '
+                        <?php
+                        $snack_query = $conn->query("SELECT * FROM items WHERE category='Snack' AND is_available=1 ORDER BY name ASC");
+                        $snacks = $snack_query->fetch_all(MYSQLI_ASSOC);
+
+                        foreach ($snacks as $snack):
+                        ?>
                         <div class="carousel-item">
-                            <img src="' . $snack['image'] . '" alt="' . htmlspecialchars($snack['name']) . '" loading="lazy">
+                            <img src="<?= htmlspecialchars($snack['image'], ENT_QUOTES) ?>" alt="<?= htmlspecialchars($snack['name'], ENT_QUOTES) ?>" loading="lazy">
                             <div class="item-details">
                                 <div class="item-info">
-                                    <p class="item-name">' . htmlspecialchars($snack['name']) . '</p>
-                                    <p class="price">PHP ' . htmlspecialchars($snack['price']) . '</p>
+                                    <p class="item-name"><?= htmlspecialchars($snack['name'], ENT_QUOTES) ?></p>
+                                    <p class="price">PHP <?= htmlspecialchars($snack['price'], ENT_QUOTES) ?></p>
                                 </div>
                                 <div class="order-btn-container">
-                                    <button class="order-btn">ORDER</button>
+                                    <button class="order-btn"
+                                            data-name="<?= htmlspecialchars($snack['name'], ENT_QUOTES) ?>"
+                                            data-price="<?= htmlspecialchars($snack['price'], ENT_QUOTES) ?>"
+                                            data-image="<?= htmlspecialchars($snack['image'], ENT_QUOTES) ?>">
+                                        ORDER
+                                    </button>
                                 </div>
                             </div>
-                        </div>';
-                        }
-                        ?>
+                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
                 
