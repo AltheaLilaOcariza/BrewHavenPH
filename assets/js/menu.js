@@ -351,6 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 const itemNameElem = item.querySelector('.item-name');
                 const priceElem = item.querySelector('.price');
+                const imageElem = item.querySelector('img');
                 
                 if (!itemNameElem || !priceElem) {
                     console.error('Could not find item name or price in:', item);
@@ -359,6 +360,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 const itemName = itemNameElem.textContent;
                 const price = priceElem.textContent;
+                const imageUrl = imageElem ? imageElem.src : '';
                 
                 // Animation feedback
                 this.style.transform = 'scale(0.9)';
@@ -373,6 +375,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Show notification
                 showAddToCartNotification(itemName);
                 
+                // Store order for order page
+                storeOrderItem(itemName, price, imageUrl);
+                
                 console.log(`Added to cart: ${itemName} - ${price}`);
             });
         });
@@ -382,6 +387,20 @@ document.addEventListener('DOMContentLoaded', function() {
         if (viewOrderBtn) {
             updateCartBadge(0); // Initialize with 0
         }
+    }
+    
+    function storeOrderItem(name, price, imageUrl) {
+        // Store in sessionStorage so order page can retrieve it
+        let cartItems = sessionStorage.getItem('cartItems');
+        let items = cartItems ? JSON.parse(cartItems) : [];
+        
+        items.push({
+            name: name,
+            price: price,
+            image: imageUrl
+        });
+        
+        sessionStorage.setItem('cartItems', JSON.stringify(items));
     }
     
     function updateCartBadge(count) {

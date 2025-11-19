@@ -128,12 +128,9 @@
             </div>
         </div>
 
-        <button class="view-order-btn">View Order</button>
+        <a href="order.php"><button class="view-order-btn">View Order</button></a>
     </section>
 
 </main>
-
-<!-- MANUALLY INCLUDE THE JAVASCRIPT FILE -->
-<script src="../assets/js/menu.js"></script>
 
 <?php include '../includes/footer.php'; ?>
