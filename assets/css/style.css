@@ -189,32 +189,6 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 /* ===== SPECIAL CAFE EFFECTS ===== */
-/* Coffee steam effect */
-.steam {
-    position: relative;
-}
-
-.steam::before {
-    content: "☁️";
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.5em;
-    opacity: 0;
-    animation: steamFloat 3s ease-in-out infinite;
-}
-
-.steam::after {
-    content: "☁️";
-    position: absolute;
-    top: -30px;
-    left: 40%;
-    transform: translateX(-50%);
-    font-size: 1.2em;
-    opacity: 0;
-    animation: steamFloat 3s ease-in-out infinite 0.5s;
-}
 
 /* Warm highlight effect */
 .warm-highlight {
@@ -325,24 +299,6 @@
 .cozy-shadow {
     box-shadow: 0 8px 32px rgba(160, 82, 45, 0.1),
                 0 2px 8px rgba(160, 82, 45, 0.05);
-}
-
-/* ===== SEASONAL ANIMATIONS (for future use) ===== */
-@keyframes fallingLeaf {
-    0% {
-        transform: translateY(-100px) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-    }
 }
 
 .seasonal-leaf {
@@ -509,17 +465,6 @@
     pointer-events: none;
 }
 
-/* Staggered Content Reveal */
-.content-grid {
-    opacity: 0;
-    animation: gentleFadeIn 0.8s ease-out 1s forwards;
-}
-
-.content-card {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: gentleFadeIn 0.6s ease-out forwards;
-}
 
 /* Responsive Animation Adjustments */
 @media (max-width: 768px) {
