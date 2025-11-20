@@ -11,6 +11,8 @@
     <section class="hero-section-with-image">
         <div class="hero-overlay"></div>
         <div class="hero-container">
+            
+            <!-- LEFT HERO CONTENT -->
             <div class="hero-content">
                 <h1>Your Kapihan,<br>Your Haven</h1>
                 <p class="hero-tagline">Experience the perfect blend of Filipino<br>hospitality and artisan coffee.</p>
@@ -18,35 +20,24 @@
                 
                 <div class="cta-buttons">
                     <a href="pages/menu.php" class="cta-button cta-primary">Browse Menu</a>
-                    <!-- Removed Login button from prominent position -->
                 </div>
             </div>
-            
+
+            <!-- RIGHT HERO IMAGE (FIX ADDED) -->
             <div class="hero-image">
-                <!-- We'll use a background image via CSS -->
+                <div class="image-glow"></div>
             </div>
+
         </div>
     </section>
 
-    <!-- Keep your existing content section -->
+    <!-- Content Section -->
     <section class="content-section">
-        <div class="content-grid">
-            <div class="content-card">
-                <h2>About us</h2>
-                <p>Learn more about our story and passion for bringing you the best coffee experience.</p>
-            </div>
-            <div class="content-card">
-                <h2>FAQs</h2>
-                <p>Find answers to commonly asked questions about our products and services.</p>
-            </div>
-        </div>
-        
         <div class="brand-footer">
-            <h2>BREWHAVEN CAFE</h2>
+            <h2>WELCOME TO BREWHAVEN CAFE</h2>
         </div>
     </section>
 
 </div>
-
 
 <?php include 'includes/footer.php'; ?>
