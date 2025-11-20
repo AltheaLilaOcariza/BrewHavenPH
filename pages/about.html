@@ -156,6 +156,69 @@
             line-height: 1.6;
         }
 
+        /* Our Cafe Gallery Section */
+        .cafe-gallery-section {
+            padding: 80px 40px;
+            background: #F5F5DC;
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .gallery-container h2 {
+            color: #A0522D;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .gallery-subtitle {
+            font-size: 1.3em;
+            color: #5a3927;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-item {
+            background: #FFFFFF;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid #FFD88F;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-caption {
+            padding: 20px;
+            color: #3E2723;
+            font-size: 1.1em;
+            font-weight: 500;
+            background: #FFFFFF;
+        }
+
         /* Responsive Design */
         @media (max-width: 968px) {
             .story-container {
@@ -176,7 +239,8 @@
             .about-hero,
             .story-section,
             .philosophy-section,
-            .values-section {
+            .values-section,
+            .cafe-gallery-section {
                 padding: 60px 20px;
             }
             
@@ -186,12 +250,32 @@
             
             .story-content h2,
             .philosophy-container h2,
-            .values-container h2 {
+            .values-container h2,
+            .gallery-container h2 {
                 font-size: 2em;
             }
             
             .philosophy-content {
                 padding: 30px 20px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .gallery-image {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-container h2 {
+                font-size: 1.8em;
+            }
+            
+            .gallery-subtitle {
+                font-size: 1.1em;
             }
         }
     </style>
@@ -278,6 +362,41 @@
                 </div>
             </div>
         </section>
+
+       <!-- Our Cafe Gallery Section -->
+<section class="cafe-gallery-section">
+    <div class="gallery-container">
+        <h2>Our Cafe</h2>
+        <p class="gallery-subtitle">Step into our warm and inviting space<br>Explore our proposed building design via SketchUp 3D model</p>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="../assets/img/cafe-bldg1.jpg" alt="BrewHaven Cafe Exterior" class="gallery-image">
+                <div class="gallery-caption">Proposed Building: Front View</div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/img/cafe-bldg2.jpg" alt="Cafe 3D Render" class="gallery-image">
+                <div class="gallery-caption">3D Rendered Building Design</div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/img/cafe-bldg3.jpg" alt="Coffee Bar Design" class="gallery-image">
+                <div class="gallery-caption">Artisan Coffee Bar Area</div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/img/cafe-bldg4.jpg" alt="Seating Area Design" class="gallery-image">
+                <div class="gallery-caption">Comfortable Seating Layout</div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/img/cafe-bldg5.jpg" alt="Building Angle" class="gallery-image">
+                <div class="gallery-caption">Alternative Building Perspective</div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/img/cafe-floorplan.jpg" alt="Cafe Floor Plan" class="gallery-image">
+                <div class="gallery-caption">Complete Floor Plan Layout</div>
+            </div>
+        </div>
+    </div>
+</section>
 
         <!-- Footer -->
         <footer class="main-footer">
