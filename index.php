@@ -5,10 +5,7 @@
 ?>
 
 <div class="container">
-    <?php 
-        $logo="assets/img/logo.png";
-        include 'includes/nav.php'; 
-    ?>
+    <?php include 'includes/nav.php'; ?>
 
     <!-- Hero Section with Image -->
     <section class="hero-section-with-image">
@@ -21,7 +18,7 @@
                 
                 <div class="cta-buttons">
                     <a href="pages/menu.php" class="cta-button cta-primary">Browse Menu</a>
-                    <a href="#" class="cta-button cta-secondary">Login</a>
+                    <!-- Removed Login button from prominent position -->
                 </div>
             </div>
             
@@ -47,10 +44,9 @@
         <div class="brand-footer">
             <h2>BREWHAVEN CAFE</h2>
         </div>
-        
     </section>
 
 </div>
 
-<?php include 'includes/footer.php'; ?>
 
+<?php include 'includes/footer.php'; ?>
