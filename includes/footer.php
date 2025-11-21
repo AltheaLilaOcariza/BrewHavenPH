@@ -26,7 +26,21 @@
     
     <div class="footer-bottom">
         <p>&copy; 2025 BrewHaven Cafe PH. All rights reserved. 
-           | <small><a href="/BrewHavenCafe/admin/login.php" style="color: #FFD88F;">Staff Login</a></small>
+        <small id="staff-login"><a href="admin/login.php" style="color: #FFD88F;">| Staff Login</a></small>
         </p>
     </div>
 </footer>
+
+<script>
+
+    // Staff Login Link Toggle
+    const staffLogin = document.getElementById('staff-login');
+    const currentPath = window.location.pathname;
+
+    if (currentPath.includes('/admin/')) {
+        staffLogin.style.display = 'none';
+    } else {
+        staffLogin.style.display = 'inline';
+    }
+
+</script>
