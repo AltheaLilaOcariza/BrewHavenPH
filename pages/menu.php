@@ -6,6 +6,7 @@
     require '../backend/functions.php';
 
     $item = new Item();
+    $best_seller = $item->getBestSeller();
     $drinks_list = $item->getAllDrinks();
     $snacks_list = $item->getAllSnacks();
 ?>
@@ -25,18 +26,18 @@
                 <h2 class="title">Best Seller!!!</h2>
     
                 <div class="image-box">
-                    <img src="https://images.pexels.com/photos/27548798/pexels-photo-27548798.jpeg" alt="Ube Latte">
+                    <img src="<?= $best_seller[0]['image'] ?>" alt="<?= $best_seller[0]['name'] ?>">
                 </div>
     
                 <div class="details-box">
                     <div class="info">
-                        <p class="item-name">Ube Latte</p>
-                        <p class="price">PHP 185</p>
+                        <p class="item-name"><?= $best_seller[0]['name'] ?></p>
+                        <p class="price">PHP <?= $best_seller[0]['price'] ?></p>
                     </div>
                     <button class="best-seller-order-btn"
-                            data-name="Ube Latte"
-                            data-price="185"
-                            data-image="https://images.pexels.com/photos/27548798/pexels-photo-27548798.jpeg">
+                            data-name="<?= $best_seller[0]['name'] ?>"
+                            data-price="<?= $best_seller[0]['price'] ?>"
+                            data-image="<?= $best_seller[0]['image'] ?>">
                         ORDER
                     </button>
 
@@ -45,9 +46,7 @@
     
             <div class="description-box">
                 <p>
-                    Our signature Ube Latte combines the rich flavor of purple yam with premium espresso 
-                    and steamed milk. Topped with coconut cream and toasted coconut flakes for an authentic 
-                    Filipino twist on a classic coffee.
+                    <?= $best_seller[0]['description'] ?>
                 </p>
             </div>
         </section>

@@ -50,6 +50,20 @@
 
             return $drinks;
         }
+
+        public function getBestSeller() {
+            $query = "SELECT * FROM items ORDER BY items_sold DESC LIMIT 1";
+            $result = mysqli_query($this->conn, $query);
+            $bestSellers = [];
+
+            if ($result) {
+                while ($item = mysqli_fetch_assoc($result)) {
+                    $bestSellers[] = $item;
+                }
+            }
+
+            return $bestSellers;
+        }
     }
 
 ?> 
