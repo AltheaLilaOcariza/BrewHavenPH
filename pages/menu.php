@@ -3,7 +3,12 @@
     $extra_css = ['../assets/css/includes.css', '../assets/css/menu.css'];
     $extra_js = ['../assets/js/menu.js'];
     include '../includes/header.php';
-    include '../includes/db_con.php';
+    require '../backend/functions.php';
+
+    $item = new Item();
+    $best_seller = $item->getBestSeller();
+    $drinks_list = $item->getAllDrinks();
+    $snacks_list = $item->getAllSnacks();
 ?>
 
 <main class="container">
@@ -21,18 +26,18 @@
                 <h2 class="title">Best Seller!!!</h2>
     
                 <div class="image-box">
-                    <img src="https://images.pexels.com/photos/27548798/pexels-photo-27548798.jpeg" alt="Ube Latte">
+                    <img src="<?= $best_seller[0]['image'] ?>" alt="<?= $best_seller[0]['name'] ?>">
                 </div>
     
                 <div class="details-box">
                     <div class="info">
-                        <p class="item-name">Ube Latte</p>
-                        <p class="price">PHP 185</p>
+                        <p class="item-name"><?= $best_seller[0]['name'] ?></p>
+                        <p class="price">PHP <?= $best_seller[0]['price'] ?></p>
                     </div>
                     <button class="best-seller-order-btn"
-                            data-name="Ube Latte"
-                            data-price="185"
-                            data-image="https://images.pexels.com/photos/27548798/pexels-photo-27548798.jpeg">
+                            data-name="<?= $best_seller[0]['name'] ?>"
+                            data-price="<?= $best_seller[0]['price'] ?>"
+                            data-image="<?= $best_seller[0]['image'] ?>">
                         ORDER
                     </button>
 
@@ -41,9 +46,7 @@
     
             <div class="description-box">
                 <p>
-                    Our signature Ube Latte combines the rich flavor of purple yam with premium espresso 
-                    and steamed milk. Topped with coconut cream and toasted coconut flakes for an authentic 
-                    Filipino twist on a classic coffee.
+                    <?= $best_seller[0]['description'] ?>
                 </p>
             </div>
         </section>
@@ -56,18 +59,16 @@
                 
                 <div class="carousel-window">
                     <div class="carousel-track">
-                        <?php
-                        $drink_query = $conn->query("SELECT * FROM items WHERE category='Drink' AND is_available=1 ORDER BY name ASC");
-                        $drinks = $drink_query->fetch_all(MYSQLI_ASSOC);
 
-                        foreach ($drinks as $drink):
+                        <?php
+                        foreach ($drinks_list as $drink){
                         ?>
                         <div class="carousel-item">
-                            <img src="<?= htmlspecialchars($drink['image'], ENT_QUOTES) ?>" alt="<?= htmlspecialchars($drink['name'], ENT_QUOTES) ?>" loading="lazy">
+                            <img src="<?= $drink['image'] ?>" loading="lazy">
                             <div class="item-details">
                                 <div class="item-info">
-                                    <p class="item-name"><?= htmlspecialchars($drink['name'], ENT_QUOTES) ?></p>
-                                    <p class="price">PHP <?= htmlspecialchars($drink['price'], ENT_QUOTES) ?></p>
+                                    <p class="item-name"><?= $drink['name'] ?></p>
+                                    <p class="price">PHP <?= $drink['price'] ?></p>
                                 </div>
                                 <div class="order-btn-container">
                                     <button class="order-btn"
@@ -79,7 +80,10 @@
                                 </div>
                             </div>
                         </div>
-                        <?php endforeach; ?>
+                        <?php 
+                        } 
+                        ?>
+
                     </div>
                 </div>
                 
@@ -96,17 +100,14 @@
                 <div class="carousel-window">
                     <div class="carousel-track">
                         <?php
-                        $snack_query = $conn->query("SELECT * FROM items WHERE category='Snack' AND is_available=1 ORDER BY name ASC");
-                        $snacks = $snack_query->fetch_all(MYSQLI_ASSOC);
-
-                        foreach ($snacks as $snack):
+                        foreach ($snacks_list as $snack){
                         ?>
                         <div class="carousel-item">
-                            <img src="<?= htmlspecialchars($snack['image'], ENT_QUOTES) ?>" alt="<?= htmlspecialchars($snack['name'], ENT_QUOTES) ?>" loading="lazy">
+                            <img src="<?= $snack['image'] ?>" loading="lazy">
                             <div class="item-details">
                                 <div class="item-info">
-                                    <p class="item-name"><?= htmlspecialchars($snack['name'], ENT_QUOTES) ?></p>
-                                    <p class="price">PHP <?= htmlspecialchars($snack['price'], ENT_QUOTES) ?></p>
+                                    <p class="item-name"><?= $snack['name'] ?></p>
+                                    <p class="price">PHP <?= $snack['price'] ?></p>
                                 </div>
                                 <div class="order-btn-container">
                                     <button class="order-btn"
@@ -118,7 +119,9 @@
                                 </div>
                             </div>
                         </div>
-                        <?php endforeach; ?>
+                        <?php 
+                        }
+                        ?>
                     </div>
                 </div>
                 

@@ -1,14 +1,14 @@
 .order-section {
     margin: 0px 20px;
+    padding: 20px;
 }
+
 .back-to-menu {
     display: flex;
-    align-items: start;
-    align-content: center;
+    align-items: center;
     gap: 8px;
-    font-size: 20px;
+    font-size: 18px;
     color: #6F4E37;
-    cursor: pointer;
     margin-bottom: 20px;
 }
 
@@ -18,55 +18,83 @@
     align-items: center;
     gap: 8px;
     color: #6F4E37;
+    transition: color 0.3s ease;
+}
+
+.back-to-menu a:hover {
+    color: #A0522D;
 }
 
 .back-arrow {
     font-weight: bold;
-    font-size: 23px;
-    line-height: 16px;
+    font-size: 24px;
+    line-height: 1;
 }
 
 /* MAIN CONTAINER */
 .order-container {
     display: flex;
     width: 100%;
-    height: 100vh;
-    border: 3px solid #666;
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 2px solid #A0522D;
+    border-radius: 15px;
     box-sizing: border-box;
+    background: #FAF9F6;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    min-height: 600px;
+    overflow: hidden;
 }
 
 /* LEFT COLUMN */
 .orders-left {
-    width: 55%;
-    padding: 20px;
-    border-right: 3px solid #666;
+    width: 60%;
+    padding: 30px;
+    border-right: 2px solid #A0522D;
     box-sizing: border-box;
+    background: #FFF;
 }
 
 .orders-left h2 {
     text-align: center;
-    font-size: 1.6rem;
-    margin-bottom: 20px;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #A0522D;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* ORDER ITEM ROW */
 .order-item {
     display: flex;
     align-items: center;
-    border: 3px solid #777;
+    border: 2px solid #D4B896;
     padding: 15px;
     margin-bottom: 15px;
-    border-radius: 5px;
+    border-radius: 10px;
     gap: 20px;
+    background: #FFF;
+    transition: all 0.3s ease;
+}
+
+.order-item:hover {
+    border-color: #A0522D;
+    box-shadow: 0 4px 12px rgba(160, 82, 45, 0.15);
+    transform: translateY(-2px);
 }
 
 /* IMAGE BOX */
 .item-img {
-    width: 60px;
-    height: 60px;
-    background: #eee;
-    border: 3px solid #777;
-    border-radius: 5px;
+    width: 80px;
+    height: 80px;
+    background: #F5F5DC;
+    border: 2px solid #D4B896;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
 }
 
 /* NAME + PRICE */
@@ -75,17 +103,20 @@
 }
 
 .item-name {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     margin: 0;
+    color: #3E2723;
+    font-weight: 600;
 }
 
 .item-price {
-    font-size: 1rem;
-    margin-top: 4px;
-    color: #555;
+    font-size: 1.1rem;
+    margin-top: 5px;
+    color: #A0522D;
+    font-weight: 500;
 }
 
-/* + – QUANTITY CONTROLS */
+/* QUANTITY CONTROLS */
 .qty-control {
     display: flex;
     align-items: center;
@@ -93,70 +124,279 @@
 }
 
 .qty-control button {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     border: none;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: bold;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
 }
 
 .minus {
-    background: #d9534f;
+    background: #D04F4F;
     color: white;
 }
 
+.minus:hover {
+    background: #c0392b;
+    transform: scale(1.1);
+}
+
 .plus {
-    background: #28a745;
+    background: #5EBCAA;
     color: white;
+}
+
+.plus:hover {
+    background: #4a9c8a;
+    transform: scale(1.1);
 }
 
 .qty {
     font-size: 1.2rem;
     font-weight: bold;
+    color: #3E2723;
+    min-width: 30px;
+    text-align: center;
 }
 
 /* RIGHT COLUMN */
 .orders-right {
-    width: 45%;
-    padding: 40px 30px;
+    width: 40%;
+    padding: 30px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    background: #F5F5DC;
+}
+
+.your-order-section {
+    margin-bottom: 25px;
+}
+
+.your-order-section h3 {
+    font-size: 1.4rem;
+    color: #A0522D;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ORDER SUMMARY */
+.order-summary {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    padding: 12px 0;
+    border-bottom: 1px solid #D4B896;
 }
 
 .label {
-    font-size: 1.3rem;
-    color: #777;
+    font-size: 1.1rem;
+    color: #3E2723;
+    font-weight: 500;
 }
 
 .value {
-    font-size: 2rem;
+    font-size: 1.2rem;
     font-weight: bold;
-    color: #555;
+    color: #A0522D;
 }
 
-/* CONFIRM & CANCEL BUTTONS */
-.confirm {
-    background: #28a745;
-    color: #fff;
+.total-row {
+    border-bottom: none;
+    border-top: 2px solid #A0522D;
+    margin-top: 10px;
+    padding-top: 15px;
+}
+
+.total-row .label {
+    font-size: 1.3rem;
+    color: #3E2723;
+    font-weight: bold;
+}
+
+.total-row .value {
+    font-size: 1.5rem;
+    color: #D04F4F;
+}
+
+/* BUTTONS */
+.order-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.edit-order {
+    background: linear-gradient(135deg, #FFD88F 0%, #F4D03F 100%);
+    color: #A0522D;
     border: none;
-    padding: 12px 40px;
+    padding: 12px 25px;
     border-radius: 25px;
-    font-size: 1.4rem;
+    font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 5px;
+}
+
+.edit-order:hover {
+    background: linear-gradient(135deg, #F4D03F 0%, #E4C02F 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(244, 208, 63, 0.3);
+}
+
+.confirm {
+    background: linear-gradient(135deg, #5EBCAA 0%, #4a9c8a 100%);
+    color: #fff;
+    border: none;
+    padding: 16px 30px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(94, 188, 170, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.confirm:hover {
+    background: linear-gradient(135deg, #4a9c8a 0%, #3a7c6a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(94, 188, 170, 0.4);
 }
 
 .cancel {
-    background: #8B0000;
+    background: linear-gradient(135deg, #D04F4F 0%, #c0392b 100%);
     color: #fff;
     border: none;
-    padding: 10px 35px;
-    border-radius: 20px;
-    font-size: 1.1rem;
+    padding: 14px 25px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(208, 79, 79, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cancel:hover {
+    background: linear-gradient(135deg, #c0392b 0%, #a0291b 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(208, 79, 79, 0.4);
+}
+
+/* EMPTY STATE */
+.empty-order {
+    text-align: center;
+    padding: 60px 20px;
+    color: #777;
+}
+
+.empty-order p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.empty-order p:first-child {
+    font-size: 1.4rem;
+    color: #A0522D;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 968px) {
+    .order-container {
+        flex-direction: column;
+        min-height: auto;
+    }
+    
+    .orders-left,
+    .orders-right {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #A0522D;
+    }
+    
+    .orders-right {
+        border-radius: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .order-section {
+        margin: 0px 15px;
+        padding: 15px;
+    }
+    
+    .orders-left,
+    .orders-right {
+        padding: 20px;
+    }
+    
+    .orders-left h2 {
+        font-size: 1.6rem;
+    }
+    
+    .order-item {
+        padding: 12px;
+        gap: 15px;
+    }
+    
+    .item-img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .qty-control button {
+        width: 32px;
+        height: 32px;
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .order-section {
+        margin: 0px 10px;
+        padding: 10px;
+    }
+    
+    .orders-left,
+    .orders-right {
+        padding: 15px;
+    }
+    
+    .order-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .item-details {
+        text-align: center;
+    }
+    
+    .qty-control {
+        justify-content: center;
+    }
 }

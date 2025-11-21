@@ -1,0 +1,498 @@
+/* ===== BREWHAVEN CAFE ANIMATIONS & MICRO-INTERACTIONS ===== */
+/* Cozy, warm animations that match our cafe atmosphere */
+
+/* ===== GENTLE ENTRANCE ANIMATIONS ===== */
+@keyframes gentleFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes warmSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+        filter: blur(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes coffeeRise {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9);
+    }
+    60% {
+        opacity: 0.8;
+        transform: translateY(-5px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes steamFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.8);
+    }
+    50% {
+        opacity: 0.6;
+        transform: translateY(-10px) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px) scale(1.2);
+    }
+}
+
+/* ===== HOVER EFFECTS ===== */
+@keyframes gentlePulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 5px 15px rgba(160, 82, 45, 0.1);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 8px 25px rgba(160, 82, 45, 0.2);
+    }
+}
+
+@keyframes warmGlow {
+    from {
+        box-shadow: 0 0 0 0 rgba(255, 216, 143, 0.4);
+    }
+    to {
+        box-shadow: 0 0 0 10px rgba(255, 216, 143, 0);
+    }
+}
+
+@keyframes buttonPress {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ===== CONTINUOUS AMBIENT ANIMATIONS ===== */
+@keyframes floating {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    33% {
+        transform: translateY(-5px) rotate(1deg);
+    }
+    66% {
+        transform: translateY(3px) rotate(-1deg);
+    }
+}
+
+@keyframes gentleSway {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(0.5deg);
+    }
+    75% {
+        transform: rotate(-0.5deg);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+/* ===== ANIMATION CLASSES ===== */
+/* Entrance Animations */
+.gentle-fade-in {
+    animation: gentleFadeIn 0.8s ease-out;
+}
+
+.warm-slide-in {
+    animation: warmSlideIn 0.6s ease-out;
+}
+
+.coffee-rise {
+    animation: coffeeRise 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.steam-float {
+    animation: steamFloat 2s ease-in-out infinite;
+}
+
+/* Hover Effects */
+.hover-gentle-pulse:hover {
+    animation: gentlePulse 2s ease-in-out infinite;
+}
+
+.hover-warm-glow:hover {
+    animation: warmGlow 1.5s ease-in-out infinite;
+}
+
+.hover-button-press:active {
+    animation: buttonPress 0.3s ease;
+}
+
+/* Ambient Animations */
+.floating {
+    animation: floating 6s ease-in-out infinite;
+}
+
+.gentle-sway {
+    animation: gentleSway 8s ease-in-out infinite;
+}
+
+.shimmer-effect {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 216, 143, 0.3),
+        transparent
+    );
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+}
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.hero-img {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+/* ===== SPECIAL CAFE EFFECTS ===== */
+
+/* Warm highlight effect */
+.warm-highlight {
+    position: relative;
+    overflow: hidden;
+}
+
+.warm-highlight::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 216, 143, 0.2),
+        transparent
+    );
+    transition: left 0.8s ease;
+}
+
+.warm-highlight:hover::before {
+    left: 100%;
+}
+
+/* Bean sprinkle effect */
+.bean-sprinkle {
+    position: relative;
+}
+
+.bean-sprinkle::before {
+    content: "•";
+    position: absolute;
+    color: #A0522D;
+    font-size: 0.8em;
+    animation: floating 4s ease-in-out infinite;
+}
+
+.bean-sprinkle::after {
+    content: "•";
+    position: absolute;
+    color: #8B4513;
+    font-size: 0.6em;
+    animation: floating 5s ease-in-out infinite 1s;
+}
+
+/* ===== PAGE TRANSITIONS ===== */
+.page-transition {
+    animation: gentleFadeIn 0.5s ease-out;
+}
+
+.stagger-children > * {
+    opacity: 0;
+    animation: gentleFadeIn 0.6s ease-out forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+
+/* ===== LOADING STATES ===== */
+.loading-pulse {
+    animation: gentlePulse 2s ease-in-out infinite;
+}
+
+.brewing-loader {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #FFD88F;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: gentleSway 1s linear infinite;
+}
+
+/* ===== RESPONSIVE ANIMATIONS ===== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===== PERFORMANCE-FRIENDLY ANIMATIONS ===== */
+@media (hover: hover) {
+    .hover-gentle-pulse:hover,
+    .hover-warm-glow:hover {
+        animation-play-state: running;
+    }
+}
+
+/* ===== CAFE-SPECIFIC UTILITIES ===== */
+.text-glow {
+    text-shadow: 0 0 10px rgba(255, 216, 143, 0.5),
+                 0 0 20px rgba(255, 216, 143, 0.3);
+}
+
+.border-glow {
+    box-shadow: 0 0 15px rgba(255, 216, 143, 0.3),
+                inset 0 0 15px rgba(255, 216, 143, 0.1);
+}
+
+.cozy-shadow {
+    box-shadow: 0 8px 32px rgba(160, 82, 45, 0.1),
+                0 2px 8px rgba(160, 82, 45, 0.05);
+}
+
+.seasonal-leaf {
+    position: fixed;
+    top: 0;
+    font-size: 1.5em;
+    animation: fallingLeaf 10s linear infinite;
+    pointer-events: none;
+    z-index: 9999;
+}
+/* ===== INDEX.PHP ENHANCEMENTS ===== */
+
+/* Hero Section Animations */
+.hero-section-with-image {
+    animation: gentleFadeIn 1.2s ease-out;
+}
+
+.hero-content h1 {
+    animation: warmSlideIn 0.8s ease-out 0.2s both;
+}
+
+.hero-tagline {
+    animation: warmSlideIn 0.8s ease-out 0.4s both;
+}
+
+.hero-description {
+    animation: warmSlideIn 0.8s ease-out 0.6s both;
+}
+
+.cta-buttons {
+    animation: coffeeRise 0.9s ease-out 0.8s both;
+}
+
+.hero-image::before {
+    animation: floating 8s ease-in-out infinite;
+}
+
+/* Content Section Animations */
+.content-section {
+    animation: gentleFadeIn 1s ease-out 1s both;
+}
+
+.content-grid {
+    animation: coffeeRise 0.8s ease-out 1.2s both;
+}
+
+.content-card {
+    animation: gentleFadeIn 0.6s ease-out both;
+    transition: all 0.3s ease;
+}
+
+.content-card:nth-child(1) { animation-delay: 1.4s; }
+.content-card:nth-child(2) { animation-delay: 1.6s; }
+
+.content-card:hover {
+    animation: gentlePulse 2s ease-in-out infinite;
+    transform: translateY(-5px);
+}
+
+.brand-footer {
+    animation: warmSlideIn 0.8s ease-out 1.8s both;
+}
+
+/* CTA Button Enhancements */
+.cta-primary {
+    position: relative;
+    overflow: hidden;
+    animation: gentlePulse 3s ease-in-out infinite;
+}
+
+.cta-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: left 0.8s ease;
+}
+
+.cta-primary:hover::before {
+    left: 100%;
+}
+
+.cta-primary:hover {
+    animation: warmGlow 1.5s ease-in-out infinite, 
+               buttonPress 0.3s ease;
+}
+
+/* Hero Image Coffee Steam Effect */
+.hero-image {
+    position: relative;
+}
+
+/* Content Card Hover Effects */
+.content-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 216, 143, 0.1),
+        transparent
+    );
+    transition: left 0.6s ease;
+}
+
+.content-card:hover::before {
+    left: 100%;
+}
+
+/* Brand Footer Animation */
+.brand-footer h2 {
+    position: relative;
+    display: inline-block;
+}
+
+.brand-footer h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #FFD88F;
+    transition: width 0.6s ease;
+    animation: widthGrow 2s ease-in-out infinite alternate;
+}
+
+@keyframes widthGrow {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* Gentle Background Animation */
+.hero-section-with-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        circle at 20% 80%,
+        rgba(255, 216, 143, 0.1) 0%,
+        transparent 50%
+    );
+    animation: gentleSway 15s ease-in-out infinite;
+    pointer-events: none;
+}
+
+
+/* Responsive Animation Adjustments */
+@media (max-width: 768px) {
+    .hero-image::before {
+        font-size: 5em;
+    }
+    
+    .hero-image::after {
+        width: 40px;
+        height: 60px;
+    }
+}
+
+/* Performance Optimization */
+@media (prefers-reduced-motion: reduce) {
+    .hero-section-with-image,
+    .hero-content h1,
+    .hero-tagline,
+    .hero-description,
+    .cta-buttons,
+    .content-section,
+    .content-grid,
+    .content-card,
+    .brand-footer,
+    .cta-primary,
+    .hero-image::before,
+    .hero-image::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}
