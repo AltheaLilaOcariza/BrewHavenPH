@@ -26,7 +26,7 @@
     
     <div class="footer-bottom">
         <p>&copy; 2025 BrewHaven Cafe PH. All rights reserved. 
-        <small id="staff-login"><a href="admin/login.php" style="color: #FFD88F;">| Staff Login</a></small>
+        <small id="staff-login"><a href="../admin/login.php" style="color: #FFD88F;">| Staff Login</a></small>
         </p>
     </div>
 </footer>
