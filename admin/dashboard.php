@@ -1,5 +1,5 @@
 <?php 
-    $title = "Home | BrewHaven Cafe PH";
+    $title = "Dashboard | BrewHaven Cafe PH";
     $extra_css = ['../assets/css/includes.css'];
     include '../includes/header.php';
 ?>
