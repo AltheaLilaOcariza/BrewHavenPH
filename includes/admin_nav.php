@@ -12,11 +12,11 @@ $base_path = (strpos($_SERVER['PHP_SELF'], 'pages/') !== false) ? '../' : '';
 
     <div class="right-section">
         <ul class="nav-links">
-            <li><a href="<?php echo $base_path; ?>admin/dashboard.php">Dashboard</a></li>
-            <li><a href="<?php echo $base_path; ?>admin/manage_menu.php">Manage Menu</a></li>
-            <li><a href="<?php echo $base_path; ?>admin/manage_orders.php">Manage Orders</a></li>
-            <li><a href="<?php echo $base_path; ?>admin/feedbacks.php">Feedbacks</a></li>
-            <li><a href="<?php echo $base_path; ?>admin/logout.php">Log Out</a></li>
+            <li><a href="<?php echo $base_path; ?>dashboard.php">Dashboard</a></li>
+            <li><a href="<?php echo $base_path; ?>manage_menu.php">Manage Menu</a></li>
+            <li><a href="<?php echo $base_path; ?>manage_orders.php">Manage Orders</a></li>
+            <li><a href="<?php echo $base_path; ?>feedbacks.php">Feedbacks</a></li>
+            <li><a href="<?php echo $base_path; ?>logout.php">Log Out</a></li>
         </ul>
     </div>
 </nav>
