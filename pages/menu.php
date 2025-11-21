@@ -3,7 +3,11 @@
     $extra_css = ['../assets/css/includes.css', '../assets/css/menu.css'];
     $extra_js = ['../assets/js/menu.js'];
     include '../includes/header.php';
-    include '../includes/db_con.php';
+    require '../backend/functions.php';
+
+    $item = new Item();
+    $drinks_list = $item->getAllDrinks();
+    $snacks_list = $item->getAllSnacks();
 ?>
 
 <main class="container">
@@ -56,18 +60,16 @@
                 
                 <div class="carousel-window">
                     <div class="carousel-track">
-                        <?php
-                        $drink_query = $conn->query("SELECT * FROM items WHERE category='Drink' AND is_available=1 ORDER BY name ASC");
-                        $drinks = $drink_query->fetch_all(MYSQLI_ASSOC);
 
-                        foreach ($drinks as $drink):
+                        <?php
+                        foreach ($drinks_list as $drink){
                         ?>
                         <div class="carousel-item">
-                            <img src="<?= htmlspecialchars($drink['image'], ENT_QUOTES) ?>" alt="<?= htmlspecialchars($drink['name'], ENT_QUOTES) ?>" loading="lazy">
+                            <img src="<?= $drink['image'] ?>" loading="lazy">
                             <div class="item-details">
                                 <div class="item-info">
-                                    <p class="item-name"><?= htmlspecialchars($drink['name'], ENT_QUOTES) ?></p>
-                                    <p class="price">PHP <?= htmlspecialchars($drink['price'], ENT_QUOTES) ?></p>
+                                    <p class="item-name"><?= $drink['name'] ?></p>
+                                    <p class="price">PHP <?= $drink['price'] ?></p>
                                 </div>
                                 <div class="order-btn-container">
                                     <button class="order-btn"
@@ -79,7 +81,10 @@
                                 </div>
                             </div>
                         </div>
-                        <?php endforeach; ?>
+                        <?php 
+                        } 
+                        ?>
+
                     </div>
                 </div>
                 
@@ -96,17 +101,14 @@
                 <div class="carousel-window">
                     <div class="carousel-track">
                         <?php
-                        $snack_query = $conn->query("SELECT * FROM items WHERE category='Snack' AND is_available=1 ORDER BY name ASC");
-                        $snacks = $snack_query->fetch_all(MYSQLI_ASSOC);
-
-                        foreach ($snacks as $snack):
+                        foreach ($snacks_list as $snack){
                         ?>
                         <div class="carousel-item">
-                            <img src="<?= htmlspecialchars($snack['image'], ENT_QUOTES) ?>" alt="<?= htmlspecialchars($snack['name'], ENT_QUOTES) ?>" loading="lazy">
+                            <img src="<?= $snack['image'] ?>" loading="lazy">
                             <div class="item-details">
                                 <div class="item-info">
-                                    <p class="item-name"><?= htmlspecialchars($snack['name'], ENT_QUOTES) ?></p>
-                                    <p class="price">PHP <?= htmlspecialchars($snack['price'], ENT_QUOTES) ?></p>
+                                    <p class="item-name"><?= $snack['name'] ?></p>
+                                    <p class="price">PHP <?= $snack['price'] ?></p>
                                 </div>
                                 <div class="order-btn-container">
                                     <button class="order-btn"
@@ -118,7 +120,9 @@
                                 </div>
                             </div>
                         </div>
-                        <?php endforeach; ?>
+                        <?php 
+                        }
+                        ?>
                     </div>
                 </div>
                 
