@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: #fff5e8;
+}
+
+.manage-menu-container {
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    font-size: 40px;
+    color: #7b3f21;
+    margin-bottom: 25px;
+}
+
+.top-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.search-box {
+    position: relative;
+    width: 30%
+}
+
+.search-box input {
+    padding: 10px 35px 10px 15px;
+    width: 100%;
+    border-radius: 30px;
+    border: 2px solid #dcbfa4;
+    background: #fff;
+}
+
+.search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #b4795b;
+}
+
+.btn {
+    padding: 8px 25px;
+    border-radius: 30px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.add {
+    background: #99d67b;
+    color: #fff;
+}
+
+.delete {
+    background: #e45c5c;
+    color: #fff;
+}
+
+.save {
+    background: #99d67b;
+    color: white;
+}
+
+.edit {
+    background: #f1e5d1;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 60% 38%;
+    gap: 30px;
+}
+
+/* LEFT PANEL */
+.left-panel {
+    background: #f4e4d0;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.product-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-info {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.product-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.product-name {
+    font-weight: 600;
+}
+
+.timestamps {
+    font-size: 13px;
+    color: #876b58;
+}
+
+.product-price {
+    font-weight: 600;
+    font-size: 18px;
+    color: #6c4b3a;
+}
+
+/* RIGHT PANEL */
+.right-panel {
+    background: #f4e4d0;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.panel-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: 600;
+    margin-top: 10px;
+    display: block;
+}
+
+.input, select, .textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 30px;
+    border: none;
+    margin-top: 5px;
+}
+
+.small {
+    width: 120px;
+}
+
+.row {
+    display: flex;
+    gap: 20px;
+}
+
+.textarea {
+    height: 150px;
+    border-radius: 15px;
+    resize: none;
+}
+
+.image-box {
+    margin-top: 10px;
+    width: 120px;
+    height: 110px;
+    background: #fff;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.product-scroll {
+    height: 630px;        /* adjust based on your layout */
+    overflow-y: auto;     /* enables vertical scrolling */
+    padding-right: 10px;  /* prevents scrollbar overlap */
+}
+
+/* optional: pretty scrollbar */
+.product-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.product-scroll::-webkit-scrollbar-thumb {
+    background: #c8a98a;
+    border-radius: 10px;
+}
+
+.product-scroll::-webkit-scrollbar-track {
+    background: #f4e4d0;
+}
+
+
