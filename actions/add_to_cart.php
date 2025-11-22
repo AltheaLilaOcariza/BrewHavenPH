@@ -18,4 +18,6 @@ if (isset($_POST['name']) && isset($_POST['price']) && isset($_POST['image'])) {
     $_SESSION['cart'][] = $item;
 }
 
-echo "success";
+header("Location: order.php");
+exit;
+?>
