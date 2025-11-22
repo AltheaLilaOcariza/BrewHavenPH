@@ -2,6 +2,7 @@
 session_start();
 //we might debug this later, 
 // Check if user is logged in
+// not connected to database, Design pani
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header('Location: login.php');
     exit;
