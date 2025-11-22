@@ -1,12 +1,12 @@
 <?php 
     $title = "Order | BrewHaven Cafe PH";
     $extra_css = ['../assets/css/includes.css', '../assets/css/order.css'];
-    $extra_js = ['../assets/js/order.js'];
+    $extra_js = ['../assets/js/cart.js'];
     include '../includes/header.php';
 ?>
 
 <main class="container">
-    <?php include '../includes/nav.php'; ?>
+    <?php include '../includes/nav.php';?>
     <section class="order-section">
         <div class="back-to-menu">
             <a href="menu.php">
