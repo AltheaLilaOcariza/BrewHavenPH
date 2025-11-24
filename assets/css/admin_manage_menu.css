@@ -111,6 +111,9 @@ body {
     border-radius: 12px;
     display: flex;
     justify-content: space-between;
+    border: 2px solid transparent;  /* important */
+    cursor: pointer;
+    transition: box-shadow 0.3s, border 0.3s;
 }
 
 .product-info {
@@ -222,4 +225,8 @@ label {
     background: #f4e4d0;
 }
 
+/* selectable product card */
+.product-card.selected {
+    border: 2px solid #7b3f21;
+}
 
