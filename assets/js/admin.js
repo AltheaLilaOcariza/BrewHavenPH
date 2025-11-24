@@ -18,6 +18,39 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
+//search box and dropdown
+document.addEventListener("DOMContentLoaded", function() {
+
+    const searchInput = document.querySelector(".search-box input");
+    const categoryFilter = document.querySelector("#categoryFilter");
+    const cards = document.querySelectorAll(".product-card");
+
+    function filterProducts() {
+        const searchValue = searchInput.value.toLowerCase();
+        const selectedCategory = categoryFilter.value.toLowerCase();
+
+        cards.forEach(card => {
+            const name = card.dataset.name;
+            const category = card.dataset.category;
+
+            const matchName = name.includes(searchValue);
+            const matchCategory = (selectedCategory === "all") || (selectedCategory === category);
+
+            if (matchName && matchCategory) {
+                card.style.display = "flex";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+
+    // Search filter
+    searchInput.addEventListener("input", filterProducts);
+
+    // Category filter
+    categoryFilter.addEventListener("change", filterProducts);
+
+});
 
 
 

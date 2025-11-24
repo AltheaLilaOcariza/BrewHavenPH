@@ -6,6 +6,10 @@
 
     $item = new Item();
     $item_list = $item->getAllItems();
+    
+    // Fetch distinct categories dynamically
+    $categories = $item->getCategories();
+    
 ?>
 
 <div class="container">
@@ -33,8 +37,14 @@
                     <h2>Products</h2>
     
                     <div class="dropdown">
-                        <button class="dropdown-btn">Category ⮟</button>
+                        <select id="categoryFilter" class="input">
+                            <option value="all">All</option>
+                            <?php foreach($categories as $cat): ?>
+                                <option value="<?= $cat ?>"><?= $cat ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
+
                 </div>
     
                 <div class="product-scroll">
@@ -43,7 +53,9 @@
                     foreach ($item_list as $item) {
                     ?>
                         <!-- Repeated Product Card -->
-                        <div class="product-card">
+                        <div class="product-card" 
+                            data-name="<?= strtolower($item['name']) ?>" 
+                            data-category="<?= strtolower($item['category']) ?>">
                             <div class="product-info">
                                 <img src="<?= $item['image'] ?>" alt="Product Image">
                                 <div>
@@ -56,6 +68,7 @@
                             </div>
                             <div class="product-price"><?= $item['price'] ?></div>
                         </div>
+
                     <?php
                     }
                     ?>

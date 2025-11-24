@@ -64,6 +64,21 @@
 
             return $bestSellers;
         }
+
+        public function getCategories() {
+            $query = "SELECT DISTINCT category FROM items";
+            $result = mysqli_query($this->conn, $query);
+            $categories = [];
+
+            if ($result) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $categories[] = $row['category']; // <-- only the string
+                }
+            }
+
+            return $categories;
+        }
+
     }
 
 ?> 
