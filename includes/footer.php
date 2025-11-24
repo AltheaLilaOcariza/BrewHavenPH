@@ -1,3 +1,26 @@
+
+<?php
+if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) {
+    echo '<script src="../assets/js/admin.js"></script>';
+}
+    
+?>
+
+<script>
+
+    // Staff Login Link Toggle
+    const staffLogin = document.getElementById('staff-login');
+    const currentPath = window.location.pathname;
+
+    if (currentPath.includes('/admin/')) {
+        staffLogin.style.display = 'none';
+    } else {
+        staffLogin.style.display = 'inline';
+    }
+
+</script>
+
+</body>
 <footer class="main-footer">
     <div class="footer-content">
         <div class="footer-section">
@@ -30,17 +53,3 @@
         </p>
     </div>
 </footer>
-
-<script>
-
-    // Staff Login Link Toggle
-    const staffLogin = document.getElementById('staff-login');
-    const currentPath = window.location.pathname;
-
-    if (currentPath.includes('/admin/')) {
-        staffLogin.style.display = 'none';
-    } else {
-        staffLogin.style.display = 'inline';
-    }
-
-</script>

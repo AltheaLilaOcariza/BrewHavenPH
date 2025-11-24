@@ -39,4 +39,5 @@ if (!isset($extra_css) || !is_array($extra_css)) {
     }
     ?>
 </head>
+
 <body>

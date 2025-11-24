@@ -47,7 +47,7 @@
                             <div class="product-info">
                                 <img src="<?= $item['image'] ?>" alt="Product Image">
                                 <div>
-                                    <p class="product-name"><?= $item['name'] ?> Name</p>
+                                    <p class="product-name"><?= $item['name'] ?></p>
                                     <p class="timestamps">
                                         Created | <?= $item['created_at'] ?><br>
                                         Edited | <?= $item['edited_at'] ?>
