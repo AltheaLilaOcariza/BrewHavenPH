@@ -52,6 +52,75 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
+// Get product id of selected item
+document.addEventListener("DOMContentLoaded", function() {
+
+    const cards = document.querySelectorAll('.product-card');
+    let selectedID = null;
+
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+
+            // Remove selected class on all cards
+            cards.forEach(c => c.classList.remove('selected'));
+
+            // Highlight clicked card
+            card.classList.add('selected');
+
+            // Get the ID
+            selectedID = card.dataset.id;
+
+            console.log("Selected Product ID:", selectedID);
+
+            // If you want to load this into the right panel later:
+            // loadProductDetails(selectedID);
+        });
+    });
+
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const cards = document.querySelectorAll('.product-card');
+    let selectedID = null;
+
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+
+            // Remove selected class on all cards
+            cards.forEach(c => c.classList.remove('selected'));
+
+            // Highlight clicked card
+            card.classList.add('selected');
+
+            // Get the ID
+            selectedID = card.dataset.id;
+
+            console.log("Selected Product ID:", selectedID);
+
+            // Fetch item info from PHP
+            fetch('../backend/get_item.php?id=' + selectedID)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data); // Shows full product info
+                    document.querySelector(".right-panel input[type='text']").value = data.name;
+                    // Populate right panel
+                    document.querySelector('input[name="product_name"]').value = data.name;
+                    document.querySelector('input[name="price"]').value = data.price;
+                    document.querySelector('select[name="status"]').value = data.status;
+                    document.querySelector('select[name="category"]').value = data.category;
+                    document.querySelector('textarea[name="description"]').value = data.description;
+
+                    // Product Image
+                    document.getElementById('productImage').style.backgroundImage =
+                        `url(${data.image})`;
+                })
+                .catch(err => console.log("Error fetching product:", err));
+        });
+    });
+});
+
+
+
 
 
 

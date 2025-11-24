@@ -79,6 +79,19 @@
             return $categories;
         }
 
+        public function getItemById($id) {
+            $query = "SELECT item_id, name, description, price, image, category, status, items_sold, created_at, edited_at 
+                    FROM items WHERE item_id = ?";
+            
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            return $result->fetch_assoc();  // returns one row as array
+        }
+
+
     }
 
 ?> 

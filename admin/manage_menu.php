@@ -54,6 +54,7 @@
                     ?>
                         <!-- Repeated Product Card -->
                         <div class="product-card" 
+                            data-id="<?= $item['item_id'] ?>"
                             data-name="<?= strtolower($item['name']) ?>" 
                             data-category="<?= strtolower($item['category']) ?>">
                             <div class="product-info">
@@ -84,38 +85,39 @@
                 </div>
     
                 <label>Product Name</label>
-                <input type="text" class="input">
-    
+                <input type="text" class="input" name="product_name">
+
                 <div class="row">
                     <div>
                         <label>Price</label>
-                        <input type="text" class="input small">
+                        <input type="text" class="input small" name="price">
                     </div>
                     <div>
                         <label>Status</label>
-                        <select class="input">
-                            <option>In Stock</option>
-                            <option>Out of Stock</option>
+                        <select class="input" name="status">
+                            <option value="In Stock">In Stock</option>
+                            <option value="Out of Stock">Out of Stock</option>
                         </select>
                     </div>
                 </div>
-    
+
                 <label>Category</label>
-                <select class="input">
-                    <option>None</option>
+                <select class="input" name="category">
+                    <option value="all">All</option>
+                    <?php foreach($categories as $cat): ?>
+                        <option value="<?= $cat ?>"><?= $cat ?></option>
+                    <?php endforeach; ?>
                 </select>
-    
-                <input type="text" class="input" placeholder="Other">
-    
+
                 <label>Product Description</label>
-                <textarea class="textarea"></textarea>
-    
-                <label>Product Image</label>                              
+                <textarea class="textarea" name="description"></textarea>
+
+                <label>Product Image</label>
                 <div class="image-wrapper">
-                    <div class="image-box"></div>
-                    <button class="btn delete ">Edit</button>
+                    <div class="image-box" id="productImage"></div>
+                    <button class="btn delete">Edit</button>
                 </div>
-    
+
             </div>
     
         </div>
