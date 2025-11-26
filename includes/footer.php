@@ -32,10 +32,10 @@ if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) {
         <div class="footer-section">
             <h4>Quick Links</h4>
             <ul>
-                <li><a href="../index.php">Home</a></li>
-                <li><a href="menu.php">Menu</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="pages/menu.php">Menu</a></li>
+                <li><a href="pages/about.html">About Us</a></li>
+                <li><a href="pages/contact.html">Contact</a></li>
             </ul>
         </div>
         
@@ -49,7 +49,7 @@ if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) {
     
     <div class="footer-bottom">
         <p>&copy; 2025 BrewHaven Cafe PH. All rights reserved. 
-        <small id="staff-login"><a href="../admin/login.php" style="color: #FFD88F;">| Staff Login</a></small>
+        <small id="staff-login"><a href="admin/login.php" style="color: #FFD88F;">| Staff Login</a></small>
         </p>
     </div>
 </footer>
