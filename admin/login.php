@@ -1,5 +1,3 @@
-//please disregard this sa huhu
-//welp i guess goods ramn
 <?php
 // Start session for admin login
 session_start();
@@ -58,6 +56,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 100%;
             max-width: 450px;
             text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #5a3927;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-btn:hover {
+            background: #A0522D;
+            transform: translateX(-3px);
         }
 
         .login-logo {
@@ -210,11 +232,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 flex-direction: column;
                 gap: 15px;
             }
+
+            .back-btn {
+                top: 15px;
+                left: 15px;
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="login-container">
+        <!-- Back Button -->
+        <a href="../index.php" class="back-btn">← Back to Site</a>
+
         <div class="login-logo">☕</div>
         <h1 class="login-title">Admin Login</h1>
         <p class="login-subtitle">BrewHaven Cafe Management System</p>
