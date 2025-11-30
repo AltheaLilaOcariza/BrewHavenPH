@@ -87,15 +87,18 @@
 
                     <input type="number" name="id" style="display: none;">
                     <label>Product Name</label>
+                    <p class="required">*required</p>
                     <input type="text" class="input" name="product_name">
     
                     <div class="row">
                         <div>
                             <label>Price</label>
+                            <p class="required">*required</p>
                             <input type="text" class="input small" name="price">
                         </div>
                         <div>
                             <label>Status</label>
+                            <p class="required">*required</p>
                             <select class="input" name="status">
                                 <option value="In Stock">In Stock</option>
                                 <option value="Out of Stock">Out of Stock</option>
@@ -104,6 +107,7 @@
                     </div>
     
                     <label>Category</label>
+                    <p class="required">*required</p>
                     <select class="input" name="category">
                         <option value="all">All</option>
                         <?php foreach($categories as $cat): ?>
@@ -129,5 +133,7 @@
     </div>
     
 </div>
+
+<?php include '../includes/manage_menu_alerts.php'; ?>
 
 <?php include '../includes/footer.php'; ?>
