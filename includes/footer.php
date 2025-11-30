@@ -3,7 +3,6 @@
 if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) {
     echo '<script src="../assets/js/admin.js"></script>';
 }
-    
 ?>
 
 <script>

@@ -111,8 +111,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     document.querySelector('textarea[name="description"]').value = data.description;
 
                     // Product Image
-                    document.getElementById('productImage').style.backgroundImage =
-                        `url(${data.image})`;
+                    const imageBox = document.getElementById('productImage');
+                    imageBox.style.backgroundImage = `url('${data.image}')`;
                 })
                 .catch(err => console.log("Error fetching product:", err));
         });

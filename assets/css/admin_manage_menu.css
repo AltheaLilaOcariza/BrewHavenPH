@@ -196,6 +196,8 @@ label {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-size: cover;    /* or contain */
+    background-repeat: no-repeat;
 }
 
 .image-wrapper {
