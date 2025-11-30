@@ -91,6 +91,32 @@
             return $result->fetch_assoc();  // returns one row as array
         }
 
+        // CREATE
+        public function create($name, $description, $price, $image, $category, $status) {
+            $query = "INSERT INTO items (name, description, price, image, category, status) 
+                    VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("ssdsss", $name, $description, $price, $image, $category, $status);
+            return $stmt->execute();
+        }
+
+        // UPDATE
+        public function update($id, $name, $description, $price, $image, $category, $status) {
+            $query = "UPDATE items 
+                    SET name=?, description=?, price=?, image=?, category=?, status=?, edited_at=NOW() 
+                    WHERE item_id=?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("ssdsssi", $name, $description, $price, $image, $category, $status, $id);
+            return $stmt->execute();
+        }
+
+        // DELETE
+        public function delete($id) {
+            $query = "DELETE FROM items WHERE item_id=?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("i", $id);
+            return $stmt->execute();
+        }
 
     }
 

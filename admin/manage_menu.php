@@ -24,9 +24,6 @@
                 <input type="text" placeholder="Search product...">
                 <span class="search-icon">🔍</span>
             </div>
-    
-            <button class="btn add">Add</button>
-            <button class="btn delete">Delete</button>
         </div>
     
         <div class="main-grid">
@@ -79,44 +76,51 @@
     
             <!-- RIGHT SECTION -->
             <div class="right-panel">
-                <div class="panel-top">
-                    <h2>Product Info</h2>
-                    <button class="btn save">Save</button>
-                </div>
+                <form action="../backend/crud.php" method="POST" enctype="multipart/form-data">
+                    
+                    <div class="panel-top">
+                        <h2>Product Info</h2>
+                        <input type="submit" name="addbtn" value="Add" class="btn add">
+                        <input type="submit" name="delbtn" value="Delete" class="btn delete">
+                        <input type="submit" name="savebtn" value="Save" class="btn save">
+                    </div>
+
+                    <input type="number" name="id" style="display: none;">
+                    <label>Product Name</label>
+                    <input type="text" class="input" name="product_name">
     
-                <label>Product Name</label>
-                <input type="text" class="input" name="product_name">
-
-                <div class="row">
-                    <div>
-                        <label>Price</label>
-                        <input type="text" class="input small" name="price">
+                    <div class="row">
+                        <div>
+                            <label>Price</label>
+                            <input type="text" class="input small" name="price">
+                        </div>
+                        <div>
+                            <label>Status</label>
+                            <select class="input" name="status">
+                                <option value="In Stock">In Stock</option>
+                                <option value="Out of Stock">Out of Stock</option>
+                            </select>
+                        </div>
                     </div>
-                    <div>
-                        <label>Status</label>
-                        <select class="input" name="status">
-                            <option value="In Stock">In Stock</option>
-                            <option value="Out of Stock">Out of Stock</option>
-                        </select>
+    
+                    <label>Category</label>
+                    <select class="input" name="category">
+                        <option value="all">All</option>
+                        <?php foreach($categories as $cat): ?>
+                            <option value="<?= $cat ?>"><?= $cat ?></option>
+                        <?php endforeach; ?>
+                    </select>
+    
+                    <label>Product Description</label>
+                    <textarea class="textarea" name="description"></textarea>
+    
+                    <label>Product Image</label>
+                    <div class="image-wrapper">
+                        <div class="image-box" id="productImage"></div>
+                        <input type="file" name="image">
                     </div>
-                </div>
 
-                <label>Category</label>
-                <select class="input" name="category">
-                    <option value="all">All</option>
-                    <?php foreach($categories as $cat): ?>
-                        <option value="<?= $cat ?>"><?= $cat ?></option>
-                    <?php endforeach; ?>
-                </select>
-
-                <label>Product Description</label>
-                <textarea class="textarea" name="description"></textarea>
-
-                <label>Product Image</label>
-                <div class="image-wrapper">
-                    <div class="image-box" id="productImage"></div>
-                    <button class="btn delete">Edit</button>
-                </div>
+                </form>
 
             </div>
     

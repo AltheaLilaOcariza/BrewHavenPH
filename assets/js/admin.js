@@ -102,6 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(res => res.json())
                 .then(data => {
                     console.log(data); // Shows full product info
+                    document.querySelector(".right-panel input[type='number']").value = selectedID;
                     document.querySelector(".right-panel input[type='text']").value = data.name;
                     // Populate right panel
                     document.querySelector('input[name="product_name"]').value = data.name;
