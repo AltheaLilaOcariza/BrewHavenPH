@@ -19,6 +19,8 @@ if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) {
 
 </script>
 
+<script src="../assets/js/cart.js"></script>
+
 </body>
 <footer class="main-footer">
     <div class="footer-content">

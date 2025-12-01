@@ -35,6 +35,7 @@
                         <p class="price">PHP <?= $best_seller[0]['price'] ?></p>
                     </div>
                     <button class="best-seller-order-btn"
+                            data-id="<?= $best_seller[0]['item_id'] ?>"
                             data-name="<?= $best_seller[0]['name'] ?>"
                             data-price="<?= $best_seller[0]['price'] ?>"
                             data-image="<?= $best_seller[0]['image'] ?>">
@@ -72,6 +73,7 @@
                                 </div>
                                 <div class="order-btn-container">
                                     <button class="order-btn"
+                                            data-id="<?= htmlspecialchars($drink['item_id'], ENT_QUOTES) ?>"
                                             data-name="<?= htmlspecialchars($drink['name'], ENT_QUOTES) ?>"
                                             data-price="<?= htmlspecialchars($drink['price'], ENT_QUOTES) ?>"
                                             data-image="<?= htmlspecialchars($drink['image'], ENT_QUOTES) ?>">
@@ -111,6 +113,7 @@
                                 </div>
                                 <div class="order-btn-container">
                                     <button class="order-btn"
+                                            data-id="<?= htmlspecialchars($snack['item_id'], ENT_QUOTES) ?>"
                                             data-name="<?= htmlspecialchars($snack['name'], ENT_QUOTES) ?>"
                                             data-price="<?= htmlspecialchars($snack['price'], ENT_QUOTES) ?>"
                                             data-image="<?= htmlspecialchars($snack['image'], ENT_QUOTES) ?>">
@@ -134,5 +137,6 @@
 
 </main>
 <!-- Manual script inclusion at the bottom -->
+<!--<script src="../assets/js/order_button.js"></script> -->
 <script src="../assets/js/menu.js"></script>
 <?php include '../includes/footer.php'; ?>

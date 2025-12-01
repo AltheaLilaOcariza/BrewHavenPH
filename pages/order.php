@@ -28,22 +28,25 @@
             } else {
                 foreach ($_SESSION['cart'] as $item) {
                     echo '
-                    <section class="order-item">
+                    <section class="order-item" id="item-'.$item['item_id'].'">
                         <section class="item-img" style="background-image:url('.$item['image'].')"></section>
 
                         <section class="item-details">
                             <p class="item-name">'.$item['name'].'</p>
                             <p class="item-price">₱'.$item['price'].'</p>
+                            <p class="item-subtotal">Subtotal: ₱'.($item['price'] * $item['qty']).'</p>
                         </section>
 
+
                         <section class="qty-control">
-                            <button class="minus" data-id="'.$item['id'].'">−</button>
+                            <button class="minus" data-id="'.$item['item_id'].'">−</button>
                             <span class="qty">'.$item['qty'].'</span>
-                            <button class="plus" data-id="'.$item['id'].'">+</button>
+                            <button class="plus" data-id="'.$item['item_id'].'">+</button>
                         </section>
                     </section>
                     ';
                 }
+
             }
             ?>
         </section>
@@ -51,10 +54,18 @@
         <!-- RIGHT COLUMN -->
         <section class="orders-right">
             <p class="label">Order No:</p>
-            <p class="value">########</p>
+            <p class="value order-no">########</p>
 
+            <?php
+            $total = 0;
+            if (!empty($_SESSION['cart'])) {
+                foreach ($_SESSION['cart'] as $item) {
+                    $total += $item['price'] * $item['qty'];
+                }
+            }
+            ?>
             <p class="label">Total Due:</p>
-            <p class="value">########</p>
+            <p class="value total-due">₱<?= $total ?></p>
 
             <button class="confirm">Confirm</button>
             <button class="cancel">Cancel</button>
