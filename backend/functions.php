@@ -118,6 +118,140 @@
             return $stmt->execute();
         }
 
+        // UPDATE ITEMS SOLD
+        public function updateItemsSold($id, $quantity) {
+            $query = "UPDATE items SET items_sold = items_sold + ? WHERE item_id = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("ii", $quantity, $id);
+            return $stmt->execute();
+        }
+
+
+    }
+
+    class OrderDAO {
+        private $conn;
+
+        public function __construct() {
+            $database = new Database();
+            $this->conn = $database->getConnection();
+        }
+
+        // CREATE ORDER
+        public function createOrder($totalAmount, $status, $items = []) {
+            // Insert into orders
+            $stmt = $this->conn->prepare("INSERT INTO orders (total_amount, status) VALUES (?, ?)");
+            $stmt->bind_param("ds", $totalAmount, $status);
+            $stmt->execute();
+            $orderId = $stmt->insert_id;
+            $stmt->close();
+
+            // Insert order items and update items_sold
+            foreach ($items as $item) {
+                $subtotal = $item['quantity'] * $item['price_each'];
+
+                // Insert into order_items
+                $stmt = $this->conn->prepare(
+                    "INSERT INTO order_items (order_id, item_id, quantity, price_each, subtotal) VALUES (?, ?, ?, ?, ?)"
+                );
+                $stmt->bind_param(
+                    "iiidd",
+                    $orderId,
+                    $item['item_id'],
+                    $item['quantity'],
+                    $item['price_each'],
+                    $subtotal
+                );
+                $stmt->execute();
+                $stmt->close();
+
+                // Update items_sold in items table
+                $stmtUpdate = $this->conn->prepare(
+                    "UPDATE items SET items_sold = items_sold + ? WHERE item_id = ?"
+                );
+                $stmtUpdate->bind_param("ii", $item['quantity'], $item['item_id']);
+                $stmtUpdate->execute();
+                $stmtUpdate->close();
+            }
+
+            return $orderId;
+        }
+
+        // READ ALL ORDERS
+        public function getAllOrders() {
+            $orders = [];
+            $result = $this->conn->query("SELECT * FROM orders ORDER BY created_at DESC");
+            while ($row = $result->fetch_assoc()) {
+                $orders[] = $row;
+            }
+            return $orders;
+        }
+
+        // READ ORDER BY ID (with items)
+        public function getOrderById($orderId) {
+            $stmt = $this->conn->prepare("SELECT * FROM orders WHERE order_id = ?");
+            $stmt->bind_param("i", $orderId);
+            $stmt->execute();
+            $order = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            if ($order) {
+                $stmt = $this->conn->prepare("SELECT * FROM order_items WHERE order_id = ?");
+                $stmt->bind_param("i", $orderId);
+                $stmt->execute();
+                $items = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                $stmt->close();
+                $order['items'] = $items;
+            }
+
+            return $order;
+        }
+
+        // UPDATE ORDER STATUS
+        public function updateOrderStatus($orderId, $status) {
+            $stmt = $this->conn->prepare("UPDATE orders SET status = ? WHERE order_id = ?");
+            $stmt->bind_param("si", $status, $orderId);
+            $stmt->execute();
+            $stmt->close();
+            return true;
+        }
+
+        // DELETE ORDER
+        public function deleteOrder($orderId) {
+            $stmt = $this->conn->prepare("DELETE FROM orders WHERE order_id = ?");
+            $stmt->bind_param("i", $orderId);
+            $stmt->execute();
+            $stmt->close();
+            return true;
+        }
+
+        // UPDATE ORDER ITEM QUANTITY
+        public function updateOrderItem($orderItemId, $quantity) {
+            // Get price_each first
+            $stmt = $this->conn->prepare("SELECT price_each FROM order_items WHERE order_item_id = ?");
+            $stmt->bind_param("i", $orderItemId);
+            $stmt->execute();
+            $price = $stmt->get_result()->fetch_assoc()['price_each'];
+            $stmt->close();
+
+            $subtotal = $price * $quantity;
+            $stmt = $this->conn->prepare("UPDATE order_items SET quantity = ?, subtotal = ? WHERE order_item_id = ?");
+            $stmt->bind_param("idi", $quantity, $subtotal, $orderItemId);
+            $stmt->execute();
+            $stmt->close();
+            return true;
+        }
+
+        // GET LAST ORDER ID
+        public function getLastOrderId() {
+            $result = $this->conn->query("SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1");
+            if ($row = $result->fetch_assoc()) {
+                return $row['order_id'];
+            }
+            return 0; // no orders yet
+        }
+
+    
     }
 
 ?> 

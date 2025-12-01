@@ -3,6 +3,11 @@
     $extra_css = ['../assets/css/includes.css', '../assets/css/order.css'];
     $extra_js = ['../assets/js/cart.js'];
     include '../includes/header.php';
+    require '../backend/functions.php';
+
+    $manager = new OrderDAO();
+    $orderID = $manager->getLastOrderId();
+    $orderID += 1;
 ?>
 
 <main class="container">
@@ -14,65 +19,79 @@
                 <p>Back to Menu</p>
             </a>
         </div>
+
         <section class="order-container">
 
-        <!-- LEFT COLUMN -->
-        <section class="orders-left">
-            <h2>Your Orders</h2>
+            <!-- LEFT COLUMN -->
+            <section class="orders-left">
+                <h2>Your Orders</h2>
 
-            <?php
-            session_start();
+                <?php
+                session_start();
 
-            if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
-                echo "<p class='empty-msg'>Your cart is empty.</p>";
-            } else {
-                foreach ($_SESSION['cart'] as $item) {
-                    echo '
-                    <section class="order-item" id="item-'.$item['item_id'].'">
-                        <section class="item-img" style="background-image:url('.$item['image'].')"></section>
+                if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+                    echo "<p class='empty-msg'>Your cart is empty.</p>";
+                } else {
+                    foreach ($_SESSION['cart'] as $item) {
+                        echo '
+                        <section class="order-item" id="item-'.$item['item_id'].'">
+                            <section class="item-img" style="background-image:url('.$item['image'].')"></section>
 
-                        <section class="item-details">
-                            <p class="item-name">'.$item['name'].'</p>
-                            <p class="item-price">₱'.$item['price'].'</p>
-                            <p class="item-subtotal">Subtotal: ₱'.($item['price'] * $item['qty']).'</p>
+                            <section class="item-details">
+                                <p class="item-name">'.$item['name'].'</p>
+                                <p class="item-price">₱'.$item['price'].'</p>
+                                <p class="item-subtotal">Subtotal: ₱'.($item['price'] * $item['qty']).'</p>
+                            </section>
+
+                            <section class="qty-control">
+                                <button type="button" class="minus" data-id="'.$item['item_id'].'">−</button>
+                                <span class="qty">'.$item['qty'].'</span>
+                                <button type="button" class="plus" data-id="'.$item['item_id'].'">+</button>
+                            </section>
                         </section>
-
-
-                        <section class="qty-control">
-                            <button class="minus" data-id="'.$item['item_id'].'">−</button>
-                            <span class="qty">'.$item['qty'].'</span>
-                            <button class="plus" data-id="'.$item['item_id'].'">+</button>
-                        </section>
-                    </section>
-                    ';
+                        ';
+                    }
                 }
+                ?>
+            </section>
 
-            }
-            ?>
-        </section>
+            <!-- RIGHT COLUMN -->
+            <section class="orders-right">
+                <p class="label">Order No:</p>
+                <p class="value order-no"><?= $orderID ?></p>
 
-        <!-- RIGHT COLUMN -->
-        <section class="orders-right">
-            <p class="label">Order No:</p>
-            <p class="value order-no">########</p>
-
-            <?php
-            $total = 0;
-            if (!empty($_SESSION['cart'])) {
-                foreach ($_SESSION['cart'] as $item) {
-                    $total += $item['price'] * $item['qty'];
+                <?php
+                $total = 0;
+                if (!empty($_SESSION['cart'])) {
+                    foreach ($_SESSION['cart'] as $item) {
+                        $total += $item['price'] * $item['qty'];
+                    }
                 }
-            }
-            ?>
-            <p class="label">Total Due:</p>
-            <p class="value total-due">₱<?= $total ?></p>
+                ?>
 
-            <button class="confirm">Confirm</button>
-            <button class="cancel">Cancel</button>
+                <p class="label">Total Due:</p>
+                <p class="value total-due">₱<?= $total ?></p>
+
+                <form action="../backend/order_manager.php" method="POST">
+                    <input type="hidden" name="total_amount" value="<?= $total ?>">
+
+                    <?php if (!empty($_SESSION['cart'])): ?>
+                        <?php foreach ($_SESSION['cart'] as $item): ?>
+                            <input type="hidden" name="items[<?= $item['item_id'] ?>][item_id]" value="<?= $item['item_id'] ?>">
+                            <input type="hidden" name="items[<?= $item['item_id'] ?>][quantity]" value="<?= $item['qty'] ?>">
+                            <input type="hidden" name="items[<?= $item['item_id'] ?>][price_each]" value="<?= $item['price'] ?>">
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+
+                    <button type="submit" class="confirm" name="confirm">Confirm</button>
+                    <button class="cancel" name="cancel" >Cancel</button>
+                </form>
+
+            </section>
+
         </section>
-        
     </section>
-
 </main>
 
+<?php include '../includes/order_alerts.php'; ?>
 <?php include '../includes/footer.php'; ?>
