@@ -1,4 +1,6 @@
 //needed backend & database and needs fixing...
+//somethings wrong with the admin_nav.php
+
 <?php 
     session_start();
     // TODO: Add admin authentication here
