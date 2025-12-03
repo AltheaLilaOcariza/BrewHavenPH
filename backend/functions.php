@@ -321,4 +321,37 @@
         }
     }
 
+
+    class FeedbackDAO {
+        private $conn;
+
+        public function __construct() {
+            $database = new Database();
+            $this->conn = $database->getConnection();
+        }
+
+        // CREATE
+        public function addFeedback($subject, $message) {
+            $stmt = $this->conn->prepare("INSERT INTO feedback (subject, message) VALUES (?, ?)");
+            $stmt->bind_param("ss", $subject, $message);
+            return $stmt->execute();
+        }
+
+        // READ ALL
+        public function getAllFeedback() {
+            $result = $this->conn->query("SELECT * FROM feedback ORDER BY created_at DESC");
+            $feedbacks = [];
+            while($row = $result->fetch_assoc()) {
+                $feedbacks[] = $row;
+            }
+            return $feedbacks;
+        }
+
+        // DELETE
+        public function deleteFeedback($id) {
+            $stmt = $this->conn->prepare("DELETE FROM feedback WHERE id = ?");
+            $stmt->bind_param("i", $id);
+            return $stmt->execute();
+        }
+    }
 ?> 
