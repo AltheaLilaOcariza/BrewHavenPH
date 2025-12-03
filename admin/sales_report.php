@@ -1,4 +1,3 @@
-//Placeholders only... needed syag backend
 <?php
 session_start();
 
@@ -16,6 +15,15 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
         '../assets/js/sales_chart.js'
     ];
     include '../includes/header.php';
+    require '../backend/functions.php';
+
+    $items = new Item();
+    $orderDAO = new OrderDAO();
+
+    $top_selling_items = $items->getTopBestSeller(8);
+    $total_sales = $orderDAO->getTotalSales();
+    $order_count = $orderDAO->getCompletedOrdersCount();
+    $avg_order_value = $orderDAO->getAverageOrderValue();
 ?>
 
 <style>
@@ -88,7 +96,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
         border-radius: 15px;
         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         border: 2px solid #FFD88F;
-        height: 400px;
+        height: 91%;
     }
 
     .chart-container h3 {
@@ -155,15 +163,15 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
         <div class="stats-summary">
             <div class="stat-card">
                 <h4>Total Revenue</h4>
-                <div class="stat-number">₱12,450</div>
+                <div class="stat-number">₱<?= $total_sales ?></div>
             </div>
             <div class="stat-card">
                 <h4>Total Orders</h4>
-                <div class="stat-number">89</div>
+                <div class="stat-number"><?= $order_count ?></div>
             </div>
             <div class="stat-card">
                 <h4>Avg. Order Value</h4>
-                <div class="stat-number">₱140</div>
+                <div class="stat-number">₱<?= $avg_order_value ?></div>
             </div>
         </div>
 
@@ -173,12 +181,13 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
             <div class="top-products">
                 <h3>Top Selling Items</h3>
                 <ul class="product-list">
-                    <li>Ube Latte</li>
-                    <li>Espresso</li>
-                    <li>Cappuccino</li>
-                    <li>Biko</li>
-                    <li>Cassava Cake</li>
-                    <li>Matcha Latte</li>
+                    <?php
+                    foreach($top_selling_items as $item){
+                    ?>
+                        <li><?= $item['name'];?></li>
+                    <?php
+                    }
+                    ?>
                 </ul>
             </div>
 
@@ -187,6 +196,8 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
                 <h3>Sales Performance</h3>
                 <canvas id="salesChart"></canvas>
             </div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="../assets/js/salesChart.js"></script>
         </div>
     </div>
 </div>

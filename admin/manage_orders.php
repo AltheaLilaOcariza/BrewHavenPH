@@ -8,7 +8,7 @@
     $extra_css = ['../assets/css/includes.css', '../assets/css/manage_orders.css'];
     include '../includes/header.php';
     
-    require_once '../backend/functions.php';
+    require '../backend/functions.php';
     $orderManager = new OrderDAO();
     $itemManager = new Item(); // We need this to get item names
     
@@ -38,21 +38,11 @@
     
     // Get all orders
     $orders = $orderManager->getAllOrders();
-    
-    // Determine if we're in pages directory for correct nav
-    $is_in_pages = (strpos($_SERVER['PHP_SELF'], 'pages/') !== false);
-    $nav_path = $is_in_pages ? '../includes/admin_nav.php' : 'includes/admin_nav.php';
 ?>
 
 <main class="container">
     <?php 
-    // Include the admin navigation
-    if (file_exists($nav_path)) {
-        include $nav_path;
-    } else {
-        // Fallback to regular nav if admin_nav doesn't exist
-        include '../includes/nav.php';
-    }
+    include '../includes/admin_nav.php'
     ?>
     
     <section class="manage-orders-section">

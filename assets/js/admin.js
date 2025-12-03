@@ -22,20 +22,21 @@ document.addEventListener("DOMContentLoaded", function() {
 document.addEventListener("DOMContentLoaded", function() {
 
     const searchInput = document.querySelector(".search-box input");
-    const categoryFilter = document.querySelector("#categoryFilter");
+    const categoryFilter = document.getElementById("categoryFilter");
     const cards = document.querySelectorAll(".product-card");
 
+    
     function filterProducts() {
         const searchValue = searchInput.value.toLowerCase();
         const selectedCategory = categoryFilter.value.toLowerCase();
-
+        
         cards.forEach(card => {
             const name = card.dataset.name;
             const category = card.dataset.category;
-
+            
             const matchName = name.includes(searchValue);
             const matchCategory = (selectedCategory === "all") || (selectedCategory === category);
-
+            
             if (matchName && matchCategory) {
                 card.style.display = "flex";
             } else {
@@ -43,12 +44,16 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
-
+    
     // Search filter
-    searchInput.addEventListener("input", filterProducts);
-
+    if (searchInput) {
+        searchInput.addEventListener("input", filterProducts);
+    }
+    
     // Category filter
-    categoryFilter.addEventListener("change", filterProducts);
+    if (categoryFilter) {
+        categoryFilter.addEventListener("change", filterProducts);
+    }
 
 });
 

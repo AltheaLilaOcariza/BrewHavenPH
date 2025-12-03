@@ -6,17 +6,18 @@ if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) {
 ?>
 
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const staffLogin = document.querySelector('.staff-login');
+        const currentPath = window.location.pathname;
 
-    // Staff Login Link Toggle
-    const staffLogin = document.getElementById('staff-login');
-    const currentPath = window.location.pathname;
-
-    if (currentPath.includes('/admin/')) {
-        staffLogin.style.display = 'none';
-    } else {
-        staffLogin.style.display = 'inline';
-    }
-
+        if (staffLogin) {
+            if (currentPath.includes('/admin/')) {
+                staffLogin.style.display = 'none';
+            } else {
+                staffLogin.style.display = 'inline';
+            }
+        }
+    });
 </script>
 
 <script src="../assets/js/cart.js"></script>
@@ -50,7 +51,7 @@ if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) {
     
     <div class="footer-bottom">
         <p>&copy; 2025 BrewHaven Cafe PH. All rights reserved. 
-        <small id="staff-login"><a href="admin/login.php" style="color: #FFD88F;">| Staff Login</a></small>
+        <small class="staff-login"><a href="admin/login.php" style="color: #FFD88F;">| Staff Login</a></small>
         </p>
     </div>
 </footer>

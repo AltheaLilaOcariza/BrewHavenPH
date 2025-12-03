@@ -65,6 +65,20 @@
             return $bestSellers;
         }
 
+        public function getTopBestSeller($num_of_items) {
+            $query = "SELECT * FROM items ORDER BY items_sold DESC LIMIT $num_of_items";
+            $result = mysqli_query($this->conn, $query);
+            $bestSellers = [];
+
+            if ($result) {
+                while ($item = mysqli_fetch_assoc($result)) {
+                    $bestSellers[] = $item;
+                }
+            }
+
+            return $bestSellers;
+        }
+
         public function getCategories() {
             $query = "SELECT DISTINCT category FROM items";
             $result = mysqli_query($this->conn, $query);
@@ -251,7 +265,60 @@
             return 0; // no orders yet
         }
 
-    
+        public function getMonthlySales() {
+            $sales = [];
+            $result = $this->conn->query("SELECT 
+                        DATE_FORMAT(created_at, '%Y-%m') AS month,
+                        SUM(total_amount) AS total_sales
+                    FROM orders
+                    WHERE status = 'completed'
+                    GROUP BY DATE_FORMAT(created_at, '%Y-%m')
+                    ORDER BY month ASC");
+            while ($row = $result->fetch_assoc()) {
+                $sales[] = $row;
+            }
+            return $sales;
+        }
+
+        public function getTotalSales() {
+            $total = 0;
+
+            $result = $this->conn->query("
+                SELECT SUM(total_amount) AS total_sales
+                FROM orders
+                WHERE status = 'completed'
+            ");
+
+            if ($result) {
+                $row = $result->fetch_assoc();
+                $total = $row['total_sales'] ?? 0;
+            }
+
+            return $total;
+        }
+
+        public function getAverageOrderValue() {
+            $avg = 0;
+
+            $result = $this->conn->query("
+                SELECT AVG(total_amount) AS avg_order
+                FROM orders
+                WHERE status = 'completed'
+            ");
+
+            if ($result) {
+                $row = $result->fetch_assoc();
+                $avg = $row['avg_order'] ?? 0;
+            }
+
+            return number_format((float)$avg, 2, '.', '');
+        }
+
+        public function getCompletedOrdersCount() {
+            $result = $this->conn->query("SELECT COUNT(*) as total FROM orders WHERE status = 'completed'");
+            $row = $result->fetch_assoc();
+            return $row['total'] ?? 0;
+        }
     }
 
 ?> 
