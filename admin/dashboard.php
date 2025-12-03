@@ -17,6 +17,9 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     $orderDAO = new OrderDAO();
     $total_sales = $orderDAO->getTotalSales();
     $order_count = $orderDAO->getCompletedOrdersCount();
+
+    $feedbackDAO = new FeedbackDAO();
+    $total_feedback = $feedbackDAO->getTotalFeedback();
 ?>
 
 <style>
@@ -188,7 +191,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
             
             <div class="stat-card">
                 <h3>Feedback</h3>
-                <div class="stat-number">0</div>
+                <div class="stat-number"><?= $total_feedback ?></div>
                 <div class="stat-label">Customer Messages</div>
             </div>
         </div>

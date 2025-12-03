@@ -353,5 +353,11 @@
             $stmt->bind_param("i", $id);
             return $stmt->execute();
         }
+
+        public function getTotalFeedback() {
+            $result = $this->conn->query("SELECT COUNT(*) AS total FROM feedback");
+            $row = $result->fetch_assoc();
+            return $row['total'];
+        }
     }
 ?> 
