@@ -1,8 +1,14 @@
 
+<?php
+session_start();
 
-<?php 
-    session_start();
-    // TODO: Add admin authentication here
+// Check if user is logged in
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header('Location: login.php');
+    exit;
+}
+?>
+<?php
     
     $title = "Manage Orders | BrewHaven Cafe";
     $extra_css = ['../assets/css/includes.css', '../assets/css/manage_orders.css'];

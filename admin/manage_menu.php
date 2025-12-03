@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header('Location: login.php');
+    exit;
+}
+?>
+
 <?php 
     $title = "Manage Menu | BrewHaven Cafe PH";
     $extra_css = ['../assets/css/includes.css', '../assets/css/admin_manage_menu.css'];
