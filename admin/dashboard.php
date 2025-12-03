@@ -12,6 +12,11 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     $title = "Admin Dashboard | BrewHaven Cafe";
     $extra_css = ['../assets/css/includes.css'];
     include '../includes/header.php';
+    include '../backend/functions.php';
+
+    $orderDAO = new OrderDAO();
+    $total_sales = $orderDAO->getTotalSales();
+    $order_count = $orderDAO->getCompletedOrdersCount();
 ?>
 
 <style>
@@ -171,13 +176,13 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
         <div class="stats-grid">
             <div class="stat-card">
                 <h3>Total Sales</h3>
-                <div class="stat-number">₱0</div>
+                <div class="stat-number">₱<?= $total_sales ?></div>
                 <div class="stat-label">Overall Revenue</div>
             </div>
             
             <div class="stat-card">
                 <h3>Total Orders</h3>
-                <div class="stat-number">0</div>
+                <div class="stat-number"><?= $order_count ?></div>
                 <div class="stat-label">All-time Orders</div>
             </div>
             
