@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | BrewHaven Cafe PH</title>
+    <link rel="stylesheet" href="../assets/css/includes.css">
+    <style>
+        /* About Page Specific Styles */
+        .about-hero {
+            background: linear-gradient(135deg, #FAF9F6 0%, #FFD88F 100%);
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .about-hero h1 {
+            font-size: 3.5em;
+            color: #3E2723;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .about-hero .tagline {
+            font-size: 1.3em;
+            color: #A0522D;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .story-section {
+            padding: 80px 40px;
+            background: #FAF9F6;
+        }
+
+        .story-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .story-content h2 {
+            color: #A0522D;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .story-content p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #3E2723;
+            margin-bottom: 25px;
+        }
+
+        .story-image {
+            text-align: center;
+        }
+
+        .logo-story {
+            width: 300px;
+            height: 300px;
+            background: #FFFFFF;
+            border: 3px solid #A0522D;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .logo-story img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .philosophy-section {
+            background: #F5F5DC;
+            padding: 80px 40px;
+        }
+
+        .philosophy-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .philosophy-container h2 {
+            color: #A0522D;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .philosophy-content {
+            background: #FFFFFF;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 2px solid #A0522D;
+        }
+
+        .philosophy-content p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #3E2723;
+            margin-bottom: 25px;
+        }
+
+        .values-section {
+            padding: 80px 40px;
+            background: #FAF9F6;
+        }
+
+        .values-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .values-container h2 {
+            text-align: center;
+            color: #A0522D;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .value-card {
+            background: #FFFFFF;
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #FFD88F;
+        }
+
+        .value-card h3 {
+            color: #D04F4F;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .value-card p {
+            color: #3E2723;
+            line-height: 1.6;
+        }
+
+        /* Our Cafe Gallery Section */
+        .cafe-gallery-section {
+            padding: 80px 40px;
+            background: #F5F5DC;
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .gallery-container h2 {
+            color: #A0522D;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .gallery-subtitle {
+            font-size: 1.3em;
+            color: #5a3927;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-item {
+            background: #FFFFFF;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid #FFD88F;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-caption {
+            padding: 20px;
+            color: #3E2723;
+            font-size: 1.1em;
+            font-weight: 500;
+            background: #FFFFFF;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .story-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .story-image {
+                order: -1;
+            }
+            
+            .about-hero h1 {
+                font-size: 2.8em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-hero,
+            .story-section,
+            .philosophy-section,
+            .values-section,
+            .cafe-gallery-section {
+                padding: 60px 20px;
+            }
+            
+            .about-hero h1 {
+                font-size: 2.3em;
+            }
+            
+            .story-content h2,
+            .philosophy-container h2,
+            .values-container h2,
+            .gallery-container h2 {
+                font-size: 2em;
+            }
+            
+            .philosophy-content {
+                padding: 30px 20px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .gallery-image {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-container h2 {
+                font-size: 1.8em;
+            }
+            
+            .gallery-subtitle {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <?php include '../includes/nav.php'; ?>
+
+        <!-- Hero Section -->
+        <section class="about-hero">
+            <h1>Our Story</h1>
+            <p class="tagline">Brewing connections, one cup at a time</p>
+        </section>
+
+        <!-- Story Section -->
+        <section class="story-section">
+            <div class="story-container">
+                <div class="story-content">
+                    <h2>Our Journey</h2>
+                    <p>Nestled in the heart of the Philippines, BrewHaven Café began as a simple dream — to create a warm and welcoming space where every cup tells a story. From the comforting aroma of freshly ground beans to the laughter shared over a plate of pastries, BrewHaven is more than just a café — it's a haven for connection, creativity, and calm.</p>
+                    <p>Founded in 2020, our café started as a small corner shop with just three tables and a big vision. Today, we've grown into a community hub where students, professionals, and families gather to share moments of joy over perfectly brewed coffee and authentic Filipino delicacies.</p>
+                </div>
+                <div class="story-image">
+                    <div class="logo-story">
+                        <img src="../assets/img/logo.png" alt="BrewHaven Logo">
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <h3 style="color: #A0522D;">Our Logo Story</h3>
+                        <p style="color: #3E2723; max-width: 400px; margin: 10px auto;">
+                            The circular logo represents the warmth and completeness of our coffee experience. 
+                            The warm brown tones reflect our Cinnamon Roast, while the white background symbolizes 
+                            the purity of our ingredients and intentions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Philosophy Section -->
+        <section class="philosophy-section">
+            <div class="philosophy-container">
+                <h2>Our Philosophy</h2>
+                <div class="philosophy-content">
+                    <p>At BrewHaven, we believe that coffee is not just a drink — it's a feeling. It's the warmth that starts your day, the comfort that eases your worries, and the joy shared with people who matter.</p>
+                    <p>Every detail — from our Cinnamon Roast tones to our Banana Glaze smiles — reflects our Filipino roots and our promise to bring you a café experience brewed with love, respect, and authenticity.</p>
+                    <p>We source our beans from local Filipino farmers, supporting sustainable agriculture while bringing you the rich, authentic flavors of our homeland. Our pastries and delicacies are made using traditional recipes passed down through generations, with a modern twist that celebrates our culinary heritage.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Values Section -->
+        <section class="values-section">
+            <div class="values-container">
+                <h2>Our Values</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <h3>Community First</h3>
+                        <p>We believe in building strong connections with our customers and supporting local communities through partnerships with Filipino farmers and artisans.</p>
+                    </div>
+                    <div class="value-card">
+                        <h3>Quality Always</h3>
+                        <p>From bean to cup, we maintain the highest standards of quality, ensuring every drink is crafted with precision and care.</p>
+                    </div>
+                    <div class="value-card">
+                        <h3>Authentic Heritage</h3>
+                        <p>We celebrate Filipino culture through our recipes, decor, and the warm hospitality that makes every visit feel like coming home.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       <!-- Our Cafe Gallery Section -->
+<section class="cafe-gallery-section">
+    <div class="gallery-container">
+        <h2>Our Cafe</h2>
+        <p class="gallery-subtitle">Step into our warm and inviting space<br>Explore our proposed building design via SketchUp 3D model</p>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="../assets/img/cafe-bldg1.jpg" alt="BrewHaven Cafe Exterior" class="gallery-image">
+                <div class="gallery-caption">Proposed Building: Front View</div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/img/cafe-bldg2.jpg" alt="Cafe 3D Render" class="gallery-image">
+                <div class="gallery-caption">3D Rendered Building Design</div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/img/cafe-bldg3.jpg" alt="Coffee Bar Design" class="gallery-image">
+                <div class="gallery-caption">Artisan Coffee Bar Area</div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/img/cafe-bldg4.jpg" alt="Seating Area Design" class="gallery-image">
+                <div class="gallery-caption">Comfortable Seating Layout</div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/img/cafe-bldg5.jpg" alt="Building Angle" class="gallery-image">
+                <div class="gallery-caption">Alternative Building Perspective</div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/img/cafe-floorplan.jpg" alt="Cafe Floor Plan" class="gallery-image">
+                <div class="gallery-caption">Complete Floor Plan Layout</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BrewHaven Cafe PH</h3>
+                    <p>Your Kapihan, Your Haven</p>
+                    <p>Experience the perfect blend of Filipino hospitality and artisan coffee.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.php">Home</a></li>
+                        <li><a href="menu.php">Menu</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p>📍 Cebu City, Cebu</p>
+                    <p>📞 (02) 8123-4567</p>
+                    <p>✉️ hello@brewhaven.com</p>
+                </div>
+            
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 BrewHaven Cafe PH. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

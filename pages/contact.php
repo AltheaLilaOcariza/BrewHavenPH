@@ -277,22 +277,7 @@
 <body>
     <div class="container">
         <!-- Navigation -->
-        <nav class="main-nav">
-            <div class="left-section">
-                <img src="../assets/img/logo.png" alt="BrewHaven Cafe Logo" class="logo">
-                <span class="site-name">BrewHaven Cafe PH</span>
-                <div class="divider"></div>
-            </div>
-            <div class="right-section">
-                <ul class="nav-links">
-                    <li><a href="../index.php">Home</a></li>
-                    <li><a href="menu.php">Menu</a></li>
-                    <li><a href="contact.html" style="background: #FFD88F; color: #A0522D;">Contact</a></li>
-                    <li><a href="about.html">About us</a></li>
-                    <li><a href="faq.html">FAQs</a></li>
-                </ul>
-            </div>
-        </nav>
+        <?php include '../includes/nav.php'; ?>
 
         <!-- Hero Section -->
         <section class="contact-hero">
