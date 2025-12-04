@@ -498,4 +498,3 @@ window.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("scroll", updateButtonPosition);
     window.addEventListener("resize", updateButtonPosition);
 });
-

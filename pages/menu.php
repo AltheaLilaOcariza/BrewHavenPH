@@ -76,7 +76,9 @@
                                             data-id="<?= htmlspecialchars($drink['item_id'], ENT_QUOTES) ?>"
                                             data-name="<?= htmlspecialchars($drink['name'], ENT_QUOTES) ?>"
                                             data-price="<?= htmlspecialchars($drink['price'], ENT_QUOTES) ?>"
-                                            data-image="<?= htmlspecialchars($drink['image'], ENT_QUOTES) ?>">
+                                            data-image="<?= htmlspecialchars($drink['image'], ENT_QUOTES) ?>"
+                                            data-status="<?= htmlspecialchars($drink['status'], ENT_QUOTES) ?>">
+
                                         ORDER
                                     </button>
                                 </div>
@@ -85,6 +87,22 @@
                         <?php 
                         } 
                         ?>
+                        <!-- if item is out of stock, disable the button -->
+                        <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            document.querySelectorAll(".order-btn").forEach(btn => {
+                                let status = btn.dataset.status?.toLowerCase();
+
+                                if (status === "out of stock") {
+                                    btn.disabled = true;
+                                    btn.textContent = "NO STOCK";
+                                    btn.style.background = "#b3b3b3";   // optional UI
+                                    btn.style.cursor = "not-allowed";   // optional UI
+                                    btn.style.fontSize = "11px";   // 👈 smaller text here
+                                }
+                            });
+                        });
+                        </script>
 
                     </div>
                 </div>

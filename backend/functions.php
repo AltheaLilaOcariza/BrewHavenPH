@@ -140,6 +140,23 @@
             return $stmt->execute();
         }
 
+            public function isOutOfStock($item_id) {
+        $query = "SELECT status FROM items WHERE item_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $item_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        if (!$row) {
+            return false; // item does not exist, treat as not out-of-stock
+        }
+
+        return strtolower($row['status']) === 'out of stock';
+    }
+
+
 
     }
 
