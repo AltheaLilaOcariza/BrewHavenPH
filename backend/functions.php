@@ -151,39 +151,46 @@
             $this->conn = $database->getConnection();
         }
 
-        // CREATE ORDER
-        public function createOrder($totalAmount, $status, $items = []) {
+        public function createOrder($status, $items = []) {
+            // Compute total cost
+            $totalAmount = 0;
+            foreach ($items as $item) {
+                $price = floatval($item['price']);
+                $qty   = intval($item['qty']);
+                $totalAmount += $price * $qty;
+            }
+
             // Insert into orders
-            $stmt = $this->conn->prepare("INSERT INTO orders (total_amount, status) VALUES (?, ?)");
+            $stmt = $this->conn->prepare(
+                "INSERT INTO orders (total_amount, status) VALUES (?, ?)"
+            );
             $stmt->bind_param("ds", $totalAmount, $status);
             $stmt->execute();
             $orderId = $stmt->insert_id;
             $stmt->close();
 
-            // Insert order items and update items_sold
+            // Insert each order item
             foreach ($items as $item) {
-                $subtotal = $item['quantity'] * $item['price_each'];
+
+                $itemId  = intval($item['item_id']);
+                $qty     = intval($item['qty']);
+                $price   = floatval($item['price']);
+                $subtotal = $qty * $price;
 
                 // Insert into order_items
-                $stmt = $this->conn->prepare(
-                    "INSERT INTO order_items (order_id, item_id, quantity, price_each, subtotal) VALUES (?, ?, ?, ?, ?)"
-                );
-                $stmt->bind_param(
-                    "iiidd",
-                    $orderId,
-                    $item['item_id'],
-                    $item['quantity'],
-                    $item['price_each'],
-                    $subtotal
-                );
+                $stmt = $this->conn->prepare("
+                    INSERT INTO order_items (order_id, item_id, quantity, price_each, subtotal)
+                    VALUES (?, ?, ?, ?, ?)
+                ");
+                $stmt->bind_param("iiidd", $orderId, $itemId, $qty, $price, $subtotal);
                 $stmt->execute();
                 $stmt->close();
 
-                // Update items_sold in items table
-                $stmtUpdate = $this->conn->prepare(
-                    "UPDATE items SET items_sold = items_sold + ? WHERE item_id = ?"
-                );
-                $stmtUpdate->bind_param("ii", $item['quantity'], $item['item_id']);
+                // Update items_sold
+                $stmtUpdate = $this->conn->prepare("
+                    UPDATE items SET items_sold = items_sold + ? WHERE item_id = ?
+                ");
+                $stmtUpdate->bind_param("ii", $qty, $itemId);
                 $stmtUpdate->execute();
                 $stmtUpdate->close();
             }

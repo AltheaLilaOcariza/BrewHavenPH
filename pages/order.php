@@ -61,14 +61,30 @@
                 <p class="value order-no"><?= $orderID ?></p>
 
                 <?php
-                $total = 0;
-                if (!empty($_SESSION['cart'])) {
+                // --- compute a clean numeric total (defensive: remove currency chars, commas, etc.)
+                $total = 0.0;
+                if (!empty($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                     foreach ($_SESSION['cart'] as $item) {
-                        $total += $item['price'] * $item['qty'];
+                        // Defensive checks and cleaning:
+                        $rawPrice = $item['price'] ?? 0;    // whatever is stored
+                        $rawQty   = $item['qty'] ?? 0;
+
+                        // Remove non-numeric characters (currency sign, spaces, commas)
+                        $cleanPrice = floatval(str_replace([',', '₱', ' ', PHP_EOL, "\t"], '', $rawPrice));
+                        $cleanQty   = intval($rawQty);
+
+                        // ensure non-negative
+                        if ($cleanQty < 0) $cleanQty = 0;
+                        if ($cleanPrice < 0) $cleanPrice = 0.0;
+
+                        $total += $cleanPrice * $cleanQty;
                     }
                 }
-                ?>
 
+                // For display (nice formatting). Use 2 decimals (change if you want integers)
+                $displayTotal = number_format($total, 2);
+                ?>
+        
                 <p class="label">Total Due:</p>
                 <p class="value total-due">₱<?= $total ?></p>
 
