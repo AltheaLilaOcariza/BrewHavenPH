@@ -5,7 +5,7 @@ $feedbackDAO = new FeedbackDAO();
 if (isset($_POST['submit'])) {
 
 
-    $subject = ($_POST['subject']); 
+    $subject = ($_POST['name']); 
     $message = trim($_POST['feedback']);  // Rename variable for clarity
 
     // Add feedback

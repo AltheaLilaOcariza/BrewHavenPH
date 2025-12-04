@@ -347,16 +347,8 @@
                     <h2>Give Us Feedback</h2>
                     <form id="contactForm" action="../backend/feedback.php" method="POST">
                         <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <select id="subject" name="subject" required>
-                                <option value="">Select a subject</option>
-                                <option value="general">General Inquiry</option>
-                                <option value="reservation">Table Reservation</option>
-                                <option value="catering">Catering Services</option>
-                                <option value="feedback">Feedback</option>
-                                <option value="complaint">Complaint</option>
-                                <option value="partnership">Partnership</option>
-                            </select>
+                            <label for="subject">Username</label>
+                            <input type="text" id="subject" name="name" placeholder="Username here (optional)">
                         </div>
 
                         <div class="form-group">
