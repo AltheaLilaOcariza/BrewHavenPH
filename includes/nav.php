@@ -4,23 +4,27 @@ $base_path = (strpos($_SERVER['PHP_SELF'], 'pages/') !== false) ? '../' : '';
 ?>
 
 <nav class="main-nav">
-    <div class="nav-inner-pages">
-        <div class="left-section">
-            <img src="<?php echo $base_path; ?>assets/img/logo.png" alt="BrewHaven Cafe Logo" class="logo">
-            <span class="site-name">BrewHaven Cafe PH</span>
-            <div class="divider"></div>
-        </div>
-    
-        <div class="right-section">
-            <ul class="nav-links">
-                <li><a href="<?php echo $base_path; ?>index.php">Home</a></li>
-                <li><a href="<?php echo $base_path; ?>pages/menu.php">Menu</a></li>
-                <li><a href="<?php echo $base_path; ?>pages/contact.php">Contacts</a></li>
-                <li><a href="<?php echo $base_path; ?>pages/about.php">About us</a></li>
-                <li><a href="<?php echo $base_path; ?>pages/faq.php">FAQs</a></li>
-            </ul>
-        </div>
+    <div class="left-section">
+        <img src="<?php echo $base_path; ?>assets/img/logo.png" alt="BrewHaven Cafe Logo" class="logo">
+        <a href="<?= $base_path ?>index.php"><span class="site-name">BrewHaven Cafe PH</span></a>
+        <div class="divider"></div>
     </div>
+    
+    <div class="right-section">
+        <ul class="nav-links">
+            <li><a href="<?php echo $base_path; ?>index.php">Home</a></li>
+            <li><a href="<?php echo $base_path; ?>pages/menu.php">Menu</a></li>
+            <li><a href="<?php echo $base_path; ?>pages/contact.php">Contacts</a></li>
+            <li><a href="<?php echo $base_path; ?>pages/about.php">About us</a></li>
+            <li><a href="<?php echo $base_path; ?>pages/faq.php">FAQs</a></li>
+        </ul>
+    </div>   
 </nav>
 
-<div class="nav-spacer"></div>
+
+<style>
+    .left-section a {
+        text-decoration: none;
+        color: inherit;
+    }
+</style>
