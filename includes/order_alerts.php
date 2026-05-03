@@ -16,10 +16,45 @@ if (action === "order") {
     } else {
         message = "Failed to send order.";
     }
+
+    /*let confirmBtn = document.querySelection(".confirm");
+
+    confirmBtn.addEventListener("click", function (){
+        startPrepTimer(36000); //10 minutes prep time
+    });
+
+    function startPrepTimer(seconds){
+        let timeLeft = seconds;
+        let prepSection = document.getElementById("prepSection");
+        let prepTimer = document.getElementById("prepTimer");
+
+        prepSection.style.display = "block";
+
+        document.querySelector(".confirm").style.display = "none";
+        document.querySelector(".cancel").style.display = "none";
+
+        let timer = setInterval(function (){
+            timeLeft--;
+            prepTimer.textContent = timeLeft;
+
+            if(timeLeft <= 5){
+                prepTimer.style.color = "red";
+            }
+
+            if(timeLeft <= 0){
+                clearInterval(timer);
+                orderReady();
+            }
+        }, 36000);
+    }
+
+    function orderReady(){
+        alert("Your order is ready for pick-up/delivery! ☕")
+    }*/
 }
 
 if (action === "cancel") {
-    if (status === "success") {
+    if (status === "cancel") {
         message = "Order canceled successfully";
     } else {
         message = "Failed to Cancel order.";

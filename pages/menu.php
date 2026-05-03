@@ -76,9 +76,8 @@
                                             data-id="<?= htmlspecialchars($drink['item_id'], ENT_QUOTES) ?>"
                                             data-name="<?= htmlspecialchars($drink['name'], ENT_QUOTES) ?>"
                                             data-price="<?= htmlspecialchars($drink['price'], ENT_QUOTES) ?>"
-                                            data-image="<?= htmlspecialchars($drink['image'], ENT_QUOTES) ?>"
-                                            data-status="<?= htmlspecialchars($drink['status'], ENT_QUOTES) ?>">
-
+                                            data-image="<?= htmlspecialchars($drink['image'], ENT_QUOTES) ?>">
+                                        
                                         ORDER
                                     </button>
                                 </div>
