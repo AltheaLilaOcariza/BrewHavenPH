@@ -13,7 +13,7 @@ if(isset($_POST['confirm'])){
         exit;
     }
 
-    $order_id = $_POST['order_id'];
+    /*$order_id = $_POST['order_id'];
 
     //prep time = 36000 seconds (10 mins)
     $query = "UPDATE orders
@@ -23,7 +23,7 @@ if(isset($_POST['confirm'])){
 
     mysqli_query($conn, $query);
     
-    echo json_encode(["success" => true]);
+    echo json_encode(["success" => true]);*/
 
     // Create order using your class method
     $success = $manager->createOrder( 'pending', $items);

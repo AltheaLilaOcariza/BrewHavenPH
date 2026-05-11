@@ -101,16 +101,15 @@
                             <input type="hidden" name="items[<?= $item['item_id'] ?>][price_each]" value="<?= $item['price'] ?>">
                         <?php endforeach; ?>
                     <?php endif; ?>
-
-                    <div class="prepSection" style="display:none">
-                            <p>Preparing the order...</p>
-                            <p>Ready in <span id="prepTimer">10</span> minutes</p>
-                    </div>
-
-                    <button type="submit" class="confirm" name="confirm">Confirm</button>
-                    <button class="cancel" name="cancel" >Cancel</button>
+                    
+                    </br>
+                    
                 </form>
-
+                <form action="orderSummary.php" method="POST">
+                    <button type="submit" class="confirm">
+                        PROCEED TO ORDER SUMMARY
+                    </button>
+                </form>
             </section>
 
         </section>
