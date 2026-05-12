@@ -12,6 +12,19 @@ if(isset($_POST['confirm'])){
         header("Location: ../pages/order.php?error=empty_cart");
         exit;
     }
+
+    /*$order_id = $_POST['order_id'];
+
+    //prep time = 36000 seconds (10 mins)
+    $query = "UPDATE orders
+              SET status='preparing',
+                ready_at = DATE_ADD(NOW(), INTERVAL 36000 SECOND)
+              WHERE id = $order_id";
+
+    mysqli_query($conn, $query);
+    
+    echo json_encode(["success" => true]);*/
+
     // Create order using your class method
     $success = $manager->createOrder( 'pending', $items);
 

@@ -79,7 +79,10 @@
 
                         $total += $cleanPrice * $cleanQty;
                     }
+
                 }
+
+                
 
                 // For display (nice formatting). Use 2 decimals (change if you want integers)
                 $displayTotal = number_format($total, 2);
@@ -98,11 +101,15 @@
                             <input type="hidden" name="items[<?= $item['item_id'] ?>][price_each]" value="<?= $item['price'] ?>">
                         <?php endforeach; ?>
                     <?php endif; ?>
-
-                    <button type="submit" class="confirm" name="confirm">Confirm</button>
-                    <button class="cancel" name="cancel" >Cancel</button>
+                    
+                    </br>
+                    
                 </form>
-
+                <form action="orderSummary.php" method="POST">
+                    <button type="submit" class="confirm">
+                        PROCEED TO ORDER SUMMARY
+                    </button>
+                </form>
             </section>
 
         </section>

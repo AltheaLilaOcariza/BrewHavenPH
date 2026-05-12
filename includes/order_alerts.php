@@ -1,4 +1,4 @@
-<?php if (isset($_GET['status'])): ?>
+<?php if (isset($_GET['status'])): include 'database.php';?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
@@ -16,10 +16,24 @@ if (action === "order") {
     } else {
         message = "Failed to send order.";
     }
+
+    <?php
+        $order_id = $_GET['order_id'];
+
+        $query = "SELECT status,
+                    TIMESTAMPDIFF(SECOND, NOW(), ready_at) AS time_left
+                  FROM orders
+                  WHERE id = $order_id";
+
+        $result = mysqli_query($conn, $query);
+        $order = mysqli_fetch_assoc($result);
+
+        $time_left = max(0, $order['time_left']);
+    ?>
 }
 
 if (action === "cancel") {
-    if (status === "success") {
+    if (status === "cancel") {
         message = "Order canceled successfully";
     } else {
         message = "Failed to Cancel order.";
