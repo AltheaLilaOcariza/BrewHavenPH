@@ -40,4 +40,6 @@
 
 </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php 
+$login_link = 'admin/login.php';
+include 'includes/footer.php'; ?>

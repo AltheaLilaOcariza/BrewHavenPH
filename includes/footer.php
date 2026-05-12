@@ -51,7 +51,7 @@ if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) {
     
     <div class="footer-bottom">
         <p>&copy; 2025 BrewHaven Cafe PH. All rights reserved. 
-        <small class="staff-login"><a href="admin/login.php" style="color: #FFD88F;">| Staff Login</a></small>
+        <small class="staff-login"><a href=<?= $login_link ?> style="color: #FFD88F;">| Staff Login</a></small>
         </p>
     </div>
 </footer>
