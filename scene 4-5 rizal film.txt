@@ -1,0 +1,11 @@
+basically,
+t-test gamiton if magcompare ta ug 2 groups
+
+types:
+one sample t-test
+two sample t-test
+pair t-test
+
+one sample - if mean sa 1 ka sample and mean sa population
+two sample - 2 groups ang gi compare(male&female)
+pair - before and after
