@@ -53,17 +53,20 @@
         <?php foreach($cart as $item): ?>
 
             <?php
-                $subtotal = $item['price'] * $item['quantity'];
+                $price = floatval($item['price']);
+                $qty = intval($item['qty']);
+                $subtotal = $item['price'] * $rawQty;
                 $total += $subtotal;
             ?>
 
             <div class="product-box">
 
-                <h3>Product: <?php echo $item['product']; ?></h3>
+                <img src="<?php echo $item['image']; ?>" class="product-img">
+                <h3>Product: <?php echo $item['name']; ?></h3>
 
                 <p>
                     Quantity:
-                    <?php echo $item['quantity']; ?>
+                    <?php echo $rawQty; ?>
                 </p>
 
                 <p>
@@ -102,6 +105,11 @@
             <label>Contact Number (Optional)</label>
             <input type="text" name="contact_number">
 
+            <label>Additional Message (Optional)</label>
+            <textarea
+                name="customer_message"
+                placeholder="Enter message here..."
+            >   </textarea>
 
             <br>
             <button type="submit" class="confirm" name="confirm">
