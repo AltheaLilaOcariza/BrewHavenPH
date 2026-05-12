@@ -1,4 +1,4 @@
-<?php if (isset($_GET['status'])): ?>
+<?php if (isset($_GET['status'])): include 'database.php';?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
@@ -17,40 +17,19 @@ if (action === "order") {
         message = "Failed to send order.";
     }
 
-    /*let confirmBtn = document.querySelection(".confirm");
+    <?php
+        $order_id = $_GET['order_id'];
 
-    confirmBtn.addEventListener("click", function (){
-        startPrepTimer(36000); //10 minutes prep time
-    });
+        $query = "SELECT status,
+                    TIMESTAMPDIFF(SECOND, NOW(), ready_at) AS time_left
+                  FROM orders
+                  WHERE id = $order_id";
 
-    function startPrepTimer(seconds){
-        let timeLeft = seconds;
-        let prepSection = document.getElementById("prepSection");
-        let prepTimer = document.getElementById("prepTimer");
+        $result = mysqli_query($conn, $query);
+        $order = mysqli_fetch_assoc($result);
 
-        prepSection.style.display = "block";
-
-        document.querySelector(".confirm").style.display = "none";
-        document.querySelector(".cancel").style.display = "none";
-
-        let timer = setInterval(function (){
-            timeLeft--;
-            prepTimer.textContent = timeLeft;
-
-            if(timeLeft <= 5){
-                prepTimer.style.color = "red";
-            }
-
-            if(timeLeft <= 0){
-                clearInterval(timer);
-                orderReady();
-            }
-        }, 36000);
-    }
-
-    function orderReady(){
-        alert("Your order is ready for pick-up/delivery! ☕")
-    }*/
+        $time_left = max(0, $order['time_left']);
+    ?>
 }
 
 if (action === "cancel") {
