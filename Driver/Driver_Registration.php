@@ -384,22 +384,35 @@
                 <div class="cafe-title">
                     <i class="fas fa-sign-in-alt"></i> Driver Login
                 </div>
-                <form id="loginForm" method="POST" action="login_driver.php">
+                <form id="loginForm">
                     <div class="form-group">
                         <label>Username</label>
                         <div class="input-icon">
                             <i class="fas fa-user-circle"></i>
-                            <input type="text" id="loginUsername" name="loginUsername" placeholder="Enter username" required>
+                            <input type="text"
+                                id="loginUsername"
+                                name="loginUsername"
+                                placeholder="Enter username"
+                                required>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label>Password</label>
                         <div class="input-icon">
                             <i class="fas fa-key"></i>
-                            <input type="password" id="loginPassword" name="loginPassword" placeholder="Enter password" required>
+                            <input type="password"
+                                id="loginPassword"
+                                name="loginPassword"
+                                placeholder="Enter password"
+                                required>
                         </div>
                     </div>
-                    <button type="submit" class="btn"><i class="fas fa-mug-hot"></i> Login & Start Delivering</button>
+
+                    <button type="submit" class="btn">
+                        <i class="fas fa-mug-hot"></i>
+                        Login & Start Delivering
+                    </button>
                 </form>
                 <div class="switch-prompt">
                     New driver? <span id="showRegister">Create account →</span>
