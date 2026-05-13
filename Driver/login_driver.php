@@ -1,5 +1,7 @@
 <?php
 session_start();
+session_regenerate_id(true);
+
 require_once __DIR__ . '/db.php';
 header('Content-Type: application/json');
 
@@ -24,13 +26,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // CREATE SESSION
             $_SESSION['driver_id'] = $driver['id'];
-            $_SESSION['driver_name'] = $driver['fullname'];
+            $_SESSION['driver_name'] = $driver['Fullname'];
             $_SESSION['logged_in'] = true;
 
             echo json_encode([
                 "status" => "success",
                 "message" => "Login successful",
-                "fullname" => $driver['fullname']
+                "fullname" => $driver['Fullname']
             ]);
 
         } else {
@@ -48,5 +50,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
-
