@@ -1,4 +1,4 @@
-<?php if (isset($_GET['status'])): include 'database.php';?>
+<?php if (isset($_GET['status'])): include '../backend/database.php';?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>

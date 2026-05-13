@@ -400,7 +400,21 @@
             $database = new Database();
             $this->conn = $database->getConnection();
         }
+        
+        public function getAllDeliveries() {
+            $result = $this->conn->query("SELECT * FROM deliveries ORDER BY created_at DESC");
+            $deliveries = [];
+            while($row = $result->fetch_assoc()) {
+                $deliveries[] = $row;
+            }
+            return $deliveries;
+        }
 
+        public function fillDeliveries($order_id, $customer_name, $contact_number, $message, $pickup_location, $delivery_location, $payment_method, $delivery_status = 'READY') {
+            $stmt = $this->conn->prepare("INSERT INTO deliveries (order_id, customer_name,contact_number, message, pickup_location, delivery_location, delivery_status, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("isisssss", $order_id, $customer_name, $contact_number, $message, $pickup_location, $delivery_location, $delivery_status, $payment_method);
+            return $stmt->execute();
+        }
 
     }
 ?> 
