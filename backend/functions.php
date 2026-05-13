@@ -168,7 +168,7 @@
             $this->conn = $database->getConnection();
         }
 
-        public function createOrder($status, $items = []) {
+        public function createOrder($status, $items = [], $order_type = "On Site") {
             // Compute total cost
             $totalAmount = 0;
             foreach ($items as $item) {
@@ -179,9 +179,9 @@
 
             // Insert into orders
             $stmt = $this->conn->prepare(
-                "INSERT INTO orders (total_amount, status) VALUES (?, ?)"
+                "INSERT INTO orders (total_amount, status, order_type) VALUES (?, ?, ?)"
             );
-            $stmt->bind_param("ds", $totalAmount, $status);
+            $stmt->bind_param("dss", $totalAmount, $status, $order_type);
             $stmt->execute();
             $orderId = $stmt->insert_id;
             $stmt->close();
@@ -343,6 +343,14 @@
             $row = $result->fetch_assoc();
             return $row['total'] ?? 0;
         }
+
+        public function updateOrderType($order_type = "On Site", $order_id){
+            $stmt = $this->conn->prepare("UPDATE orders SET order_type = ? WHERE order_id = ?");
+            $stmt->bind_param("si", $order_type, $orderId);
+            $stmt->execute();
+            $stmt->close();
+            return true;
+        }
     }
 
 
@@ -383,5 +391,16 @@
             $row = $result->fetch_assoc();
             return $row['total'];
         }
+    }
+
+    class DeliveriesDAO {
+        private $conn;
+
+        public function __construct() {
+            $database = new Database();
+            $this->conn = $database->getConnection();
+        }
+
+
     }
 ?> 
