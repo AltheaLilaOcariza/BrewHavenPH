@@ -392,7 +392,7 @@ body{
     <div class="sidebar">
         <div class="logo">☕ BrewHaven</div>
         <div class="nav">
-            <a href="dashboard.php" class="active">
+            <a href="dashboard.php">
                 <i class="fas fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
@@ -408,9 +408,9 @@ body{
                 <i class="fas fa-dollar-sign"></i>
                 <span>Earnings</span>
             </a>
-            <a href="#" class="logout-link" onclick="showLogoutModal(event)">
+           <a href="#" class="logout-link" onclick="showLogoutModal(event)">
                 <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
+            <span>Logout</span>
             </a>
         </div>
     </div>
@@ -538,10 +538,10 @@ document.getElementById('confirmLogoutBtn').addEventListener('click', function()
             'Content-Type': 'application/json',
         }
     }).then(() => {
-        window.location.href = 'Driver_Registration.php';
+        window.location.href = 'Registration.html';
     }).catch(() => {
         // Fallback redirect
-        window.location.href = 'Driver_Registration.php';
+        window.location.href = 'logout.php';
     });
 });
 
