@@ -17,13 +17,23 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     require '../backend/functions.php';
     $orderManager = new OrderDAO();
     $itemManager = new Item(); // We need this to get item names
+    $deliveryManager  = new DeliveriesDAO();
     
     // Handle actions
     if (isset($_POST['update_status'])) {
         $order_id = $_POST['order_id'];
         $status = $_POST['status'];
+
+        //update order status first
         $orderManager->updateOrderStatus($order_id, $status);
         
+        // if order is completed AND it's a delivery → update delivery status
+        $order = $orderManager->getOrderById($order_id);
+
+        if ($order && $order['order_type'] === 'Delivery' && $status === 'completed') {
+            $deliveryManager->updateDeliveryStatus($order_id, "READY");
+        }
+
         // Refresh to show updated status
         $redirect_url = 'manage_orders.php';
         if (isset($_GET['selected'])) {
@@ -44,6 +54,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     
     // Get all orders
     $orders = $orderManager->getAllOrders();
+    $deliveries = $deliveryManager->getAllDeliveries();
 ?>
 
 <main class="container">
@@ -88,12 +99,25 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
                             <option value="cancelled">Cancelled</option>
                         </select>
                     </div>
+                    <div class="status-filter">
+                        <select id="orderTypeFilter" onchange="filterOrderType()">
+                            <option value="all">All Types</option>
+                            <option value="On Site">On Site</option>
+                            <option value="Delivery">Delivery</option>
+                        </select>
+                    </div>
                 </div>
                 
                 <div class="orders-cards" id="ordersList">
                     <?php if (empty($orders)): ?>
                         <p class="empty-msg">📭 No orders found.</p>
                     <?php else: ?>
+                        <?php
+                        $deliveryMap = [];
+                        foreach ($deliveries as $delivery) {
+                            $deliveryMap[$delivery['order_id']] = $delivery;
+                        }
+                        ?>
                         <?php foreach ($orders as $order): 
                             $order_number = str_pad($order['order_id'], 4, '0', STR_PAD_LEFT);
                             $order_time = date('M d, Y h:i A', strtotime($order['created_at']));
@@ -103,11 +127,26 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
                         <div class="order-card <?= isset($_GET['selected']) && $_GET['selected'] == $order['order_id'] ? 'active' : '' ?>" 
                              data-order-id="<?= $order['order_id'] ?>"
                              data-status="<?= $order['status'] ?>"
+                             data-order-type="<?= $order['order_type'] ?>"
                              data-search="<?= htmlspecialchars($search_text) ?>"
                              onclick="selectOrder(<?= $order['order_id'] ?>)">
                             
                             <div class="order-header">
                                 <h3>Order No. <?= $order_number ?></h3>
+                                <p>
+                                    <strong>Type:</strong>
+                                    <?= htmlspecialchars($order['order_type']) ?>
+                                </p>
+                                <?php if ($order['order_type'] === 'Delivery'): ?>
+                                    <?php
+                                        $delivery_status = $deliveryMap[$order['order_id']]['delivery_status']
+                                            ?? 'PENDING';
+                                    ?>
+                                    <p>
+                                        <strong>Delivery:</strong>
+                                        <?= htmlspecialchars($delivery_status) ?>
+                                    </p>
+                                <?php endif; ?>
                                 <span class="status-badge status-<?= $order['status'] ?>">
                                     <?= ucfirst($order['status']) ?>
                                 </span>
@@ -145,16 +184,76 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
                             // Get order items
                             $order_with_items = $orderManager->getOrderById($selected_order['order_id']);
                             $items = isset($order_with_items['items']) ? $order_with_items['items'] : [];
+
+                            // DELIVERY INFO
+                            $selected_delivery = null;
+
+                            foreach ($deliveries as $delivery) {
+                                if ($delivery['order_id'] == $selected_order['order_id']) {
+                                    $selected_delivery = $delivery;
+                                    break;
+                                }
+                            }
                     ?>
                     
                     <div class="order-info">
                         <h3>Order No. <?= $order_number ?></h3>
-                        <p><strong>Ordered at:</strong> <?= $order_time ?></p>
-                        <p><strong>Status:</strong> 
+                        <p><strong>Ordered at:</strong><?= $order_time ?></p>
+                        <p><strong>Order Type:</strong><?= htmlspecialchars($selected_order['order_type']) ?></p>
+
+                        <?php if ($selected_order['order_type'] === 'Delivery'): ?>
+                            <p>
+                                <strong>Delivery Status:</strong>
+                                <span class="current-status">
+                                    <?= htmlspecialchars(
+                                        $selected_delivery['delivery_status']
+                                        ?? 'PENDING'
+                                    ) ?>
+                                </span>
+                            </p>
+
+                            <p>
+                                <strong>Customer:</strong>
+                                <?= htmlspecialchars(
+                                    $selected_delivery['customer_name']
+                                    ?? 'N/A'
+                                ) ?>
+                            </p>
+
+                            <p>
+                                <strong>Contact:</strong>
+                                <?= htmlspecialchars(
+                                    $selected_delivery['contact_number']
+                                    ?? 'N/A'
+                                ) ?>
+                            </p>
+
+                            <p>
+                                <strong>Delivery Address:</strong>
+                                <?= htmlspecialchars(
+                                    $selected_delivery['delivery_location']
+                                    ?? 'N/A'
+                                ) ?>
+                            </p>
+
+                            <p>
+                                <strong>Payment Method:</strong>
+                                <?= htmlspecialchars(
+                                    $selected_delivery['payment_method']
+                                    ?? 'N/A'
+                                ) ?>
+                            </p>
+
+                        <?php endif; ?>
+
+                        <p>
+                            <strong>Status:</strong>
+
                             <span class="current-status status-<?= $selected_order['status'] ?>">
                                 <?= ucfirst($selected_order['status']) ?>
                             </span>
                         </p>
+
                     </div>
                     
                     <div class="order-items">
@@ -258,42 +357,31 @@ function selectOrder(orderId) {
     window.location.href = currentUrl.toString();
 }
 
-function filterOrders() {
+function applyFilters() {
     const searchInput = document.getElementById('searchOrders').value.toLowerCase();
     const statusFilter = document.getElementById('statusFilter').value;
+    const typeFilter = document.getElementById('orderTypeFilter').value;
+
     const orderCards = document.querySelectorAll('.order-card');
-    
+
     let visibleCount = 0;
-    
+
     orderCards.forEach(card => {
         const searchText = card.getAttribute('data-search');
         const cardStatus = card.getAttribute('data-status');
-        
+        const cardType = card.getAttribute('data-order-type');
+
         const matchesSearch = searchText.includes(searchInput);
         const matchesStatus = statusFilter === 'all' || cardStatus === statusFilter;
-        
-        if (matchesSearch && matchesStatus) {
+        const matchesType = typeFilter === 'all' || cardType === typeFilter;
+
+        if (matchesSearch && matchesStatus && matchesType) {
             card.style.display = 'block';
             visibleCount++;
         } else {
             card.style.display = 'none';
         }
     });
-    
-    // Show message if no results
-    const ordersList = document.getElementById('ordersList');
-    let noResultsMsg = ordersList.querySelector('.no-results-msg');
-    
-    if (visibleCount === 0) {
-        if (!noResultsMsg) {
-            noResultsMsg = document.createElement('p');
-            noResultsMsg.className = 'no-results-msg empty-msg';
-            noResultsMsg.textContent = 'No orders match your search.';
-            ordersList.appendChild(noResultsMsg);
-        }
-    } else if (noResultsMsg) {
-        noResultsMsg.remove();
-    }
 }
 
 function confirmDelete() {

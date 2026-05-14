@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include 'db.php';
+require_once __DIR__ . '/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
@@ -25,7 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$fullname', '$email', '$username', '$password', '$licenseNo', '$plateNo', '$vehicleType', '$contactNo')";
     
     if (mysqli_query($conn, $sql)) {
-        echo json_encode(['status' => 'success', 'message' => 'Registration successful! Redirecting to login...']);
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Registration successful!'
+        ]);
+        exit();
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Registration failed: ' . mysqli_error($conn)]);
     }

@@ -168,7 +168,7 @@
             $this->conn = $database->getConnection();
         }
 
-        public function createOrder($status, $items = []) {
+        public function createOrder($status, $items = [], $order_type = "On Site") {
             // Compute total cost
             $totalAmount = 0;
             foreach ($items as $item) {
@@ -179,9 +179,9 @@
 
             // Insert into orders
             $stmt = $this->conn->prepare(
-                "INSERT INTO orders (total_amount, status) VALUES (?, ?)"
+                "INSERT INTO orders (total_amount, status, order_type) VALUES (?, ?, ?)"
             );
-            $stmt->bind_param("ds", $totalAmount, $status);
+            $stmt->bind_param("dss", $totalAmount, $status, $order_type);
             $stmt->execute();
             $orderId = $stmt->insert_id;
             $stmt->close();
@@ -343,6 +343,14 @@
             $row = $result->fetch_assoc();
             return $row['total'] ?? 0;
         }
+
+        public function updateOrderType($order_type = "On Site", $order_id){
+            $stmt = $this->conn->prepare("UPDATE orders SET order_type = ? WHERE order_id = ?");
+            $stmt->bind_param("si", $order_type, $orderId);
+            $stmt->execute();
+            $stmt->close();
+            return true;
+        }
     }
 
 
@@ -382,6 +390,38 @@
             $result = $this->conn->query("SELECT COUNT(*) AS total FROM feedback");
             $row = $result->fetch_assoc();
             return $row['total'];
+        }
+    }
+
+    class DeliveriesDAO {
+        private $conn;
+
+        public function __construct() {
+            $database = new Database();
+            $this->conn = $database->getConnection();
+        }
+        
+        public function getAllDeliveries() {
+            $result = $this->conn->query("SELECT * FROM deliveries ORDER BY created_at DESC");
+            $deliveries = [];
+            while($row = $result->fetch_assoc()) {
+                $deliveries[] = $row;
+            }
+            return $deliveries;
+        }
+
+        public function fillDeliveries($order_id, $customer_name, $contact_number, $message, $pickup_location, $delivery_location, $payment_method, $delivery_status = 'PENDING') {
+            $stmt = $this->conn->prepare("INSERT INTO deliveries (order_id, customer_name,contact_number, message, pickup_location, delivery_location, delivery_status, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("isisssss", $order_id, $customer_name, $contact_number, $message, $pickup_location, $delivery_location, $delivery_status, $payment_method);
+            return $stmt->execute();
+        }
+
+        public function updateDeliveryStatus($order_id, $status)
+        {
+            $sql = "UPDATE deliveries SET delivery_status = ? WHERE order_id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("si", $status, $order_id);
+            return $stmt->execute();
         }
     }
 ?> 

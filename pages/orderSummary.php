@@ -89,7 +89,10 @@
 
         <h2>Customer Information</h2>
 
-        <form action="place_order.php" method="POST">
+        <form action="../backend/place_order.php" method="POST">
+
+            <label>Costumer name</label>
+            <input type="text" name="customer_name" required>
 
             <label>Name</label>
             <textarea name="name" required></textarea>
@@ -100,9 +103,9 @@
             <label>Payment Method</label>
             <select name="payment_method" required>
                 <option value="">Select Payment</option>
-                <option value="Cash on Delivery">Cash on Delivery</option>
-                <option value="GCash">GCash</option>
-                <option value="Credit Card">Credit Card</option>
+                <option value="CASH ON DELIVERY">Cash on Delivery</option>
+                <option value="GCASH">GCash</option>
+                <option value="CREDIT CARD">Credit Card</option>
             </select>
 
             <label>Contact Number</label>

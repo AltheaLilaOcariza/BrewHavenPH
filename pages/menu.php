@@ -156,4 +156,6 @@
 <!-- Manual script inclusion at the bottom -->
 <!--<script src="../assets/js/order_button.js"></script> -->
 <script src="../assets/js/menu.js"></script>
-<?php include '../includes/footer.php'; ?>
+<?php 
+$login_link = '../admin/login.php';
+include '../includes/footer.php'; ?>

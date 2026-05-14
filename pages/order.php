@@ -103,12 +103,19 @@
                     <?php endif; ?>
                     
                     </br>
-                    
-                </form>
-                <form action="orderSummary.php" method="POST">
-                    <button type="submit" class="confirm">
-                        PROCEED TO ORDER SUMMARY
-                    </button>
+                    <div class="order-actions">
+                        <button type="submit" name="onSite" class="confirm">
+                            ON SITE
+                        </button>
+
+                        <button type="submit" name="delivery" class="confirm">
+                            DELIVERY
+                        </button>
+
+                        <button type="submit" name="cancel" class="cancel">
+                            CANCEL
+                        </button>
+                    </div>
                 </form>
             </section>
 
@@ -117,4 +124,6 @@
 </main>
 
 <?php include '../includes/order_alerts.php'; ?>
-<?php include '../includes/footer.php'; ?>
+<?php 
+$login_link = '../admin/login.php';
+include '../includes/footer.php'; ?>

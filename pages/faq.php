@@ -401,7 +401,7 @@
                 <div class="quick-link-card">
                     <h4>📞 Contact Us</h4>
                     <p>Need immediate assistance? Reach out to our team.</p>
-                    <a href="contact.html" class="link-btn">Get in Touch</a>
+                    <a href="contact.php" class="link-btn">Get in Touch</a>
                 </div>
                 <div class="quick-link-card">
                     <h4>📋 View Menu</h4>
@@ -414,7 +414,7 @@
             <div class="contact-prompt">
                 <h3>Still have questions?</h3>
                 <p>Our friendly team is here to help you with any other inquiries you might have.</p>
-                <a href="contact.html" class="contact-btn">Contact Us Today</a>
+                <a href="contact.php" class="contact-btn">Contact Us Today</a>
             </div>
         </section>
 
@@ -431,8 +431,8 @@
                     <ul>
                         <li><a href="../index.php">Home</a></li>
                         <li><a href="menu.php">Menu</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="about.php">About Us</a></li>
+                        <li><a href="contact.php">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

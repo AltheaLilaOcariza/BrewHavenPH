@@ -280,9 +280,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="login-footer">
             <div class="footer-links">
-                <a href="../pages/contact.html">Contacts</a>
-                <a href="../pages/about.html">About us</a>
-                <a href="../pages/faq.html">FAQs</a>
+                <a href="../pages/contact.php">Contacts</a>
+                <a href="../pages/about.php">About us</a>
+                <a href="../pages/faq.php">FAQs</a>
             </div>
             <div class="brand-footer">BREWHAVEN CAFE</div>
         </div>
