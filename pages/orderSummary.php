@@ -91,6 +91,9 @@
 
         <form action="place_order.php" method="POST">
 
+            <label>Name</label>
+            <textarea name="name" required></textarea>
+
             <label>Address</label>
             <textarea name="address" required></textarea>
 
@@ -102,8 +105,8 @@
                 <option value="Credit Card">Credit Card</option>
             </select>
 
-            <label>Contact Number (Optional)</label>
-            <input type="text" name="contact_number">
+            <label>Contact Number</label>
+            <input type="text" name="contact_number" required>
 
             <label>Additional Message (Optional)</label>
             <textarea
