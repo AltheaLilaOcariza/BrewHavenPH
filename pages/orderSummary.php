@@ -19,6 +19,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Summary</title>
     <link rel="stylesheet" href="order_summary.css">
 </head>
@@ -91,7 +92,7 @@
 
         <form action="../backend/place_order.php" method="POST">
 
-            <label>Costumer name</label>
+            <label>Costumer Name</label>
             <input type="text" name="customer_name" required>
 
             <label>Address</label>
@@ -105,8 +106,8 @@
                 <option value="CREDIT CARD">Credit Card</option>
             </select>
 
-            <label>Contact Number (Optional)</label>
-            <input type="text" name="contact_number">
+            <label>Contact Number</label>
+            <input type="text" name="contact_number" required>
 
             <label>Additional Message (Optional)</label>
             <textarea

@@ -410,11 +410,18 @@
             return $deliveries;
         }
 
-        public function fillDeliveries($order_id, $customer_name, $contact_number, $message, $pickup_location, $delivery_location, $payment_method, $delivery_status = 'READY') {
+        public function fillDeliveries($order_id, $customer_name, $contact_number, $message, $pickup_location, $delivery_location, $payment_method, $delivery_status = 'PENDING') {
             $stmt = $this->conn->prepare("INSERT INTO deliveries (order_id, customer_name,contact_number, message, pickup_location, delivery_location, delivery_status, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("isisssss", $order_id, $customer_name, $contact_number, $message, $pickup_location, $delivery_location, $delivery_status, $payment_method);
             return $stmt->execute();
         }
 
+        public function updateDeliveryStatus($order_id, $status)
+        {
+            $sql = "UPDATE deliveries SET delivery_status = ? WHERE order_id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("si", $status, $order_id);
+            return $stmt->execute();
+        }
     }
 ?> 
