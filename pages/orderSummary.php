@@ -65,7 +65,7 @@
                     <?php
                         $price = floatval($item['price']);
                         $qty = intval($item['qty']);
-                        $subtotal = $item['price'] * $rawQty;
+                        $subtotal = $price * $qty;
                         $total += $subtotal;
                     ?>
 
@@ -76,12 +76,12 @@
 
                         <p>
                             Quantity:
-                            <?php echo $rawQty; ?>
+                            <?php echo $qty; ?>
                         </p>
 
                         <p>
                             Total Cost:
-                            ₱<?php echo $subtotal; ?>
+                            ₱<?php echo number_format($subtotal, 2); ?>
                         </p>
 
                     </div>
@@ -89,7 +89,7 @@
                 <?php endforeach; ?>
 
                 <div class="total">
-                    Grand Total: ₱<?php echo $total; ?>
+                    Grand Total: ₱<?php echo number_format($total, 2); ?>
                 </div>
 
             </div>
@@ -128,7 +128,7 @@
                     <button type="submit" class="confirm" name="confirm">
                         CONFIRM ORDER
                     </button><br><br>
-                    <button class="cancel" name="cancel">
+                    <button type="button" class="cancel" name="cancel">
                         CANCEL ORDER
                     </button>
 
@@ -139,8 +139,8 @@
     </section>
 </div>
 
-</body>
-</html>
-
 <?php include '../includes/order_alerts.php'; ?>
 <?php include '../includes/footer.php'; ?>
+
+</body>
+</html>
