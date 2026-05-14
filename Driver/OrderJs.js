@@ -1,4 +1,4 @@
-let ordersActive = true;
+let ordersActive = null;
 let queueCount = 0;
 
 // Show notification
@@ -19,6 +19,49 @@ function renderEmptyOrder() {
             <p>Waiting for new order from database...<br>Enable "Accepting Orders" to receive orders.</p>
         </div>
     `;
+}
+
+async function loadDriverStatus() {
+
+    const response = await fetch("../backend/get_driver_status.php");
+    const data = await response.json();
+
+    const toggle = document.getElementById('statusToggle');
+
+    if (!data.success) {
+        ordersActive = false;
+        renderEmptyOrder();
+        document.getElementById('statusToggle').classList.remove('online');
+        return;
+    }
+
+    if (data.status === "available") {
+
+        ordersActive = true;
+
+        toggle.classList.add('online');
+
+        toggle.innerHTML = `
+            <i class="fas fa-circle" style="font-size:0.7rem;"></i>
+            Accepting Orders
+        `;
+
+
+        renderOrderTemplate(1);
+
+    } else {
+
+        ordersActive = false;
+
+        toggle.classList.remove('online');
+
+        toggle.innerHTML = `
+            <i class="fas fa-circle" style="font-size:0.7rem;color:#EF4444;"></i>
+            Paused
+        `;
+
+        renderEmptyOrder();
+    }
 }
 
 // Render order template with database-ready structure
@@ -46,6 +89,20 @@ function renderOrderTemplate(orderNumber = 1) {
                     <i class="fas fa-receipt"></i> Total Bill
                 </div>
                 <div class="field-value" data-field="total">₱0.00</div>
+            </div>
+
+            <div class="order-field">
+                <div class="field-label">
+                    <i class="fas fa-phone"></i> Costumer Contact No.
+                </div>
+                <div class="field-value" data-field="contactNo">Loading...</div>
+            </div>
+
+            <div class="order-field">
+                <div class="field-label">
+                    <i class="fas fa-credit-card"></i> Payment Method
+                </div>
+                <div class="field-value" data-field="Payment Method">Loading...</div>
             </div>
 
             <div class="order-field">
@@ -129,20 +186,67 @@ function populateOrderData(orderData) {
 
 // Initialize app when DOM loads
 document.addEventListener('DOMContentLoaded', function() {
+    
+    loadDriverStatus();
+
     // Status toggle
-    document.getElementById('statusToggle').addEventListener('click', function() {
-        ordersActive = !ordersActive;
-        if(ordersActive) {
-            this.classList.add('online');
-            this.innerHTML = '<i class="fas fa-circle" style="font-size:0.7rem;"></i> Accepting Orders';
-            showNotification("✅ Connected - waiting for orders from database (Ctrl+Enter)", "success");
-            renderOrderTemplate(1);
-            // Here you would start polling your API for new orders
-            // startOrderPolling();
+    async function updateDriverStatus(status) {
+
+        const formData = new FormData();
+
+        formData.append("status", status);
+
+        const response = await fetch("../backend/update_driver_status.php", {
+            method: "POST",
+            body: formData
+        });
+
+        return await response.json();
+    }
+
+    document.getElementById('statusToggle').addEventListener('click', async function() {
+
+        let newStatus;
+
+        if (ordersActive === null || ordersActive === false) {
+            newStatus = "available";
         } else {
+            newStatus = "unavailable";
+        }
+
+        const result = await updateDriverStatus(newStatus);
+
+        if(!result.success){
+            showNotification("Database update failed", "info");
+            return;
+        }
+
+        ordersActive = !ordersActive;
+
+        if(ordersActive) {
+
+            this.classList.add('online');
+
+            this.innerHTML = `
+                <i class="fas fa-circle" style="font-size:0.7rem;"></i>
+                Accepting Orders
+            `;
+
+            showNotification("✅ Driver is ONLINE", "success");
+
+            renderOrderTemplate(1);
+
+        } else {
+
             this.classList.remove('online');
-            this.innerHTML = '<i class="fas fa-circle" style="font-size:0.7rem;color:#EF4444;"></i> Paused';
-            showNotification("⏸ Orders paused", "info");
+
+            this.innerHTML = `
+                <i class="fas fa-circle" style="font-size:0.7rem;color:#EF4444;"></i>
+                Paused
+            `;
+
+            showNotification("⏸ Driver is OFFLINE", "info");
+
             renderEmptyOrder();
         }
     });
@@ -163,8 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Initialize
-    renderEmptyOrder();
-    updateQueueBadge();
+    loadDriverStatus().then(() => updateQueueBadge());
     
     console.log('☕ BrewHaven Orders loaded!');
     console.log('📦 Ready for PHP/MySQL integration');

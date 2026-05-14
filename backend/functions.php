@@ -424,4 +424,29 @@
             return $stmt->execute();
         }
     }
+
+    class DriverDAO {
+        private $conn;
+
+        public function __construct() {
+            $database = new Database();
+            $this->conn = $database->getConnection();
+        }
+
+        public function getDriverByID($driver_id){
+            $sql = "SELECT * FROM drivers WHERE id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $driver_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_assoc();
+        }
+
+        public function updateDriverStatusByID($driver_id, $status="available"){
+            $sql = "UPDATE drivers SET driver_status = ? WHERE id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("si", $status, $driver_id);
+            return $stmt->execute();
+        }
+    }
 ?> 
