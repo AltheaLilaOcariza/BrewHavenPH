@@ -27,106 +27,116 @@
 <body>
 <?php include '../includes/nav.php';?>
 <div class="container">
-    <!-- LEFT SIDE -->
-    <div class="left-side">
+    <section class="order-section">
+        <div class="back-to-order">
+            <a href="order.php">
+                <p class="back-arrow"><</p>
+                <p>Back to Order</p>
+            </a>
+        </div>
 
-        <h1>ORDER SUMMARY</h1>
+        <section class="order-container">
+            <!-- LEFT SIDE -->
+            <div class="left-side">
 
-        <?php
-        if (!empty($_SESSION['cart']) && is_array($_SESSION['cart'])) {
-                foreach ($_SESSION['cart'] as $item) {
-                    // Defensive checks and cleaning:
-                    $rawPrice = $item['price'] ?? 0;    // whatever is stored
-                    $rawQty   = $item['qty'] ?? 0;
+                <h1>ORDER SUMMARY</h1>
 
-                    // Remove non-numeric characters (currency sign, spaces, commas)
-                    $cleanPrice = floatval(str_replace([',', '₱', ' ', PHP_EOL, "\t"], '', $rawPrice));
-                    $cleanQty   = intval($rawQty);
+                <?php
+                if (!empty($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+                        foreach ($_SESSION['cart'] as $item) {
+                            // Defensive checks and cleaning:
+                            $rawPrice = $item['price'] ?? 0;    // whatever is stored
+                            $rawQty   = $item['qty'] ?? 0;
 
-                    // ensure non-negative
-                    if ($cleanQty < 0) $cleanQty = 0;
-                    if ($cleanPrice < 0) $cleanPrice = 0.0;
-                        $total += $cleanPrice * $cleanQty;
-            }
-        }
-        ?>
+                            // Remove non-numeric characters (currency sign, spaces, commas)
+                            $cleanPrice = floatval(str_replace([',', '₱', ' ', PHP_EOL, "\t"], '', $rawPrice));
+                            $cleanQty   = intval($rawQty);
 
-        <?php foreach($cart as $item): ?>
+                            // ensure non-negative
+                            if ($cleanQty < 0) $cleanQty = 0;
+                            if ($cleanPrice < 0) $cleanPrice = 0.0;
+                                $total += $cleanPrice * $cleanQty;
+                    }
+                }
+                ?>
 
-            <?php
-                $price = floatval($item['price']);
-                $qty = intval($item['qty']);
-                $subtotal = $item['price'] * $rawQty;
-                $total += $subtotal;
-            ?>
+                <?php foreach($cart as $item): ?>
 
-            <div class="product-box">
+                    <?php
+                        $price = floatval($item['price']);
+                        $qty = intval($item['qty']);
+                        $subtotal = $item['price'] * $rawQty;
+                        $total += $subtotal;
+                    ?>
 
-                <img src="<?php echo $item['image']; ?>" class="product-img">
-                <h3>Product: <?php echo $item['name']; ?></h3>
+                    <div class="product-box">
 
-                <p>
-                    Quantity:
-                    <?php echo $rawQty; ?>
-                </p>
+                        <img src="<?php echo $item['image']; ?>" class="product-img">
+                        <h3>Product: <?php echo $item['name']; ?></h3>
 
-                <p>
-                    Total Cost:
-                    ₱<?php echo $subtotal; ?>
-                </p>
+                        <p>
+                            Quantity:
+                            <?php echo $rawQty; ?>
+                        </p>
+
+                        <p>
+                            Total Cost:
+                            ₱<?php echo $subtotal; ?>
+                        </p>
+
+                    </div>
+
+                <?php endforeach; ?>
+
+                <div class="total">
+                    Grand Total: ₱<?php echo $total; ?>
+                </div>
 
             </div>
 
-        <?php endforeach; ?>
+            <!-- RIGHT SIDE -->
+            <div class="right-side">
 
-        <div class="total">
-            Grand Total: ₱<?php echo $total; ?>
-        </div>
+                <h2>Customer Information</h2>
 
-    </div>
+                <form action="../backend/place_order.php" method="POST">
 
-    <!-- RIGHT SIDE -->
-    <div class="right-side">
+                    <label>Costumer Name</label>
+                    <input type="text" name="customer_name" required>
 
-        <h2>Customer Information</h2>
+                    <label>Address</label>
+                    <textarea name="address" required></textarea>
 
-        <form action="../backend/place_order.php" method="POST">
+                    <label>Payment Method</label>
+                    <select name="payment_method" required>
+                        <option value="">Select Payment</option>
+                        <option value="CASH ON DELIVERY">Cash on Delivery</option>
+                        <option value="GCASH">GCash</option>
+                        <option value="CREDIT CARD">Credit Card</option>
+                    </select>
 
-            <label>Costumer Name</label>
-            <input type="text" name="customer_name" required>
+                    <label>Contact Number</label>
+                    <input type="text" name="contact_number" required>
 
-            <label>Address</label>
-            <textarea name="address" required></textarea>
+                    <label>Additional Message (Optional)</label>
+                    <textarea
+                        name="customer_message"
+                        placeholder="Enter message here..."
+                    ></textarea>
 
-            <label>Payment Method</label>
-            <select name="payment_method" required>
-                <option value="">Select Payment</option>
-                <option value="CASH ON DELIVERY">Cash on Delivery</option>
-                <option value="GCASH">GCash</option>
-                <option value="CREDIT CARD">Credit Card</option>
-            </select>
+                    <br>
+                    <button type="submit" class="confirm" name="confirm">
+                        CONFIRM ORDER
+                    </button><br><br>
+                    <button class="cancel" name="cancel">
+                        CANCEL ORDER
+                    </button>
 
-            <label>Contact Number</label>
-            <input type="text" name="contact_number" required>
+                </form>
 
-            <label>Additional Message (Optional)</label>
-            <textarea
-                name="customer_message"
-                placeholder="Enter message here..."
-            >   </textarea>
-
-            <br>
-            <button type="submit" class="confirm" name="confirm">
-                CONFIRM ORDER
-            </button><br><br>
-            <button class="cancel" name="cancel">
-                CANCEL ORDER
-            </button>
-
-        </form>
-
-    </div>
-
+            </div>
+        </section>
+    </section>
 </div>
 
 </body>
