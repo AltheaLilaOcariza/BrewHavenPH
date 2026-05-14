@@ -60,6 +60,7 @@
                 }
                 ?>
 
+                <?php $total = 0; ?>
                 <?php foreach($cart as $item): ?>
 
                     <?php
@@ -140,7 +141,7 @@
 </div>
 
 <?php include '../includes/order_alerts.php'; ?>
-<?php include '../includes/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>  
 
 </body>
 </html>
