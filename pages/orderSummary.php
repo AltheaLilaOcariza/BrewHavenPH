@@ -16,17 +16,8 @@
     $total = 0;
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Summary</title>
-    <link rel="stylesheet" href="order_summary.css">
-</head>
-
-<body>
-<?php include '../includes/nav.php';?>
-<div class="container">
+<main class="container">
+    <?php include '../includes/nav.php';?>
     <section class="order-section">
         <div class="back-to-order">
             <a href="order.php">
@@ -132,16 +123,12 @@
                     <button type="button" class="cancel" name="cancel">
                         CANCEL ORDER
                     </button>
-
                 </form>
 
             </div>
         </section>
     </section>
-</div>
+</main>
 
-<?php include '../includes/order_alerts.php'; ?>
-<?php include '../includes/footer.php'; ?>  
-
-</body>
-</html>
+<?php include '../includes/order_alerts.php';?>
+<?php include '../includes/footer.php'; ?>

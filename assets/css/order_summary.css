@@ -10,7 +10,6 @@ body{
     padding: 0;
     background-color: #FAF9F6;
     color: #3E2723;   
-    line-height: 1.6;
 }
 
 .order-section {
@@ -65,7 +64,7 @@ body{
     box-sizing: border-box;
     background: #FAF9F6;
     box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    min-height: 600px;
+    height: auto;
     overflow: hidden;
 }
 
@@ -74,6 +73,8 @@ body{
     background: white;
     padding: 30px;
     border-radius: 15px;
+    border-right: 2px solid #A0522D;
+    box-sizing: border-box;
 }
 
 .right-side{
@@ -81,6 +82,9 @@ body{
     background: #f8f4df;
     padding: 30px;
     border-radius: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 .product-box{
@@ -130,15 +134,46 @@ input, select, textarea{
     border: 1px solid #ccc;
 }
 
-button {
-    width: 100%;
-    padding: 15px;
-    background: #4caf9a;
-    color: white;
+.confirm {
+    background: linear-gradient(135deg, #5EBCAA 0%, #4a9c8a 100%);
+    color: #fff;
     border: none;
-    border-radius: 30px;
-    font-size: 18px;
+    padding: 16px 30px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(94, 188, 170, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.confirm:hover {
+    background: linear-gradient(135deg, #4a9c8a 0%, #3a7c6a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(94, 188, 170, 0.4);
+}
+
+.cancel {
+    background: linear-gradient(135deg, #D04F4F 0%, #c0392b 100%);
+    color: #fff;
+    border: none;
+    padding: 14px 25px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(208, 79, 79, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cancel:hover {
+    background: linear-gradient(135deg, #c0392b 0%, #a0291b 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(208, 79, 79, 0.4);
 }
 
 @media (max-width: 968px) {
@@ -159,3 +194,37 @@ button {
     }
 }
 
+@media (max-width: 768px) {
+    .order-section {
+        margin: 0px 15px;
+        padding: 15px;
+    }
+    
+    .left-side,
+    .right-side {
+        padding: 20px;
+    }
+    
+    .left-side h1 {
+        font-size: 1.6rem;
+    }
+    
+    .product-img {
+        width: 60px;
+        height: 60px;
+    }
+    
+}
+
+@media (max-width: 480px) {
+    .order-section {
+        margin: 0px 10px;
+        padding: 10px;
+    }
+    
+    .left-side,
+    .right-side {
+        padding: 15px;
+    }
+    
+}
