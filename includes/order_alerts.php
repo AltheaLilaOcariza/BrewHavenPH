@@ -18,6 +18,8 @@ if (action === "order") {
     }
 
     <?php
+        $db = new Database();
+        $conn = $db->connection;
         $order_id = $_GET['order_id'];
 
         $query = "SELECT status,
