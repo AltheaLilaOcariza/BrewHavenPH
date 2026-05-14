@@ -538,7 +538,7 @@ document.getElementById('confirmLogoutBtn').addEventListener('click', function()
             'Content-Type': 'application/json',
         }
     }).then(() => {
-        window.location.href = 'Registration.html';
+        window.location.href = 'Driver_Registration.php';
     }).catch(() => {
         // Fallback redirect
         window.location.href = 'logout.php';
