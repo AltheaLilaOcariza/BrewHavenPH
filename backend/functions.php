@@ -583,6 +583,15 @@
             return $result->fetch_assoc();
         }
 
+        public function setDeliveryStatus($delivery_id, $status){
+            $sql = "UPDATE deliveries 
+                    SET delivery_status = ?
+                    WHERE delivery_id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("si", $status, $delivery_id);
+            return $stmt->execute();
+        }
+
         public function getTotalDeliveriesAssigned($driver_id)
         {
             $sql = "
@@ -638,6 +647,15 @@
             $stmt->close();
 
             return $result['total_deliveries'];
+        }
+
+        public function getDeliveryByIDNoItems($currentDeliveryId){
+            $sql = "SELECT * FROM deliveries WHERE delivery_id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $currentDeliveryId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_assoc();
         }
     }
 

@@ -115,7 +115,8 @@ $total_failed = $deliveryManager -> getDeliveryCountByStatus("FAILED");
                 <div class="stat-card">
                     <div class="stat-header">
                         <div class="stat-title">Failed</div>
-                        <div class="stat-icon icon-canceled">
+                        <div class="stat-icon icon-cance
+                        led">
                             <i class="fas fa-times-circle"></i>
                         </div>
                     </div>

@@ -6,6 +6,13 @@ if (!isset($_SESSION['logged_in'])) {
     header("Location: index.php");
     exit();
 }
+
+require_once '../backend/functions.php';
+
+$deliveryManager = new DeliveriesDAO();
+$currentDelivery = $deliveryManager->getDeliveryByIDNoItems($currentDeliveryID);
+$status = $currentDelivery['status'] ?? '';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,12 +74,12 @@ if (!isset($_SESSION['logged_in'])) {
                 <!-- ACTIVE DELIVERY CARD -->
                 <div class="active-delivery" id="activeDeliveryCard">
                     <div class="delivery-header">
-                        <div class="delivery-id" id="deliveryId">ORDER ID</div>
+                        <div class="delivery-id" id="deliveryId">ORDER ID #<?= $currentDeliveryID ?></div>
                         <div class="customer-info">
-                            <h3 id="customerName">Customer Name</h3>
+                            <h3 id="customerName"><?= $currentDelivery['customer_name'] ?></h3>
                             <div class="customer-address" id="customerAddress">
                                 <i class="fas fa-map-marker-alt"></i>
-                                Address • Distance
+                                <?= $currentDelivery['delivery_location'] ?>
                             </div>
                         </div>
                     </div>
@@ -107,35 +114,24 @@ if (!isset($_SESSION['logged_in'])) {
                         </div>
                     </div>
 
-                    <!-- ORDER ITEMS -->
-                    <div class="items-list" id="orderItems">
-                        <div class="item-row">
-                            <span class="item-name" id="item1Name">Item Name</span>
-                            <span class="item-price" id="item1Price">₱0.00</span>
-                        </div>
-                        <div class="item-row">
-                            <span class="item-name" id="item2Name">Item Name</span>
-                            <span class="item-price" id="item2Price">₱0.00</span>
-                        </div>
-                        <div style="margin-top:16px; padding-top:16px; border-top:2px solid #E5E7EB;">
-                            <div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.1rem;" id="totalAmount">
-                                <span>Total</span>
-                                <span>₱0.00</span>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- UPDATE STATUS BUTTONS -->
-                    <div class="update-buttons">
-                        <button class="btn-update btn-pickup" id="btnPickup">
-                            <i class="fas fa-shopping-bag"></i>
-                            Mark as Picked Up
-                        </button>
-                        <button class="btn-update btn-delivered" id="btnDelivered" disabled>
-                            <i class="fas fa-check"></i>
-                            Mark as Delivered
-                        </button>
-                    </div>
+                    <form action="../backend/mark_delivery_action.php" method="POST">
+                        <div class="update-buttons">
+                            <button type="submit"
+                                    name="btnPickup"
+                                    class="btn-update btn-pickup"
+                                    <?= ($status != 'READY') ? 'disabled' : '' ?>>
+                                Mark as Picked Up
+                            </button>
+
+                            <button type="submit"
+                                    name="btnDelivered"
+                                    class="btn-update btn-delivered"
+                                    <?= ($status != 'PICKED UP') ? 'disabled' : '' ?>>
+                                Mark as Delivered
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- NO ACTIVE DELIVERY -->
