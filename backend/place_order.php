@@ -20,6 +20,13 @@ if (isset($_POST['confirm'])) {
 
 
     $success = $deliveries->fillDeliveries($orderID, $customer_name, $contact_number, $message, $pickup_location, $address, $payment_method);
+
+    /*$query = "INSERT INTO orders 
+            (customer_name, address, total_amount)
+            VALUES 
+            ('$customer_name', '$address', '$total')";
+    */
+
     
     // =========================
     // CLEAR CART
