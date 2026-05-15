@@ -1,5 +1,7 @@
-let ordersActive = true;
+let ordersActive = null;
 let queueCount = 0;
+let currentDeliveryID = null;
+let isOnDelivery = false;
 
 // Show notification
 function showNotification(text, type = "info") {
@@ -21,14 +23,66 @@ function renderEmptyOrder() {
     `;
 }
 
+async function loadDriverStatus() {
+
+    const response = await fetch("../backend/get_driver_status.php");
+    const data = await response.json();
+
+    const toggle = document.getElementById('statusToggle');
+
+    if (!data.success) {
+        ordersActive = false;
+        renderEmptyOrder();
+        document.getElementById('statusToggle').classList.remove('online');
+        return;
+    }
+
+    if (data.status === "available") {
+
+        ordersActive = true;
+
+        toggle.classList.add('online');
+
+        toggle.innerHTML = `
+            <i class="fas fa-circle" style="font-size:0.7rem;"></i>
+            Accepting Orders
+        `;
+
+
+        checkPendingDeliveries(true);
+
+    } else {
+
+        ordersActive = false;
+
+        toggle.classList.remove('online');
+
+        toggle.innerHTML = `
+            <i class="fas fa-circle" style="font-size:0.7rem;color:#EF4444;"></i>
+            Paused
+        `;
+
+        renderEmptyOrder();
+    }
+}
+
 // Render order template with database-ready structure
-function renderOrderTemplate(orderNumber = 1) {
+function renderOrderTemplate(orderNumber=null) {
     const container = document.getElementById('orderContainer');
     container.innerHTML = `
         <div class="order-card">
             <div class="order-header">
                 <div class="order-no">
                     <i class="fas fa-hashtag"></i> Order #${orderNumber}
+                </div>
+            </div>
+
+            <div class="order-field">
+                <div class="field-label">
+                    <i class="fas fa-cube"></i> Costumer Name
+                </div>
+                <div class="field-value" data-field="customerName">
+                    Loading from database...
                 </div>
             </div>
 
@@ -46,6 +100,20 @@ function renderOrderTemplate(orderNumber = 1) {
                     <i class="fas fa-receipt"></i> Total Bill
                 </div>
                 <div class="field-value" data-field="total">₱0.00</div>
+            </div>
+
+            <div class="order-field">
+                <div class="field-label">
+                    <i class="fas fa-phone"></i> Costumer Contact No.
+                </div>
+                <div class="field-value" data-field="contactNo">Loading...</div>
+            </div>
+
+            <div class="order-field">
+                <div class="field-label">
+                    <i class="fas fa-credit-card"></i> Payment Method
+                </div>
+                <div class="field-value" data-field="paymentMethod">Loading...</div>
             </div>
 
             <div class="order-field">
@@ -80,36 +148,62 @@ function renderOrderTemplate(orderNumber = 1) {
                 <button class="btn-accept" id="acceptBtn">
                     <i class="fas fa-check-circle"></i> Accept Order
                 </button>
-                <button class="btn-cancel" id="cancelBtn">
-                    <i class="fas fa-times-circle"></i> Cancel Order
-                </button>
             </div>
         </div>
     `;
 
     // Accept button handler
-    document.getElementById('acceptBtn').addEventListener('click', () => {
-        if(!ordersActive) {
-            showNotification("Enable 'Accepting Orders' first", "info");
-            return;
-        }
-        // Here you would send POST request to your backend
-        showNotification("✅ Order accepted! Sent to processing.", "success");
-        queueCount--;
-        updateQueueBadge();
-        renderEmptyOrder();
+    const acceptBtn = document.getElementById('acceptBtn');
+
+    if (acceptBtn) {
+
+        acceptBtn.addEventListener('click', async () => {
+
+            if (!ordersActive) {
+                showNotification("Enable 'Accepting Orders' first", "info");
+                return;
+            }
+
+            const result = await acceptDelivery(currentDeliveryID);
+
+            if (!result.success) {
+                showNotification("Failed to accept delivery", "error");
+                return;
+            }
+
+            showNotification("🚚 Delivery assigned to you!", "success");
+
+            queueCount--;
+            updateQueueBadge();
+
+            // 🔥 LOCK SYSTEM
+            isOnDelivery = true;
+
+            // CHANGE BUTTON UI
+            acceptBtn.outerHTML = `
+                <button class="btn-accept disabled" id="ongoingBtn">
+                    <i class="fas fa-truck"></i> Delivery On Going...
+                </button>
+            `;
+
+            // STOP NEW ORDERS
+            // (polling already blocked by isOnDelivery)
+
+        });
+    }
+}
+
+async function acceptDelivery(deliveryId) {
+
+    const formData = new FormData();
+    formData.append("delivery_id", deliveryId);
+
+    const response = await fetch("../backend/accept_delivery.php", {
+        method: "POST",
+        body: formData
     });
 
-    // Cancel button handler
-    document.getElementById('cancelBtn').addEventListener('click', () => {
-        if(!ordersActive) {
-            showNotification("Cannot cancel while paused", "info");
-            return;
-        }
-        // Here you would send DELETE request to your backend
-        showNotification("❌ Order cancelled", "info");
-        renderEmptyOrder();
-    });
+    return await response.json();
 }
 
 function updateQueueBadge() {
@@ -127,22 +221,169 @@ function populateOrderData(orderData) {
     });
 }
 
+//polling for orders
+async function checkPendingDeliveries(force = false) {
+
+    if (!ordersActive) return;
+
+    try {
+
+        const response = await fetch("../backend/get_ready_delivery.php");
+        const data = await response.json();
+
+        // 🔥 CASE 1: backend says driver already has active delivery
+        if (data.locked && data.delivery) {
+
+            isOnDelivery = true;
+            currentDeliveryID = data.delivery.delivery_id;
+
+        } else {
+            isOnDelivery = false;
+        }
+
+        // ❌ no available order
+        if (!data.success || !data.delivery) {
+
+            // only clear if NOT locked
+            if (!isOnDelivery) {
+                renderEmptyOrder();
+                queueCount = 0;
+                updateQueueBadge();
+                currentDeliveryID = null;
+            }
+
+            return;
+        }
+
+        const delivery = data.delivery;
+
+        //delete later
+        console.log("DELIVERY RESPONSE:", delivery);
+
+        // avoid re-render spam
+        if (!force && currentDeliveryID === delivery.delivery_id) return;
+
+        currentDeliveryID = delivery.delivery_id;
+
+        renderOrderTemplate(delivery.order_id);
+
+        populateOrderData({
+            customerName: delivery.customer_name || "Unknown",
+            items: delivery.items
+                ? delivery.items.map(i => `${i.item_name} x${i.quantity}`).join(", ")
+                : "No items found",
+             total: delivery.total_amount ? "₱" + delivery.total_amount : "₱0.00",
+            contactNo: delivery.contact_number,
+            pickup: delivery.pickup_location,
+            delivery: delivery.delivery_location,
+            notes: delivery.message,
+            paymentMethod: delivery.payment_method,
+            time: "15 mins"
+        });
+
+        queueCount = 1;
+        updateQueueBadge();
+
+        showNotification("🚚 New delivery received!", "success");
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function checkIfDelivered() {
+
+    if (!currentDeliveryID) return;
+
+    const res = await fetch("../backend/check_delivery_status.php?id=" + currentDeliveryID);
+    const data = await res.json();
+
+    if (data.status === "DELIVERED") {
+        showNotification("✅ Delivery completed!", "success");
+        resetDeliveryState();
+        renderEmptyOrder();
+        queueCount = 0;
+        updateQueueBadge();
+        isOnDelivery = false;
+    }
+}
+
+function resetDeliveryState() {
+    currentDeliveryID = null;
+    isOnDelivery = false;
+}
+
 // Initialize app when DOM loads
 document.addEventListener('DOMContentLoaded', function() {
+    
+    loadDriverStatus();
+
     // Status toggle
-    document.getElementById('statusToggle').addEventListener('click', function() {
-        ordersActive = !ordersActive;
-        if(ordersActive) {
-            this.classList.add('online');
-            this.innerHTML = '<i class="fas fa-circle" style="font-size:0.7rem;"></i> Accepting Orders';
-            showNotification("✅ Connected - waiting for orders from database (Ctrl+Enter)", "success");
-            renderOrderTemplate(1);
-            // Here you would start polling your API for new orders
-            // startOrderPolling();
+    async function updateDriverStatus(status) {
+
+        const formData = new FormData();
+
+        formData.append("status", status);
+
+        const response = await fetch("../backend/update_driver_status.php", {
+            method: "POST",
+            body: formData
+        });
+
+        return await response.json();
+    }
+
+    document.getElementById('statusToggle').addEventListener('click', async function () {
+
+        // 🚫 BLOCK TOGGLE IF DELIVERY IS ACTIVE
+        if (isOnDelivery) {
+            showNotification("🚚 Finish current delivery first", "info");
+            return;
+        }
+
+        let newStatus;
+
+        if (ordersActive === null || ordersActive === false) {
+            newStatus = "available";
         } else {
+            newStatus = "unavailable";
+        }
+
+        const result = await updateDriverStatus(newStatus);
+
+        if (!result.success) {
+            showNotification("Database update failed", "info");
+            return;
+        }
+
+        ordersActive = !ordersActive;
+
+        if (ordersActive) {
+
+            this.classList.add('online');
+
+            this.innerHTML = `
+                <i class="fas fa-circle" style="font-size:0.7rem;"></i>
+                Accepting Orders
+            `;
+
+            showNotification("✅ Driver is ONLINE", "success");
+
+            // 🔥 RESTORE ACTIVE ORDER if exists
+            currentDeliveryID = null; // 🔥 reset cache
+            checkPendingDeliveries(true); // FORCE FRESH FETCH
+
+        } else {
+
             this.classList.remove('online');
-            this.innerHTML = '<i class="fas fa-circle" style="font-size:0.7rem;color:#EF4444;"></i> Paused';
-            showNotification("⏸ Orders paused", "info");
+
+            this.innerHTML = `
+                <i class="fas fa-circle" style="font-size:0.7rem;color:#EF4444;"></i>
+                Paused
+            `;
+
+            showNotification("⏸ Driver is OFFLINE", "info");
+
             renderEmptyOrder();
         }
     });
@@ -163,8 +404,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Initialize
-    renderEmptyOrder();
-    updateQueueBadge();
+    loadDriverStatus().then(() => {
+
+        updateQueueBadge();
+
+        // Check every 3 seconds
+        setInterval(checkPendingDeliveries, 3000);
+
+    });
     
     console.log('☕ BrewHaven Orders loaded!');
     console.log('📦 Ready for PHP/MySQL integration');

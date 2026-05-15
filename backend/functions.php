@@ -423,5 +423,189 @@
             $stmt->bind_param("si", $status, $order_id);
             return $stmt->execute();
         }
+
+        public function getDriverDeliveriesWithStatus($status) {
+
+            $stmt = $this->conn->prepare("
+                SELECT * 
+                FROM deliveries 
+                WHERE driver_id IS NULL 
+                AND delivery_status = ?
+                ORDER BY created_at ASC
+                LIMIT 1
+            ");
+
+            $stmt->bind_param("s", $status);
+            $stmt->execute();
+
+            $delivery = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            if (!$delivery) return null;
+
+            // 🔥 NOW FETCH ORDER DETAILS (LIKE YOUR TEMPLATE)
+            $orderId = $delivery['order_id'];
+
+            $stmt = $this->conn->prepare("
+                SELECT * FROM orders WHERE order_id = ?
+            ");
+            $stmt->bind_param("i", $orderId);
+            $stmt->execute();
+            $order = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            if ($order) {
+                // fetch items
+                $stmt = $this->conn->prepare("
+                    SELECT 
+                        oi.item_id,
+                        oi.quantity,
+                        i.name AS item_name,
+                        i.price
+                    FROM order_items oi
+                    INNER JOIN items i ON oi.item_id = i.item_id
+                    WHERE oi.order_id = ?
+                ");
+
+                $stmt->bind_param("i", $orderId);
+                $stmt->execute();
+                $items = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                $stmt->close();
+
+                $order['items'] = $items;
+
+                // 🔥 ADD TOTAL AMOUNT CALCULATION
+                $total = 0;
+
+                foreach ($items as $item) {
+                    $total += $item['price'] * $item['quantity'];
+                }
+
+                $order['total_amount'] = $total;
+            }
+
+            // 🔥 ATTACH ORDER TO DELIVERY
+            $delivery['items'] = $order['items'] ?? [];
+            $delivery['total_amount'] = $order['total_amount'] ?? 0;
+            return $delivery;
+        }
+
+        public function getDeliveryById($id)
+        {
+            // 1. Get delivery by ID
+            $stmt = $this->conn->prepare("
+                SELECT * 
+                FROM deliveries 
+                WHERE delivery_id = ?
+                LIMIT 1
+            ");
+
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $delivery = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            if (!$delivery) return null;
+
+            // 2. Get order details
+            $orderId = $delivery['order_id'];
+
+            $stmt = $this->conn->prepare("
+                SELECT * 
+                FROM orders 
+                WHERE order_id = ?
+            ");
+
+            $stmt->bind_param("i", $orderId);
+            $stmt->execute();
+            $order = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            if (!$order) {
+                $order = [
+                    "items" => [],
+                    "total_amount" => 0
+                ];
+            } else {
+
+                // 3. Get items
+                $stmt = $this->conn->prepare("
+                    SELECT 
+                        oi.item_id,
+                        oi.quantity,
+                        i.name AS item_name,
+                        i.price
+                    FROM order_items oi
+                    INNER JOIN items i ON oi.item_id = i.item_id
+                    WHERE oi.order_id = ?
+                ");
+
+                $stmt->bind_param("i", $orderId);
+                $stmt->execute();
+                $items = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                $stmt->close();
+
+                $order['items'] = $items;
+
+                // 4. Calculate total
+                $total = 0;
+                foreach ($items as $item) {
+                    $total += $item['price'] * $item['quantity'];
+                }
+
+                $order['total_amount'] = $total;
+            }
+
+            // 5. FLATTEN delivery (important for your JS)
+            $delivery['items'] = $order['items'];
+            $delivery['total_amount'] = $order['total_amount'];
+
+            return $delivery;
+        }
+
+        public function assignDriverToDelivery($driver_id, $delivery_id)
+        {
+            $sql = "UPDATE deliveries 
+                    SET driver_id = ?
+                    WHERE delivery_id = ?
+                    AND delivery_status = 'READY'";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("ii", $driver_id, $delivery_id);
+            return $stmt->execute();
+        }
+
+        public function getDeliveryStatus($delivery_id){
+            $sql = "SELECT delivery_status FROM deliveries WHERE delivery_id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $delivery_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_assoc();
+        }
+    }
+
+    class DriverDAO {
+        private $conn;
+
+        public function __construct() {
+            $database = new Database();
+            $this->conn = $database->getConnection();
+        }
+
+        public function getDriverByID($driver_id){
+            $sql = "SELECT * FROM drivers WHERE id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $driver_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_assoc();
+        }
+
+        public function updateDriverStatusByID($driver_id, $status="available"){
+            $sql = "UPDATE drivers SET driver_status = ? WHERE id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("si", $status, $driver_id);
+            return $stmt->execute();
+        }
     }
 ?> 
