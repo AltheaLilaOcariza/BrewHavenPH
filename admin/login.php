@@ -3,10 +3,10 @@
 session_start();
 
 // Check if already logged in
-if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
-    header('Location: dashboard.php');
-    exit;
-}
+//if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+//    header('Location: dashboard.php');
+//    exit;
+//}
 
 // Handle login form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // UPDATE DELIVERY STATUS - PICKUP
     const btnPickup = document.getElementById('btnPickup');
     btnPickup?.addEventListener('click', function() {
+        
         const steps = {
             ready: document.getElementById('stepReady'),
             pickup: document.getElementById('stepPickup'),

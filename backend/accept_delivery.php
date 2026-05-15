@@ -15,16 +15,24 @@ if (!isset($_POST['delivery_id'])) {
 }
 
 $deliveryId = $_POST['delivery_id'];
-$driverId = $_SESSION['driver_id'];
+$driverId = $_SESSION['driver_id'] ?? null;
 
-// store in session 🔥 THIS is what you were asking about
+
+if (!$driverId) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Driver not logged in"
+    ]);
+    exit;
+}
+
 $_SESSION['currentDeliveryID'] = $deliveryId;
 $_SESSION['isOnDelivery'] = true;
 
-// optional DB update (recommended)
 $deliveryDAO->assignDriverToDelivery($driverId, $deliveryId);
 
 echo json_encode([
     "success" => true,
-    "message" => "Delivery accepted"
+    "delivery_id" => $deliveryId
 ]);
+?>

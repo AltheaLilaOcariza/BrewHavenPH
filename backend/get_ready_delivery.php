@@ -15,14 +15,31 @@ if ($isOnDelivery && $currentDeliveryID) {
 
     $delivery = $deliveryDAO->getDeliveryById($currentDeliveryID);
 
+    // 🔥 CASE 1: delivery not found → unlock session
     if (!$delivery) {
+        $_SESSION['currentDeliveryID'] = null;
+        $_SESSION['isOnDelivery'] = false;
+
         echo json_encode([
             "success" => false,
-            "error" => "Delivery not found in database"
+            "locked" => false
         ]);
         exit;
     }
 
+    // 🔥 CASE 2: delivery already completed → unlock session
+    if ($delivery['delivery_status'] === 'DELIVERED') {
+        $_SESSION['currentDeliveryID'] = null;
+        $_SESSION['isOnDelivery'] = false;
+
+        echo json_encode([
+            "success" => false,
+            "locked" => false
+        ]);
+        exit;
+    }
+
+    // 🔥 CASE 3: still active delivery → keep locked
     echo json_encode([
         "success" => true,
         "delivery" => $delivery,

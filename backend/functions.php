@@ -582,6 +582,81 @@
             $result = $stmt->get_result();
             return $result->fetch_assoc();
         }
+
+        public function setDeliveryStatus($delivery_id, $status){
+            $sql = "UPDATE deliveries 
+                    SET delivery_status = ?
+                    WHERE delivery_id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("si", $status, $delivery_id);
+            return $stmt->execute();
+        }
+
+        public function getTotalDeliveriesAssigned($driver_id)
+        {
+            $sql = "
+                SELECT COUNT(*) AS total_deliveries
+                FROM deliveries
+                WHERE driver_id = ? AND delivery_status = 'READY'
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $driver_id);
+            $stmt->execute();
+
+            $result = $stmt->get_result()->fetch_assoc();
+
+            $stmt->close();
+
+            return $result['total_deliveries'];
+        }
+
+        public function getTotalDeliveriesDelivered($driver_id)
+        {
+            $sql = "
+                SELECT COUNT(*) AS total_deliveries
+                FROM deliveries
+                WHERE driver_id = ? AND delivery_status = 'DELIVERED'
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $driver_id);
+            $stmt->execute();
+
+            $result = $stmt->get_result()->fetch_assoc();
+
+            $stmt->close();
+
+            return $result['total_deliveries'];
+        }
+
+        public function getDeliveryCountByStatus($status = "READY")
+        {
+            $sql = "
+                SELECT COUNT(*) AS total_deliveries
+                FROM deliveries
+                WHERE delivery_status = ?
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("s", $status);
+            $stmt->execute();
+
+            $result = $stmt->get_result()->fetch_assoc();
+
+            $stmt->close();
+
+            return $result['total_deliveries'];
+        }
+
+        public function getDeliveryByIDNoItems($currentDeliveryId){
+            $sql = "SELECT * FROM deliveries WHERE delivery_id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $currentDeliveryId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_assoc();
+        }
     }
 
     class DriverDAO {

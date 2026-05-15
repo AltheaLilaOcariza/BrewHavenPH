@@ -131,4 +131,6 @@
 </main>
 
 <?php include '../includes/order_alerts.php';?>
-<?php include '../includes/footer.php'; ?>
+<?php 
+$login_link = '../admin/login.php';
+include '../includes/footer.php'; ?>

@@ -4,7 +4,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: login.html");
     exit();
 }
-require_once '../backend/database.php';
+//require_once '../backend/database.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

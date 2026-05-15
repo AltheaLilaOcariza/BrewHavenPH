@@ -1,10 +1,20 @@
 <?php
 session_start();
+require_once "../backend/functions.php";
 
 if (!isset($_SESSION['logged_in'])) {
     header("Location: index.php");
     exit();
 }
+
+$driver_id = $_SESSION['driver_id'];
+
+$deliveryManager = new DeliveriesDAO();
+$total_orders = $deliveryManager->getTotalDeliveriesAssigned($driver_id);
+$total_pending = $deliveryManager ->getDeliveryCountByStatus();
+$total_delivered = $deliveryManager ->getTotalDeliveriesDelivered($driver_id);
+$total_failed = $deliveryManager -> getDeliveryCountByStatus("FAILED");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,7 +86,7 @@ if (!isset($_SESSION['logged_in'])) {
                             <i class="fas fa-mug-hot"></i>
                         </div>
                     </div>
-                    <div class="stat-number" id="totalOrders">-</div>
+                    <div class="stat-number" id="totalOrders"><?= $total_orders ?></div>
                     <div class="stat-description">Total orders assigned</div>
                 </div>
 
@@ -87,7 +97,7 @@ if (!isset($_SESSION['logged_in'])) {
                             <i class="fas fa-clock"></i>
                         </div>
                     </div>
-                    <div class="stat-number" id="pendingDeliveries">-</div>
+                    <div class="stat-number" id="readyDeliveries"><?= $total_pending ?></div>
                     <div class="stat-description">Awaiting pickup</div>
                 </div>
 
@@ -98,19 +108,20 @@ if (!isset($_SESSION['logged_in'])) {
                             <i class="fas fa-check-circle"></i>
                         </div>
                     </div>
-                    <div class="stat-number" id="completedDeliveries">-</div>
-                    <div class="stat-description">Successfully delivered</div>
+                    <div class="stat-number" id="failedDeliveries"><?= $total_delivered ?></div>
+                    <div class="stat-description">Successfully Delivered</div>
                 </div>
 
                 <div class="stat-card">
                     <div class="stat-header">
-                        <div class="stat-title">Canceled</div>
-                        <div class="stat-icon icon-canceled">
+                        <div class="stat-title">Failed</div>
+                        <div class="stat-icon icon-cance
+                        led">
                             <i class="fas fa-times-circle"></i>
                         </div>
                     </div>
-                    <div class="stat-number" id="canceledOrders">-</div>
-                    <div class="stat-description">Customer/store canceled</div>
+                    <div class="stat-number" id="failedDeliveries"><?= $total_failed ?></div>
+                    <div class="stat-description">Failed to Deliver</div>
                 </div>
 
             </div>
