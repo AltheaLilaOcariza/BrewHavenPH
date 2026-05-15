@@ -1,6 +1,6 @@
 <?php
 session_start();
-$currentDeliveryID = $_SESSION['currentDeliveryID'];
+$currentDeliveryID = $_SESSION['currentDeliveryID'] ?? null;
 
 if (!isset($_SESSION['logged_in'])) {
     header("Location: index.php");
