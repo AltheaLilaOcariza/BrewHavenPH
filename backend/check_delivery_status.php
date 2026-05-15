@@ -14,7 +14,7 @@ if ($status === "DELIVERED") {
 
     // 🔥 CLEAR SESSION ONLY WHEN DONE
     unset($_SESSION['currentDeliveryID']);
-    unset($_SESSION['isOnDelivery']);
+    $_SESSION['isOnDelivery'] = false;
 
 }
 

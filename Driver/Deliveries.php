@@ -10,8 +10,19 @@ if (!isset($_SESSION['logged_in'])) {
 require_once '../backend/functions.php';
 
 $deliveryManager = new DeliveriesDAO();
-$currentDelivery = $deliveryManager->getDeliveryByIDNoItems($currentDeliveryID);
-$status = $currentDelivery['status'] ?? '';
+
+$currentDelivery = null;
+$currentOrderID = null;
+$status = null;
+
+if ($currentDeliveryID) {
+    $currentDelivery = $deliveryManager->getDeliveryByIDNoItems($currentDeliveryID);
+}
+
+if ($currentDelivery) {
+    $currentOrderID = $currentDelivery['order_id'] ?? null;
+    $status = $currentDelivery['delivery_status'] ?? '';
+}
 
 ?>
 <!DOCTYPE html>
@@ -74,12 +85,12 @@ $status = $currentDelivery['status'] ?? '';
                 <!-- ACTIVE DELIVERY CARD -->
                 <div class="active-delivery" id="activeDeliveryCard">
                     <div class="delivery-header">
-                        <div class="delivery-id" id="deliveryId">ORDER ID #<?= $currentDeliveryID ?></div>
+                        <div class="delivery-id" id="deliveryId">ORDER ID #<?= $currentOrderID ?? 'No Order Accepted' ?></div>
                         <div class="customer-info">
-                            <h3 id="customerName"><?= $currentDelivery['customer_name'] ?></h3>
+                            <h3 id="customerName"><?= $currentDelivery['customer_name']?? 'No Data' ?></h3>
                             <div class="customer-address" id="customerAddress">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <?= $currentDelivery['delivery_location'] ?>
+                                <?= $currentDelivery['delivery_location'] ?? '-'?>
                             </div>
                         </div>
                     </div>
@@ -90,27 +101,37 @@ $status = $currentDelivery['status'] ?? '';
                             <i class="fas fa-route"></i>
                             Delivery Progress
                         </div>
+
                         <div class="progress-track">
-                            <div class="progress-step" id="stepReady">
+
+                            <!-- READY -->
+                            <div class="progress-step <?= ($status !== '') ? 'completed' : '' ?>" id="stepReady">
                                 <div class="step-icon">
                                     <i class="fas fa-store"></i>
                                 </div>
                                 <div>Order Ready</div>
                             </div>
-                            <div class="progress-line" id="line1"></div>
-                            <div class="progress-step" id="stepPickup">
+
+                            <div class="progress-line <?= ($status === 'PICKED UP' || $status === 'DELIVERED') ? 'completed' : '' ?>" id="line1"></div>
+
+                            <!-- PICKED UP -->
+                            <div class="progress-step <?= ($status === 'PICKED UP' || $status === 'DELIVERED') ? 'active completed' : '' ?>" id="stepPickup">
                                 <div class="step-icon">
                                     <i class="fas fa-handshake"></i>
                                 </div>
                                 <div>Picked Up</div>
                             </div>
-                            <div class="progress-line" id="line2"></div>
-                            <div class="progress-step" id="stepDelivered">
+
+                            <div class="progress-line <?= ($status === 'DELIVERED') ? 'completed' : '' ?>" id="line2"></div>
+
+                            <!-- DELIVERED -->
+                            <div class="progress-step <?= ($status === 'DELIVERED') ? 'active completed' : '' ?>" id="stepDelivered">
                                 <div class="step-icon">
                                     <i class="fas fa-check-circle"></i>
                                 </div>
                                 <div>Delivered</div>
                             </div>
+
                         </div>
                     </div>
 

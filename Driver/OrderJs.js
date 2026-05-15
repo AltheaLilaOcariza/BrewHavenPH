@@ -157,6 +157,13 @@ function renderOrderTemplate(orderNumber=null) {
 
     if (acceptBtn) {
 
+         // 🔥 IMPORTANT: ALWAYS RESET BUTTON STATE ON NEW RENDER
+        acceptBtn.disabled = false;
+        acceptBtn.classList.remove("disabled");
+        acceptBtn.innerHTML = `
+            <i class="fas fa-check-circle"></i> Accept Order
+        `;
+
         acceptBtn.addEventListener('click', async () => {
 
             if (!ordersActive) {
@@ -171,6 +178,7 @@ function renderOrderTemplate(orderNumber=null) {
                 return;
             }
 
+            currentDeliveryID = result.delivery_id;
             showNotification("🚚 Delivery assigned to you!", "success");
 
             queueCount--;
@@ -179,12 +187,19 @@ function renderOrderTemplate(orderNumber=null) {
             // 🔥 LOCK SYSTEM
             isOnDelivery = true;
 
+            // 👉 SOFT LOCK BUFFER (ADD THIS HERE)
+            window.deliveryLock = true;
+
+            setTimeout(() => {
+                window.deliveryLock = false;
+            }, 5000);
+
             // CHANGE BUTTON UI
-            acceptBtn.outerHTML = `
-                <button class="btn-accept disabled" id="ongoingBtn">
-                    <i class="fas fa-truck"></i> Delivery On Going...
-                </button>
+            acceptBtn.disabled = true;
+            acceptBtn.innerHTML = `
+                <i class="fas fa-truck"></i> Delivery On Going...
             `;
+            acceptBtn.classList.add("disabled");
 
             // STOP NEW ORDERS
             // (polling already blocked by isOnDelivery)
@@ -223,7 +238,7 @@ function populateOrderData(orderData) {
 
 //polling for orders
 async function checkPendingDeliveries(force = false) {
-
+    
     if (!ordersActive) return;
 
     try {
@@ -236,22 +251,43 @@ async function checkPendingDeliveries(force = false) {
 
             isOnDelivery = true;
             currentDeliveryID = data.delivery.delivery_id;
+            currentOrderID = data.delivery.order_id;
 
-        } else {
-            isOnDelivery = false;
+            // 🔥 ALWAYS render UI when locked delivery exists
+            renderOrderTemplate(data.delivery.order_id);
+
+            populateOrderData({
+                customerName: data.delivery.customer_name || "Unknown",
+                items: data.delivery.items
+                    ? data.delivery.items.map(i => `${i.item_name} x${i.quantity}`).join(", ")
+                    : "No items found",
+                total: data.delivery.total_amount ? "₱" + data.delivery.total_amount : "₱0.00",
+                contactNo: data.delivery.contact_number,
+                pickup: data.delivery.pickup_location,
+                delivery: data.delivery.delivery_location,
+                notes: data.delivery.message,
+                paymentMethod: data.delivery.payment_method,
+                time: "15 mins"
+            });
+
+            queueCount = 1;
+            updateQueueBadge();
+
+            return; // stop further processing AFTER render
         }
 
         // ❌ no available order
-        if (!data.success || !data.delivery) {
+        if (!data.success) return;
 
-            // only clear if NOT locked
-            if (!isOnDelivery) {
-                renderEmptyOrder();
-                queueCount = 0;
-                updateQueueBadge();
-                currentDeliveryID = null;
-            }
+        // only reset if we are SURE there is no session + no lock
+        if (!data.delivery && !data.locked) {
+            queueCount = 0;
+            updateQueueBadge();
 
+            currentDeliveryID = null;
+            isOnDelivery = false;
+
+            renderEmptyOrder(); // 🔥 THIS IS THE MISSING PIECE
             return;
         }
 
@@ -264,8 +300,11 @@ async function checkPendingDeliveries(force = false) {
         if (!force && currentDeliveryID === delivery.delivery_id) return;
 
         currentDeliveryID = delivery.delivery_id;
+        currentOrderID = delivery.order_id;
 
-        renderOrderTemplate(delivery.order_id);
+        if (!isOnDelivery) {
+            renderOrderTemplate(delivery.order_id);
+        }
 
         populateOrderData({
             customerName: delivery.customer_name || "Unknown",
@@ -299,18 +338,49 @@ async function checkIfDelivered() {
     const data = await res.json();
 
     if (data.status === "DELIVERED") {
+
         showNotification("✅ Delivery completed!", "success");
+
+        // 🔥 FULL RESET (important order)
         resetDeliveryState();
+
         renderEmptyOrder();
+
         queueCount = 0;
         updateQueueBadge();
+
         isOnDelivery = false;
+
+        currentDeliveryID = null; // 🔥 IMPORTANT ADDITION
+
+        // 🔥 force polling sync
+        checkPendingDeliveries(true);
     }
 }
 
 function resetDeliveryState() {
+
     currentDeliveryID = null;
     isOnDelivery = false;
+
+    window.forceUnlock = true; // 🔥 BLOCK POLLING RELOCK
+
+    const container = document.getElementById('orderContainer');
+    container.innerHTML = '';
+
+    renderEmptyOrder();
+
+    const btn = document.getElementById('acceptBtn');
+    if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fas fa-check-circle"></i> Accept Order`;
+        btn.classList.remove("disabled");
+    }
+
+    // 🔥 remove lock after short delay
+    setTimeout(() => {
+        window.forceUnlock = false;
+    }, 2000);
 }
 
 // Initialize app when DOM loads
