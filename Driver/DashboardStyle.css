@@ -198,3 +198,58 @@ body{
     .nav a span{display:none;}
     .stats-grid{grid-template-columns:1fr;}
 }
+/* GPS Map Section Styles */
+.map-section {
+    margin-top: 2rem;
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.map-header {
+    margin-bottom: 1.5rem;
+}
+
+.map-header h3 {
+    color: #2d3748;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.map-header h3 i {
+    color: #4299e1;
+}
+
+.map-header p {
+    color: #718096;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.map-container {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .map-section {
+        margin-top: 1.5rem;
+        padding: 1rem;
+    }
+    
+    .map-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .map-container iframe {
+        height: 300px;
+    }
+}

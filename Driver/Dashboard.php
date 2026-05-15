@@ -114,6 +114,26 @@ if (!isset($_SESSION['logged_in'])) {
                 </div>
 
             </div>
+
+            <!-- GPS MAP SECTION -->
+            <div class="map-section">
+                <div class="map-header">
+                    <h3><i class="fas fa-map-marker-alt"></i> Live GPS Location</h3>
+                    <p>Current location and delivery area</p>
+                </div>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d251172.89328295644!2d123.5364284039915!3d10.375710136211605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a999258dcd2dfd%3A0x4c34030cdbd33507!2sCebu%20City%2C%20Cebu!5e0!3m2!1sen!2sph!4v1778849876032!5m2!1sen!2sph" 
+                        width="100%" 
+                        height="400" 
+                        style="border:0; border-radius: 12px;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+
         </div>
 
     </div>
