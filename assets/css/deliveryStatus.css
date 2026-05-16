@@ -1,0 +1,177 @@
+/* ===== DELIVERY STATUS PAGE ===== */
+
+.delivery-section {
+    padding: 50px 40px;
+    min-height: 70vh;
+}
+
+.delivery-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.delivery-header h1 {
+    font-size: 2.8rem;
+    color: #A0522D;
+    margin-bottom: 10px;
+}
+
+.delivery-header p {
+    color: #5a3927;
+    font-size: 1.05rem;
+}
+
+/* ===== STATUS CARD ===== */
+
+.delivery-card {
+    background: #FFFDF9;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    border: 2px solid #FFD88F;
+    overflow-x: auto;
+}
+
+/* ===== TABLE ===== */
+
+.delivery-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.delivery-table thead {
+    background: linear-gradient(135deg, #D04F4F, #A0522D);
+    color: white;
+}
+
+.delivery-table thead th {
+    padding: 18px;
+    text-align: left;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.delivery-table tbody tr {
+    border-bottom: 1px solid #f0e1c8;
+    transition: all 0.3s ease;
+}
+
+.delivery-table tbody tr:hover {
+    background: #FFF7E7;
+    transform: scale(1.005);
+}
+
+.delivery-table tbody td {
+    padding: 18px;
+    font-size: 0.95rem;
+    color: #3E2723;
+}
+
+/* ===== STATUS BADGES ===== */
+
+.status-badge {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-cancelled {
+    background: #F8D7DA;
+    color: #721C24;
+}
+
+.status-pending {
+    background: #F8D7DA;
+    color: #721C24;
+}
+
+.status-ready {
+    background: #FFF3CD;
+    color: #856404;
+}
+
+.status-picked-up {
+    background: #CCE5FF;
+    color: #004085;
+}
+
+.status-delivered {
+    background: #D4EDDA;
+    color: #155724;
+}
+
+/* ===== EMPTY STATE ===== */
+
+.empty-row td {
+    text-align: center;
+    padding: 40px;
+    color: #8B4513;
+    font-style: italic;
+    font-size: 1rem;
+}
+
+/* ===== LIVE INDICATOR ===== */
+
+.live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    background: #D4EDDA;
+    color: #155724;
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.live-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #28A745;
+    animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.4);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+
+    .delivery-section {
+        padding: 30px 15px;
+    }
+
+    .delivery-header h1 {
+        font-size: 2rem;
+    }
+
+    .delivery-table thead th,
+    .delivery-table tbody td {
+        padding: 14px;
+        font-size: 0.9rem;
+    }
+}
+

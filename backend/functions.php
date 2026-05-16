@@ -402,11 +402,24 @@
         }
         
         public function getAllDeliveries() {
-            $result = $this->conn->query("SELECT * FROM deliveries ORDER BY created_at DESC");
+            $sql = "
+                SELECT *
+                FROM deliveries
+                WHERE NOT (
+                    delivery_status = 'DELIVERED'
+                    AND created_at <= NOW() - INTERVAL 4 HOUR
+                )
+                ORDER BY created_at DESC
+            ";
+
+            $result = $this->conn->query($sql);
+
             $deliveries = [];
-            while($row = $result->fetch_assoc()) {
+
+            while ($row = $result->fetch_assoc()) {
                 $deliveries[] = $row;
             }
+
             return $deliveries;
         }
 
