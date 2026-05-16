@@ -55,10 +55,6 @@ if ($currentDelivery) {
                 <i class="fas fa-truck"></i>
                 <span>Deliveries</span>
             </a>
-            <a href="Earnings.php">
-                <i class="fas fa-dollar-sign"></i>
-                <span>Earnings</span>
-            </a>
             <a href="Logout.php">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>

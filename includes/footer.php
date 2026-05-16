@@ -36,8 +36,8 @@ if (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) {
             <ul>
                 <li><a href="index.php">Home</a></li>
                 <li><a href="pages/menu.php">Menu</a></li>
-                <li><a href="pages/about.html">About Us</a></li>
-                <li><a href="pages/contact.html">Contact</a></li>
+                <li><a href="pages/about.php">About Us</a></li>
+                <li><a href="pages/contact.php">Contact</a></li>
             </ul>
         </div>
         
